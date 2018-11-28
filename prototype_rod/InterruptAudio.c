@@ -8,7 +8,7 @@ void enableSound (void)
 {
 }
 
-void disableSound (void);
+void disableSound (void)
 {
 }
 
