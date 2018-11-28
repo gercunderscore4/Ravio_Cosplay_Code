@@ -15,12 +15,22 @@
 
 
 /****************************************************************
-/* APA102 
+ * APA102 
  * Based on APA102 library for Arduino.
  ****************************************************************/
 
+// cannot deal with 0 or >240 LEDs
+
 #define BRIGHTNESS 31
-#define BRIGHTNESS_BYTE (BRIGHTNESS << 5)
+#define LED_DATA_PORT  5
+#define LED_CLOCK_PORT 4
+
+// brightness can be controlled by lowering the rgb values
+// therefore, optimize it out
+#define BRIGHTNESS_BYTE (0xE0 | BRIGHTNESS)
+
+#define BIT_DI (1 << LED_DATA_PORT)
+#define BIT_CI (1 << LED_CLOCK_PORT)
 
 typedef struct rgb_color
 {
@@ -31,67 +41,69 @@ typedef struct rgb_color
 
 void init (void)
 {
-    digitalWrite(dataPin, LOW);
-    digitalWrite(clockPin, LOW);
+    DDRB |= BIT_DI | BIT_CI;
+}
+
+void zero (void)
+{
 }
 
 void transfer (uint8_t b)
 {
-    digitalWrite(dataPin, (b >> 7) & 1);
-    digitalWrite(clockPin, HIGH);
-    digitalWrite(clockPin, LOW);
-    digitalWrite(dataPin, (b >> 6) & 1);
-    digitalWrite(clockPin, HIGH);
-    digitalWrite(clockPin, LOW);
-    digitalWrite(dataPin, (b >> 5) & 1);
-    digitalWrite(clockPin, HIGH);
-    digitalWrite(clockPin, LOW);
-    digitalWrite(dataPin, (b >> 4) & 1);
-    digitalWrite(clockPin, HIGH);
-    digitalWrite(clockPin, LOW);
-    digitalWrite(dataPin, (b >> 3) & 1);
-    digitalWrite(clockPin, HIGH);
-    digitalWrite(clockPin, LOW);
-    digitalWrite(dataPin, (b >> 2) & 1);
-    digitalWrite(clockPin, HIGH);
-    digitalWrite(clockPin, LOW);
-    digitalWrite(dataPin, (b >> 1) & 1);
-    digitalWrite(clockPin, HIGH);
-    digitalWrite(clockPin, LOW);
-    digitalWrite(dataPin, (b >> 0) & 1);
-    digitalWrite(clockPin, HIGH);
-    digitalWrite(clockPin, LOW);
+    PORTB = ((b >> 7) & 1) ? (PORTB | BIT_DI) : (PORTB & ~BIT_DI);
+    PORTB |=  BIT_CI;
+    PORTB &= ~BIT_CI;
+    PORTB = ((b >> 6) & 1) ? (PORTB | BIT_DI) : (PORTB & ~BIT_DI);
+    PORTB |=  BIT_CI;
+    PORTB &= ~BIT_CI;
+    PORTB = ((b >> 5) & 1) ? (PORTB | BIT_DI) : (PORTB & ~BIT_DI);
+    PORTB |=  BIT_CI;
+    PORTB &= ~BIT_CI;
+    PORTB = ((b >> 4) & 1) ? (PORTB | BIT_DI) : (PORTB & ~BIT_DI);
+    PORTB |=  BIT_CI;
+    PORTB &= ~BIT_CI;
+    PORTB = ((b >> 3) & 1) ? (PORTB | BIT_DI) : (PORTB & ~BIT_DI);
+    PORTB |=  BIT_CI;
+    PORTB &= ~BIT_CI;
+    PORTB = ((b >> 2) & 1) ? (PORTB | BIT_DI) : (PORTB & ~BIT_DI);
+    PORTB |=  BIT_CI;
+    PORTB &= ~BIT_CI;
+    PORTB = ((b >> 1) & 1) ? (PORTB | BIT_DI) : (PORTB & ~BIT_DI);
+    PORTB |=  BIT_CI;
+    PORTB &= ~BIT_CI;
+    PORTB = ((b >> 0) & 1) ? (PORTB | BIT_DI) : (PORTB & ~BIT_DI);
+    PORTB |=  BIT_CI;
+    PORTB &= ~BIT_CI;
 }
 
-void writeColors (rgb_color * colors, uint16_t count)
+void writeColors (rgb_color * colors, uint8_t count)
 {
     // set DI and CI to zero
-    init();
-    // 0x00000000
-    transfer(0);
-    transfer(0);
-    transfer(0);
-    transfer(0);
+    PORTB &= ~(BIT_DI | BIT_CI);
 
+    // start frame
+    // 0x00000000
+    transfer(0x00);
+    transfer(0x00);
+    transfer(0x00);
+    transfer(0x00);
+
+    // send colors
     for (int i = 0; i < count; i++)
     {
         transfer(BRIGHTNESS_BYTE);
-        transfer(color[i].blue);
-        transfer(color[i].green);
-        transfer(color[i].red);
+        transfer(colors[i].blue);
+        transfer(colors[i].green);
+        transfer(colors[i].red);
     }
 
-    if (count < 2)
+    // end frame
+    // needs at least n/2 extra pulse
+    PORTB &= ~BIT_DI; // send zeros
+    for (uint8_t i = 0; i < count; i+= 16)
     {
-        // call init() here to make sure we leave the data line driving low
-        init();
-    }
-    else
-    {
-        for (uint16_t i = 0; i < (count + 14)/16; i++)
-        {
-            transfer(0);
-        }
+        PORTB |=  BIT_CI;
+        PORTB &= ~BIT_CI;
     }
 }
 
