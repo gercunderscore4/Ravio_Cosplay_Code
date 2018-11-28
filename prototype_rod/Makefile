@@ -18,7 +18,7 @@ AVRDUDE = avrdude
 
 # Files
 EXT_C   = c
-EXT_C++ = cc
+EXT_C++ = cpp
 EXT_ASM = asm
 
 # ----- No changes should be necessary below this line -----
