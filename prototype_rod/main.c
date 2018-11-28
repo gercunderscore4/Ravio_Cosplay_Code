@@ -15,7 +15,7 @@
 
 
 /****************************************************************
- * APA102 
+ * APA102
  * Based on APA102 library for Arduino.
  ****************************************************************/
 
@@ -35,8 +35,6 @@
 typedef struct rgb_color
 {
     uint8_t red, green, blue;
-    rgb_color() {};
-    rgb_color(uint8_t r, uint8_t g, uint8_t b) : red(r), green(g), blue(b) {};
 } rgb_color;
 
 void init (void)
