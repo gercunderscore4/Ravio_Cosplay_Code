@@ -10,12 +10,10 @@ I'm working on electronics for various items, and the code for those will be sto
 I'll admit it, I'd keep this code private, except that I really like the convenience of storing it here.
 
 
-To Do
------
-Choose a licence.
+TODO
+----
 Code the prototype rod (all rods are similar in design and will be based off of it).
 Design and order custom PCB.
-Sew costume.
 
 
 Items
@@ -80,7 +78,3 @@ http://www.engbedded.com/fusecalc/
 http://ww1.microchip.com/downloads/en/DeviceDoc/ATmega48A-PA-88A-PA-168A-PA-328-P-DS-DS40002061A.pdf
 https://store.arduino.cc/usa/arduino-uno-rev3
 https://www.arduino.cc/reference/en/
-
-License
--------
-TODO
