@@ -18,6 +18,8 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include "APA102.h"
+#include "InterruptAudio.h"
+#include "AccelI2C.h"
 
 #define LED_COUNT 1
 
