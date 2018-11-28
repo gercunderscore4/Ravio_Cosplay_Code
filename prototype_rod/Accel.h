@@ -1,7 +1,12 @@
 /****************************************************************
- * I2C for communicating with an accelerometer on ATtiny85
+ * Accelerometer interface for ATtiny85
  ****************************************************************/
 
-#include "AccelI2C.h"
+#ifndef __ACCEL_H__
+#define __ACCEL_H__
 
-/* . . . */
+#include "I2C.h"
+
+/* ... */
+
+#endif // __ACCEL_H__

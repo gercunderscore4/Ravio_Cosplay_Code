@@ -5,7 +5,7 @@
 DEVICE     = attiny85
 CLOCK      = 8000000
 PROGRAMMER = -c usbtiny
-LIBRARIES  = APA102.o InterruptAudio.o AccelI2C.o
+LIBRARIES  = APA102.o InterruptAudio.o Accel.o I2C.o
 OBJECTS    = main.o
 OBJECTS   += $(LIBRARIES)
 # for ATTiny85

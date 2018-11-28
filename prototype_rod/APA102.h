@@ -22,11 +22,13 @@
 // therefore, optimize it out
 #define BRIGHTNESS_BYTE (0xE0 | BRIGHTNESS)
 
-#define BIT_DI (1 << LED_DATA_PORT)
-#define BIT_CI (1 << LED_CLOCK_PORT)
+#define BIT_DO (1 << LED_DATA_PORT)
+#define BIT_CO (1 << LED_CLOCK_PORT)
 
 // use "CYCLE_CLOCK;" to avoid bad-looking line endings
-#define CYCLE_CLOCK PORTB |=  BIT_CI; PORTB &= ~BIT_CI;
+#define CYCLE_CLOCK()\
+PORTB |=  BIT_CO;\
+PORTB &= ~BIT_CO;
 
 typedef struct rgb_color
 {
