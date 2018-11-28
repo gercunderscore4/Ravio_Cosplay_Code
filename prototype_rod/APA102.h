@@ -1,7 +1,7 @@
 /****************************************************************
  * APA102 on ATtiny85
- * 
- * Designed to handle 1 ~ 240 LEDs.
+ *
+ * Designed to handle up to 240 LEDs.
  * Based on APA102 library for Arduino.
  ****************************************************************/
 
@@ -33,7 +33,7 @@ typedef struct rgb_color
     uint8_t red, green, blue;
 } rgb_color;
 
-void APA102transfer (uint8_t b);
-void APA102WriteColors (rgb_color * colors, uint8_t count);
+void APA102Transfer (uint8_t b);
+void APA102WriteColors (rgb_color* colors, uint8_t count);
 
 #endif // __APA102_H__

@@ -1,13 +1,13 @@
 /****************************************************************
  * APA102 on ATtiny85
- * 
+ *
  * Designed to handle up to 240 LEDs.
  * Based on APA102 library for Arduino.
  ****************************************************************/
 
 #include "APA102.h"
 
-void APA102transfer (uint8_t b)
+void APA102Transfer (uint8_t b)
 {
     PORTB = (b & (1 << 7)) ? (PORTB | BIT_DI) : (PORTB & ~BIT_DI);
     CYCLE_CLOCK;
@@ -27,7 +27,7 @@ void APA102transfer (uint8_t b)
     CYCLE_CLOCK;
 }
 
-void APA102WriteColors (rgb_color * colors, uint8_t count)
+void APA102WriteColors (rgb_color* colors, uint8_t count)
 {
     // redundant after the first time, but should be quick
     // and I don't need to optimize THAT much
