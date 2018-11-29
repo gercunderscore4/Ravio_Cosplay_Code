@@ -13,6 +13,19 @@
  *     - Test with acceleraometer HW
  *     - Write interrupt-based audio output
  *     - Test with audio HW
+ *
+ *     ATtiny85
+ * PB5 -+----+- VCC
+ * PB3 -+O   +- PB2/SCL
+ * PB4 -+    +- PB1/OC0B/OC1A
+ * GND -+----+- PB0/SDA
+ * 
+ * PB0 : I2C (SDA)
+ * PB1 : PWM (audio)
+ * PB2 : I2c (SCL)
+ * PB3 : LEDs (CO)
+ * PB4 : NC
+ * PB5 : LEDs (DO)
  */
 
 #include <avr/io.h>
@@ -29,18 +42,10 @@
 
 int main (void)
 {
-    rgb_color leds[LED_COUNT] = {{0x00, 0x00, 0x00}};
+    rgb_color leds[LED_COUNT] = {{0xFF, 0xFF, 0xFF}};
 
-    // set PB3 to be output
-    DDRB = 0b00001000;
+    APA102WriteColors(leds, LED_COUNT);
     while (1) {
-        // set PB3 high
-        PORTB = 0b00001000;
-        _delay_ms(250);
-        // set PB3 low
-        PORTB = 0b00000000;
-        _delay_ms(250);
-        APA102WriteColors(leds, LED_COUNT);
     }
     return 1;
 }

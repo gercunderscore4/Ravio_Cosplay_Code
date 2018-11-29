@@ -12,7 +12,7 @@
 
 #define BRIGHTNESS 31
 #define LED_DATA_PORT  5
-#define LED_CLOCK_PORT 4
+#define LED_CLOCK_PORT 3
 
 /* LEAVE THE REST ALONE */
 
