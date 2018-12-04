@@ -9,6 +9,7 @@
 #define __I2C_H__
 
 #include <avr/io.h>
+#include <util/delay.h>
 
 // Port for the I2C
 #define I2C_DDR DDRB

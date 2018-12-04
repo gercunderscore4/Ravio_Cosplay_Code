@@ -7,6 +7,11 @@
 
 #include "I2C.h"
 
+inline void delay(double t)
+{
+    _delay_us(t);
+}
+
 void I2C_WriteBit (uint8_t c)
 {
     if (c)
