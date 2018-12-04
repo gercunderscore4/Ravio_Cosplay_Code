@@ -2,12 +2,13 @@
  * Accelerometer interface for ATtiny85
  ****************************************************************/
 
+#include "stdlib.h"
 #include "Accel.h"
 
 /*
  * estimate sqrt based on leading digit position
  * need to deal with values up to 3*0x80*80 = 49152 = 0xC000
- * 
+ *
  * python code to generate best guess:
  * from math import log2, ceil, sqrt
  * d = [(0,0,0)]
@@ -33,14 +34,13 @@ const uint8_t SQRT_BY_DIGIT[] = {  0,  //  0, sqrt(     0 * 1.5),
                                  157,  // 15, sqrt( 16384 * 1.5),
                                  222}; // 16, sqrt( 32768 * 1.5),
 
-void processAccelData (int16_t x, int16_t y, int16_t z, uint8_t* r, uint8_t* g, uint8_t* b, uint16_t* f)
-{
+void accelProcessData (int16_t x, int16_t y, int16_t z, uint8_t* r, uint8_t* g, uint8_t* b, uint16_t* f) {
     // max possibile are 0x7FFF and -0x8000
     // shrink to one byte, take absolute
     x = abs(x / 0x100);
     y = abs(y / 0x100);
     z = abs(z / 0x100);
-    
+
     // max is 3 * 0x80 * 0x80 = 0xC000
     uint32_t t = ((uint16_t) (x * x) + (y * y) + (z * z));
     // get leading digit
@@ -68,4 +68,22 @@ void processAccelData (int16_t x, int16_t y, int16_t z, uint8_t* r, uint8_t* g, 
         *g = (uint8_t) (((((uint16_t)y) << 8) - y) / m);
         *b = (uint8_t) (((((uint16_t)z) << 8) - z) / m);
     }
+}
+
+void accelInit (void) {
+    USI_TWI_Master_Initialise();
+}
+
+void accelRead (int16_t* x, int16_t* y, int16_t* z) {
+    uint8_t data[] = {0xA8, 0x00, 0x00, 0x00, 0x00, 0x00};
+    // read register 0xA8
+    USI_TWI_Start_Transceiver_With_Data(data, sizeof(data));
+    *x = (data[1]<<8) | data[0];
+    *y = (data[3]<<8) | data[2];
+    *z = (data[5]<<8) | data[4];
+}
+
+void accelUpdate (int16_t* x, int16_t* y, int16_t* z, uint8_t* r, uint8_t* g, uint8_t* b, uint16_t* f) {
+    accelRead(x,y,z);
+    accelProcessData(*x,*y,*z,r,g,b,f);
 }

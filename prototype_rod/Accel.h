@@ -7,10 +7,14 @@
 
 #include "USI_TWI_Master.h"
 
-/* ... */
-//void USI_TWI_Master_Initialise(void);
-//unsigned char USI_TWI_Start_Transceiver_With_Data_Stop(unsigned char *, unsigned char, unsigned char);
-//unsigned char USI_TWI_Start_Transceiver_With_Data(unsigned char *, unsigned char);
-//unsigned char USI_TWI_Get_State_Info(void);
+#define LIS2DH12_RANGE_2GA  0x00
+#define LIS2DH12_RANGE_4GA  0x10
+#define LIS2DH12_RANGE_8GA  0x20
+#define LIS2DH12_RANGE_16GA 0x40
+
+void accelInit (void);
+void accelProcessData (int16_t x, int16_t y, int16_t z, uint8_t* r, uint8_t* g, uint8_t* b, uint16_t* f);
+void accelRead (int16_t* x, int16_t* y, int16_t* z);
+void accelUpdate (int16_t* x, int16_t* y, int16_t* z, uint8_t* r, uint8_t* g, uint8_t* b, uint16_t* f);
 
 #endif // __ACCEL_H__

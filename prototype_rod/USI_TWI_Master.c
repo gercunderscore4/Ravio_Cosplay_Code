@@ -28,7 +28,6 @@
 ****************************************************************************/
 #include <avr/interrupt.h>
 #include <avr/io.h>
-#define F_CPU F_OSC
 #include <util/delay.h>
 #include "USI_TWI_Master.h"
 
