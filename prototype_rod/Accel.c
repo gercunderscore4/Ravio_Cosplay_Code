@@ -76,7 +76,37 @@ void accelInit (void) {
 
 void accelRead (int16_t* x, int16_t* y, int16_t* z) {
     uint8_t data[] = {0xA8, 0x00, 0x00, 0x00, 0x00, 0x00};
-    // read register 0xA8
+    // 0x31 read from accelerometer (SA0 = 0)
+    // 0xA8 read register 0xA8
+    
+    /*
+     * Transer when master is receiving multiple bytes of data from slave
+     *
+     * Master|ST|SAD+W|   |SUB|   |SR|SAD+R|   |    |MAK|    |MAK|    |NMAK|SP
+     * ------+--+-----+---+---+---+--+-----+---+----+---+----+---+----+----+--
+     * Slave |  |     |SAK|   |SAK|  |     |SAK|DATA|   |DATA|   |DATA|    |
+     *
+     * all bit signals MSB first
+     *
+     * ST    : start condition, SDA high->low while SCL high
+     * SAD+W : slave address (7-bits), write
+     * SAK   : slave ack
+     * SUB   : sub-address (MSB is auto-incrememt, 6 bit address, read/not-write)
+     * SAK   : slave ack
+     * SR    : repeated start condition, SDA high->low while SCL high
+     * SAD+R : slave address, read
+     * SAK   : slave ack
+     * DATA  : one byte, MSB first
+     * MAK   : master ack
+     * DATA  : one byte, MSB first
+     * MAK   : master ack
+     * DATA  : one byte, MSB first
+     * NMAK  : no master ack
+     * SP    : stop condition, SDA low->high while SCL high
+     *
+     * Well, this just got more complex.
+     * I'm tempted to just write more bit-banging.
+     */
     USI_TWI_Start_Transceiver_With_Data(data, sizeof(data));
     *x = (data[1]<<8) | data[0];
     *y = (data[3]<<8) | data[2];
