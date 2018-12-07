@@ -71,55 +71,19 @@ void accelProcessData (int16_t x, int16_t y, int16_t z, uint8_t* r, uint8_t* g, 
 }
 
 void accelInit (void) {
-    USI_TWI_Master_Initialise();
+    i2c_init();
 }
 
 void accelRead (int16_t* x, int16_t* y, int16_t* z) {
-    uint8_t data[] = {0xA8, 0x00, 0x00, 0x00, 0x00, 0x00};
+    uint8_t data[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
     // 0x31 read from accelerometer (SA0 = 0)
     // 0xA8 read register 0xA8
     
-    /*
-     * Transer when master is receiving multiple bytes of data from slave
-     *
-     * Master|ST|SAD+W|   |SUB|   |SR|SAD+R|   |    |MAK|    |MAK|    |NMAK|SP
-     * ------+--+-----+---+---+---+--+-----+---+----+---+----+---+----+----+--
-     * Slave |  |     |SAK|   |SAK|  |     |SAK|DATA|   |DATA|   |DATA|    |
-     *
-     * all bit signals MSB first
-     *
-     * ST    : start condition, SDA high->low while SCL high
-     * SAD+W : slave address (7-bits), write
-     * SAK   : slave ack
-     * SUB   : sub-address (MSB is auto-incrememt, 6 bit address, read/not-write)
-     * SAK   : slave ack
-     * SR    : repeated start condition, SDA high->low while SCL high
-     * SAD+R : slave address, read
-     * SAK   : slave ack
-     * DATA  : one byte, MSB first
-     * MAK   : master ack
-     * DATA  : one byte, MSB first
-     * MAK   : master ack
-     * DATA  : one byte, MSB first
-     * NMAK  : no master ack
-     * SP    : stop condition, SDA low->high while SCL high
-     *
-     * Well, this just got more complex.
-     * I'm tempted to just write more bit-banging.
-     */
-    data[0] = 0x30;
-    data[1] = 0xA8;
-    USI_TWI_Start_Transceiver_With_Data(data, 2);
-    data[0] = 0x31;
-    data[1] = 0x00;
-    data[2] = 0x00;
-    data[3] = 0x00;
-    data[4] = 0x00;
-    data[5] = 0x00;
-    USI_TWI_Start_Transceiver_With_Data_Stop(data, 2);
-    *x = (data[1]<<8) | data[0];
-    *y = (data[3]<<8) | data[2];
-    *z = (data[5]<<8) | data[4];
+    if (true == i2c_read(LIS2DH12_ADDR, LIS2DH12_OUT_X_L, data, 6)) {
+        *x = (data[1]<<8) | data[0];
+        *y = (data[3]<<8) | data[2];
+        *z = (data[5]<<8) | data[4];
+    }
 }
 
 void accelUpdate (int16_t* x, int16_t* y, int16_t* z, uint8_t* r, uint8_t* g, uint8_t* b, uint16_t* f) {

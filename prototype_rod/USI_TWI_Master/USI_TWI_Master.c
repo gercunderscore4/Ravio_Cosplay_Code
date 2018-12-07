@@ -24,15 +24,12 @@
 *                     success of the transmission.
 *
 ****************************************************************************/
-
-
 #if __GNUC__
 #include <avr/io.h>
 #else
 #include <inavr.h>
 #include <ioavr.h>
 #endif
-#ifdef USIDR
 #include "USI_TWI_Master.h"
 
 unsigned char USI_TWI_Master_Transfer(unsigned char);
@@ -269,4 +266,3 @@ unsigned char USI_TWI_Master_Stop(void)
 
 	return (TRUE);
 }
-#endif
