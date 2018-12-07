@@ -107,7 +107,16 @@ void accelRead (int16_t* x, int16_t* y, int16_t* z) {
      * Well, this just got more complex.
      * I'm tempted to just write more bit-banging.
      */
-    USI_TWI_Start_Transceiver_With_Data(data, sizeof(data));
+    data[0] = 0x30;
+    data[1] = 0xA8;
+    USI_TWI_Start_Transceiver_With_Data(data, 2);
+    data[0] = 0x31;
+    data[1] = 0x00;
+    data[2] = 0x00;
+    data[3] = 0x00;
+    data[4] = 0x00;
+    data[5] = 0x00;
+    USI_TWI_Start_Transceiver_With_Data_Stop(data, 2);
     *x = (data[1]<<8) | data[0];
     *y = (data[3]<<8) | data[2];
     *z = (data[5]<<8) | data[4];
