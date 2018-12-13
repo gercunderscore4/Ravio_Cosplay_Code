@@ -115,10 +115,12 @@ void accelRead (int16_t* x, int16_t* y, int16_t* z) {
     data[1] = LIS2DH12_OUT_X_L;
     USI_TWI_Start_Transceiver_With_Data_Stop(data, 2, false);
     data[0] = 0x31;
-    USI_TWI_Start_Transceiver_With_Data_Stop(data, 1, false);
-    data[0] = 0x00;
     data[1] = 0x00;
-    USI_TWI_Start_Transceiver_With_Data_Stop(data, sizeof(data), true);
+    data[2] = 0x00;
+    data[3] = 0x00;
+    data[4] = 0x00;
+    data[5] = 0x00;
+    USI_TWI_Start_Transceiver_With_Data_Stop(data, 6, true);
     
     //if (true == i2c_read(LIS2DH12_ADDR, LIS2DH12_OUT_X_L, data, 6)) {
 
