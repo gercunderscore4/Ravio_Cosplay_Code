@@ -78,7 +78,7 @@ void accelInit (void) {
 }
 
 void accelRead (int16_t* x, int16_t* y, int16_t* z) {
-    uint8_t data[] = {LIS2DH12_ADDR, LIS2DH12_OUT_X_L, 0x00, 0x00, 0x00, 0x00};
+    uint8_t data[] = {0x30, 0xA8, 0x31, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
     // 0x31 read from accelerometer (SA0 = 0)
     // 0xA8 read register 0xA8
 
@@ -111,16 +111,7 @@ void accelRead (int16_t* x, int16_t* y, int16_t* z) {
      * I'm tempted to just write more bit-banging.
      */
 
-    data[0] = LIS2DH12_ADDR;
-    data[1] = LIS2DH12_OUT_X_L;
-    USI_TWI_Start_Transceiver_With_Data_Stop(data, 2, false);
-    data[0] = 0x31;
-    data[1] = 0x00;
-    data[2] = 0x00;
-    data[3] = 0x00;
-    data[4] = 0x00;
-    data[5] = 0x00;
-    USI_TWI_Start_Transceiver_With_Data_Stop(data, 6, true);
+    USI_TWI_Start_Transceiver_With_Data_Stop(data, 9, false);
     
     //if (true == i2c_read(LIS2DH12_ADDR, LIS2DH12_OUT_X_L, data, 6)) {
 
