@@ -111,23 +111,23 @@ void accelRead (int16_t* x, int16_t* y, int16_t* z) {
      * I'm tempted to just write more bit-banging.
      */
 
-    //USI_TWI_Start_Transceiver_With_Data_Stop(data, 2, false);
+    USI_TWI_Start_Transceiver_With_Data_Stop(data, 2, false);
     
     //if (true == i2c_read(LIS2DH12_ADDR, LIS2DH12_OUT_X_L, data, 6)) {
 
-    data[0] = 0x30;
-    if (USI_TWI_Start_Transceiver_With_Data_Stop(&(data[0]), 1, false)) {
-        if (USI_TWI_Start_Transceiver_With_Data_Stop(&(data[1]), 1, false)) {
-            data[0] = 0x30;
-            if (USI_TWI_Start_Transceiver_With_Data_Stop(&(data[0]), 1, false)) {
-                if (USI_TWI_Start_Transceiver_With_Data_Stop(data, sizeof(data), true)) {
-                    *x = (data[1]<<8) | data[0];
-                    *y = (data[3]<<8) | data[2];
-                    *z = (data[5]<<8) | data[4];
-                }
-            }
-        }
-    }
+    //data[0] = 0x30;
+    //if (USI_TWI_Start_Transceiver_With_Data_Stop(&(data[0]), 1, false)) {
+    //    if (USI_TWI_Start_Transceiver_With_Data_Stop(&(data[1]), 1, false)) {
+    //        data[0] = 0x31;
+    //        if (USI_TWI_Start_Transceiver_With_Data_Stop(&(data[0]), 1, false)) {
+    //            if (USI_TWI_Start_Transceiver_With_Data_Stop(data, sizeof(data), true)) {
+    //                *x = (data[1]<<8) | data[0];
+    //                *y = (data[3]<<8) | data[2];
+    //                *z = (data[5]<<8) | data[4];
+    //            }
+    //        }
+    //    }
+    //}
 }
 
 void accelUpdate (int16_t* x, int16_t* y, int16_t* z, uint8_t* r, uint8_t* g, uint8_t* b, uint16_t* f) {
