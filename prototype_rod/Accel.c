@@ -5,6 +5,9 @@
 #include "stdlib.h"
 #include "Accel.h"
 
+#define I2C_SLAVE_WRITE(x) (x & 0xfe)
+#define I2C_SLAVE_READ(x) (x | 0x01)
+
 /*
  * estimate sqrt based on leading digit position
  * need to deal with values up to 3*0x80*80 = 49152 = 0xC000
