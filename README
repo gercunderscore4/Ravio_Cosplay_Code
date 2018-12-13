@@ -2,58 +2,83 @@
 |Ravio Cosplay Code|
 +------------------+
 
-
 Overview
 --------
 I'm working on a cosplay of Ravio, the shopkeeper from The Legend of Zelda: A Link Between Worlds, and I'm storing the code for it here.
 I'm working on electronics for various items, and the code for those will be stored here.
 I'll admit it, I'd keep this code private, except that I really like the convenience of storing it here.
 
+There is also a physical log book for this project. Not all notes will be stored here.
 
 TODO
 ----
-Code the prototype rod (all rods are similar in design and will be based off of it).
-Design and order custom PCB.
+- Get I2C working on T85.
+- Get PWM sound working on T85.
+- Get interrupt sound working on T85.
+- Design hat pattern using cardboard.
+- Update todo list.
 
-
-Items
------
-Bomb
-    - Lights
-    - Sounds
-    - Vibration
-    - Button
-Boomerang
-Bow
-Fire Rod
-    - Lights
-    - Sounds
-    - Accelerometer
-Hammer
-Hookshot
-Ice Rod
-    - Lights
-    - Sounds
-    - Accelerometer
-Sand Rod
-    - Lights
-    - Sounds
-    - Accelerometer
-Tornado Rod
-    - Lights
-    - Sounds
-    - Accelerometer
-
-
-Containers
-----------
-Bush
-Chest
-    - Lights
-    - Sounds
-    - Switches
-Pot
-
+#==============#============#============#========#
+| PART         | DIFFICULTY | IMPORTANCE | STATUS |
+#==============#============#============#========#
+| COSTUME                                         |
+#==============#============#============#========#
+| Hat          |     H      |     XH     |        |
++--------------+------------+------------+--------+
+| Robes        |     M      |     XH     |        |
++--------------+------------+------------+--------+
+| Belt         |     L      |     XH     |   30%  |
++--------------+------------+------------+--------+
+| Bag          |     M      |     M      |        |
++--------------+------------+------------+--------+
+| Wig          |     L      |     M      |        |
++--------------+------------+------------+--------+
+| Shoes        |     L      |     XL     |        |
++--------------+------------+------------+--------+
+| LED Shirt    |     H      |     XL     |        |
+#==============#============#============#========#
+| WEAPONS                                         |
+#==============#============#============#========#
+| Fire Rod     |     H      |     XH     |   7%   |
++--------------+------------+------------+--------+
+| Ice Rod      |     H      |     H      |        |
++--------------+------------+------------+--------+
+| Not-Bomb     |     H      |     H      |        |
++--------------+------------+------------+--------+
+| Tornado Rod  |     M      |     H      |        |
++--------------+------------+------------+--------+
+| Hammer       |     L      |     H      |        |
++--------------+------------+------------+--------+
+| Sand Rod     |     H      |     M      |        |
++--------------+------------+------------+--------+
+| Hookshot     |     H      |     M      |        |
++--------------+------------+------------+--------+
+| Boomerang    |     L      |     M      |        |
++--------------+------------+------------+--------+
+| Bow          |     L      |     L      |        |
+#==============#============#============#========#
+| SHOP                                            |
+#==============#============#============#========#
+| Chest        |     H      |     H      |   5%   |
++--------------+------------+------------+--------+
+| Rupees       |     L      |     M      |   1%   |
++--------------+------------+------------+--------+
+| Item Ears    |     M      |     L      |        |
++--------------+------------+------------+--------+
+| Rug          |     M      |     L      |        |
++--------------+------------+------------+--------+
+| Pot          |     M      |     L      |        |
++--------------+------------+------------+--------+
+| Bush         |     L      |     L      |        |
++--------------+------------+------------+--------+
+| Maps         |     L      |     L      |        |
++--------------+------------+------------+--------+
+| Sheerow      |     H      |     XL     |        |
++--------------+------------+------------+--------+
+| Sign         |     L      |     XL     |        |
++--------------+------------+------------+--------+
+| Book         |     M      |     XL     |        |
++--------------+------------+------------+--------+
 
 Microcontrols
 -------------

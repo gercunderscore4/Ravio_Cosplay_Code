@@ -75,14 +75,24 @@ void accelInit (void) {
 }
 
 void accelRead (int16_t* x, int16_t* y, int16_t* z) {
-    uint8_t data[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+    uint8_t data[] = {LIS2DH12_ADDR, LIS2DH12_OUT_X_L, 0x00, 0x00, 0x00, 0x00};
     // 0x31 read from accelerometer (SA0 = 0)
     // 0xA8 read register 0xA8
-    
-    if (true == i2c_read(LIS2DH12_ADDR, LIS2DH12_OUT_X_L, data, 6)) {
-        *x = (data[1]<<8) | data[0];
-        *y = (data[3]<<8) | data[2];
-        *z = (data[5]<<8) | data[4];
+
+    //if (true == i2c_read(LIS2DH12_ADDR, LIS2DH12_OUT_X_L, data, 6)) {
+
+	data[0] = I2C_SLAVE_WRITE(data[0]);
+	if (USI_TWI_Start_Transceiver_With_Data_Stop(&(data[0]), 1, false)) {
+		if (USI_TWI_Start_Transceiver_With_Data_Stop(&(data[1]), 1, false)) {
+			data[0] = I2C_SLAVE_READ(data[0]);
+			if (USI_TWI_Start_Transceiver_With_Data_Stop(&(data[0]), 1, false)) {
+				if (USI_TWI_Start_Transceiver_With_Data_Stop(data, sizeof(data), true)) {
+                    *x = (data[1]<<8) | data[0];
+                    *y = (data[3]<<8) | data[2];
+                    *z = (data[5]<<8) | data[4];
+                }
+            }
+        }
     }
 }
 
