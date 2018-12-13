@@ -74,7 +74,7 @@ void accelProcessData (int16_t x, int16_t y, int16_t z, uint8_t* r, uint8_t* g, 
 }
 
 void accelInit (void) {
-    i2c_init();
+    USI_TWI_Master_Initialise();
 }
 
 void accelRead (int16_t* x, int16_t* y, int16_t* z) {
