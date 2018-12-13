@@ -118,7 +118,7 @@ void accelRead (int16_t* x, int16_t* y, int16_t* z) {
     data[0] = 0x30;
     if (USI_TWI_Start_Transceiver_With_Data_Stop(&(data[0]), 1, false)) {
         if (USI_TWI_Start_Transceiver_With_Data_Stop(&(data[1]), 1, false)) {
-            data[0] = 0x30;
+            data[0] = 0x31;
             if (USI_TWI_Start_Transceiver_With_Data_Stop(&(data[0]), 1, false)) {
                 if (USI_TWI_Start_Transceiver_With_Data_Stop(data, sizeof(data), true)) {
                     *x = (data[1]<<8) | data[0];
