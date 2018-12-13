@@ -54,19 +54,22 @@ int main (void)
     while (1) {
         accelUpdate(&x, &y, &z, &r, &g, &b, &f);
         APA102WriteColors(leds, LED_COUNT);
-        if        (0 == state) {
-            if (0xFF == (++leds[0].green)) state = 1;
-        } else if (1 == state) {
-            if (0x00 == (--leds[0].red))   state = 2;
-        } else if (2 == state) {
-            if (0xFF == (++leds[0].blue))  state = 3;
-        } else if (3 == state) {
-            if (0x00 == (--leds[0].green)) state = 4;
-        } else if (4 == state) {
-            if (0xFF == (++leds[0].red))   state = 5;
-        } else if (5 == state) {
-            if (0x00 == (--leds[0].blue))  state = 0;
+        if (0 == (counter % 100)) {
+            if        (0 == state) {
+                if (0xFF == (++leds[0].green)) state = 1;
+            } else if (1 == state) {
+                if (0x00 == (--leds[0].red))   state = 2;
+            } else if (2 == state) {
+                if (0xFF == (++leds[0].blue))  state = 3;
+            } else if (3 == state) {
+                if (0x00 == (--leds[0].green)) state = 4;
+            } else if (4 == state) {
+                if (0xFF == (++leds[0].red))   state = 5;
+            } else if (5 == state) {
+                if (0x00 == (--leds[0].blue))  state = 0;
+            }
         }
+        counter++;
     }
     return 1;
 }
