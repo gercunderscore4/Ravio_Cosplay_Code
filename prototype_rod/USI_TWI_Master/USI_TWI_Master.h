@@ -33,7 +33,7 @@
 #endif
 //********** Defines **********//
 // Defines controlling timing limits
-#define TWI_FAST_MODE
+//#define TWI_FAST_MODE
 
 #define SYS_CLK 4000.0 // [kHz]
 
