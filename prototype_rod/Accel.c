@@ -78,7 +78,8 @@ void accelInit (void) {
 }
 
 void accelRead (int16_t* x, int16_t* y, int16_t* z) {
-    uint8_t data[] = {0x30, 0xA8, 0x31, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+    uint8_t data1[] = {0x30, 0xA8};
+    uint8_t data2[] = {0x31, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
     // 0x31 read from accelerometer (SA0 = 0)
     // 0xA8 read register 0xA8
 
@@ -109,10 +110,18 @@ void accelRead (int16_t* x, int16_t* y, int16_t* z) {
      *
      * Well, this just got more complex.
      * I'm tempted to just write more bit-banging.
+     *
+     *           A  A  A  A  A  A  A  R  K       S  S  S  S  S  S  S  R  K    A  A  A  A  A  A  A  R  K  
+     *     _           ____              _  __   _     _     _           _          ____           ____  
+     * SDA  \_________/    \____________/ \/  \_/ \___/ \___/ \_________/ \________/    \_________/    \_
+     *     ___                                                                                           
+     * SCL    \__|__|__|__|__|__|__|__|__|_______|__|__|__|__|__|__|__|__|____|__|__|__|__|__|__|__|__|__
+     *
      */
 
     USI_TWI_Master_Initialise();
-    USI_TWI_Start_Transceiver_With_Data_Stop(data, 9, true);
+    USI_TWI_Start_Transceiver_With_Data_Stop(data1, sizeof(data1), false);
+    USI_TWI_Start_Transceiver_With_Data_Stop(data2, sizeof(data2), true);
     
     //if (true == i2c_read(LIS2DH12_ADDR, LIS2DH12_OUT_X_L, data, 6)) {
 
