@@ -122,7 +122,7 @@ void accelRead (int16_t* x, int16_t* y, int16_t* z) {
     
     USI_TWI_Master_Initialise();
 
-    USI_TWI_Start_Transceiver_With_Data_Stop(data, sizeof(data), true);
+    USI_TWI_Start_Transceiver_With_Data_Stop(data, sizeof(data), false);
     USI_TWI_Start_Transceiver_With_Data_Stop(data1, sizeof(data1), false);
     USI_TWI_Start_Transceiver_With_Data_Stop(data2, sizeof(data2), true);
 
