@@ -67,6 +67,7 @@ void accelProcessData (int16_t x, int16_t y, int16_t z, uint8_t* r, uint8_t* g, 
         *g = 0x00;
         *b = 0x00;
     } else {
+        // use a filter to blend colors
         uint8_t tr = (uint8_t) (((((uint16_t)x) << 8) - x) / m);
         uint8_t tg = (uint8_t) (((((uint16_t)y) << 8) - y) / m);
         uint8_t tb = (uint8_t) (((((uint16_t)z) << 8) - z) / m);
