@@ -124,9 +124,9 @@ void accelRead (int16_t* x, int16_t* y, int16_t* z) {
     USI_TWI_Start_Transceiver_With_Data_Stop(data1, sizeof(data1), false);
     USI_TWI_Start_Transceiver_With_Data_Stop(data2, sizeof(data2), false);
 
-    *x = (data[2]<<8) | data[1];
-    *y = (data[4]<<8) | data[3];
-    *z = (data[6]<<8) | data[5];
+    *x = (data2[2]<<8) | data2[1];
+    *y = (data2[4]<<8) | data2[3];
+    *z = (data2[6]<<8) | data2[5];
 }
 
 void accelUpdate (int16_t* x, int16_t* y, int16_t* z, uint8_t* r, uint8_t* g, uint8_t* b, uint16_t* f) {
