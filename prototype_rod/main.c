@@ -34,7 +34,7 @@
 #include "InterruptAudio.h"
 #include "Accel.h"
 
-#define LED_COUNT 1
+#define LED_COUNT (8*8)
 
 /****************************************************************
  * MAIN
@@ -42,16 +42,62 @@
 
 int main (void)
 {
-    rgb_color leds[LED_COUNT] = {{0xFF, 0x00, 0x00}};
+    rgb_color leds[LED_COUNT];
+
+    uint8_t i = 0;
+    uint8_t bits = 0xFF;
+    while (bits) {
+        // black
+        leds[i].red   = 0x00;
+        leds[i].green = 0x00;
+        leds[i].blue  = 0x00;
+        i++;
+        // red
+        leds[i].red   = bits;
+        leds[i].green = 0x00;
+        leds[i].blue  = 0x00;
+        i++;
+        // green
+        leds[i].red   = 0x00;
+        leds[i].green = bits;
+        leds[i].blue  = 0x00;
+        i++;
+        // blue
+        leds[i].red   = 0x00;
+        leds[i].green = 0x00;
+        leds[i].blue  = bits;
+        i++;
+        // cyan
+        leds[i].red   = 0x00;
+        leds[i].green = bits;
+        leds[i].blue  = bits;
+        i++;
+        // magenta
+        leds[i].red   = bits;
+        leds[i].green = 0x00;
+        leds[i].blue  = bits;
+        i++;
+        // yellow
+        leds[i].red   = bits;
+        leds[i].green = bits;
+        leds[i].blue  = 0x00;
+        i++;
+        // white
+        leds[i].red   = bits;
+        leds[i].green = bits;
+        leds[i].blue  = bits;
+        i++;
+        bits>>=1;
+    }
 
     int16_t x,y,z;
     uint16_t f;
 
-    accelInit();
+    //accelInit();
 
     while (1) {
-        accelUpdate(&x, &y, &z, &(leds[0].red), &(leds[0].green), &(leds[0].blue), &f);
-        APA102WriteColors(leds, LED_COUNT);
+        //accelUpdate(&x, &y, &z, &(leds[0].red), &(leds[0].green), &(leds[0].blue), &f);
+        APA102WriteColors(leds, sizeof(leds));
     }
     return 1;
 }
