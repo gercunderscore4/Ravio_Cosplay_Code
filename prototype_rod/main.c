@@ -90,8 +90,8 @@ int main (void)
         bits>>=1;
     }
 
-    int16_t x,y,z;
-    uint16_t f;
+    //int16_t x,y,z;
+    //uint16_t f;
 
     //accelInit();
 
