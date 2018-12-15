@@ -43,10 +43,7 @@
 int main (void)
 {
     rgb_color leds[LED_COUNT] = {{0xFF, 0x00, 0x00}};
-    uint8_t state = 0;
-    uint8_t counter = 0;
 
-    uint8_t r,g,b;
     int16_t x,y,z;
     uint16_t f;
 

@@ -5,6 +5,8 @@
 #ifndef __ACCEL_H__
 #define __ACCEL_H__
 
+#include <stdint.h>
+#include <stdbool.h>
 #include "USI_TWI_Master/USI_TWI_Master.h"
 
 void accelInit (void);
