@@ -67,9 +67,12 @@ void accelProcessData (int16_t x, int16_t y, int16_t z, uint8_t* r, uint8_t* g, 
         *g = 0x00;
         *b = 0x00;
     } else {
-        *r = (uint8_t) (((((uint16_t)x) << 8) - x) / m);
-        *g = (uint8_t) (((((uint16_t)y) << 8) - y) / m);
-        *b = (uint8_t) (((((uint16_t)z) << 8) - z) / m);
+        uint8_t tr = (uint8_t) (((((uint16_t)x) << 8) - x) / m);
+        uint8_t tg = (uint8_t) (((((uint16_t)y) << 8) - y) / m);
+        uint8_t tb = (uint8_t) (((((uint16_t)z) << 8) - z) / m);
+        *r = (*r - (*r>>4)) + (tr>>4);
+        *g = (*g - (*g>>4)) + (tg>>4);
+        *b = (*b - (*b>>4)) + (tb>>4);
     }
 }
 
