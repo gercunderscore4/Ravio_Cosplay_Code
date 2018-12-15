@@ -5,15 +5,7 @@
 #ifndef __ACCEL_H__
 #define __ACCEL_H__
 
-#include "i2c.h"
-
-#define LIS2DH12_RANGE_2GA  0x00
-#define LIS2DH12_RANGE_4GA  0x10
-#define LIS2DH12_RANGE_8GA  0x20
-#define LIS2DH12_RANGE_16GA 0x40
-
-#define LIS2DH12_ADDR    0x30
-#define LIS2DH12_OUT_X_L 0x28
+#include "USI_TWI_Master/USI_TWI_Master.h"
 
 void accelInit (void);
 void accelProcessData (int16_t x, int16_t y, int16_t z, uint8_t* r, uint8_t* g, uint8_t* b, uint16_t* f);

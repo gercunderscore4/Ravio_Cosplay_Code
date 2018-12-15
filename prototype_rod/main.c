@@ -23,8 +23,8 @@
  * PB0 : I2C (SDA)
  * PB1 : PWM (audio)
  * PB2 : I2c (SCL)
- * PB3 : LEDs (CO)
- * PB4 : LEDs (DO)
+ * PB3 : LEDs (DO)
+ * PB4 : LEDs (CO)
  * PB5 : NC
  */
 
@@ -55,22 +55,6 @@ int main (void)
     while (1) {
         accelUpdate(&x, &y, &z, &(leds[0].red), &(leds[0].green), &(leds[0].blue), &f);
         APA102WriteColors(leds, LED_COUNT);
-        //if (0 == (counter % 100)) {
-        //    if        (0 == state) {
-        //        if (0xFF == (++leds[0].green)) state = 1;
-        //    } else if (1 == state) {
-        //        if (0x00 == (--leds[0].red))   state = 2;
-        //    } else if (2 == state) {
-        //        if (0xFF == (++leds[0].blue))  state = 3;
-        //    } else if (3 == state) {
-        //        if (0x00 == (--leds[0].green)) state = 4;
-        //    } else if (4 == state) {
-        //        if (0xFF == (++leds[0].red))   state = 5;
-        //    } else if (5 == state) {
-        //        if (0x00 == (--leds[0].blue))  state = 0;
-        //    }
-        //}
-        //counter++;
     }
     return 1;
 }

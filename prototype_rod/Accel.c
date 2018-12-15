@@ -75,6 +75,15 @@ void accelProcessData (int16_t x, int16_t y, int16_t z, uint8_t* r, uint8_t* g, 
 
 void accelInit (void) {
     uint8_t data[] = {0x30, 0xA0, 0x7F, 0x00, 0x00, 0x30, 0x00, 0x00};
+    // 0x30 write to accelerometer (SA0 = 0)
+    // 0xA0 write register 0x20
+    // 0x7F write CTRL_REG1 8-bit, 16 mg/digit, g = 9.81 N, low-power, enable xyz
+    // 0x00 write CTRL_REG2 
+    // 0x00 write CTRL_REG3 
+    // 0x30 write CTRL_REG4 +/- 2 g
+    // 0x00 write CTRL_REG5 
+    // 0x00 write CTRL_REG6 
+
     USI_TWI_Master_Initialise();
     USI_TWI_Start_Transceiver_With_Data_Stop(data, sizeof(data), false);
 }
@@ -82,45 +91,16 @@ void accelInit (void) {
 void accelRead (int16_t* x, int16_t* y, int16_t* z) {
     uint8_t data1[] = {0x30, 0xA8};
     uint8_t data2[] = {0x31, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+    // 0x30 write to accelerometer (SA0 = 0)
+    // 0xA8 read register 0x28
     // 0x31 read from accelerometer (SA0 = 0)
-    // 0xA8 read register 0xA8
+    // read OUT_X_L
+    // read OUT_X_H
+    // read OUT_Y_L
+    // read OUT_Y_H
+    // read OUT_Z_L
+    // read OUT_Z_H
 
-    /*
-     * Transer when master is receiving multiple bytes of data from slave
-     *
-     * Master|ST|SAD+W|   |SUB|   |SR|SAD+R|   |    |MAK|    |MAK|    |NMAK|SP
-     * ------+--+-----+---+---+---+--+-----+---+----+---+----+---+----+----+--
-     * Slave |  |     |SAK|   |SAK|  |     |SAK|DATA|   |DATA|   |DATA|    |
-     *
-     * all bit signals MSB first
-     *
-     * ST    : start condition, SDA high->low while SCL high
-     * SAD+W : slave address (7-bits), write
-     * SAK   : slave ack
-     * SUB   : sub-address (MSB is auto-incrememt, 6 bit address, read/not-write)
-     * SAK   : slave ack
-     * SR    : repeated start condition, SDA high->low while SCL high
-     * SAD+R : slave address, read
-     * SAK   : slave ack
-     * DATA  : one byte, MSB first
-     * MAK   : master ack
-     * DATA  : one byte, MSB first
-     * MAK   : master ack
-     * DATA  : one byte, MSB first
-     * NMAK  : no master ack
-     * SP    : stop condition, SDA low->high while SCL high
-     *
-     * Well, this just got more complex.
-     * I'm tempted to just write more bit-banging.
-     *
-     *           A  A  A  A  A  A  A  R  K       S  S  S  S  S  S  S  R  K    A  A  A  A  A  A  A  R  K  
-     *     _           ____              _  __   _     _     _           _          ____           ____  
-     * SDA  \_________/    \____________/ \/  \_/ \___/ \___/ \_________/ \________/    \_________/    \_
-     *     ___                                                                                           
-     * SCL    \__|__|__|__|__|__|__|__|__|_______|__|__|__|__|__|__|__|__|____|__|__|__|__|__|__|__|__|__
-     *
-     */
-    
     USI_TWI_Start_Transceiver_With_Data_Stop(data1, sizeof(data1), false);
     USI_TWI_Start_Transceiver_With_Data_Stop(data2, sizeof(data2), false);
 

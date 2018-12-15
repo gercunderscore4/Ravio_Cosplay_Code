@@ -2,6 +2,7 @@
 |Ravio Cosplay Code|
 +------------------+
 
+
 Overview
 --------
 I'm working on a cosplay of Ravio, the shopkeeper from The Legend of Zelda: A Link Between Worlds, and I'm storing the code for it here.
@@ -10,9 +11,9 @@ I'll admit it, I'd keep this code private, except that I really like the conveni
 
 There is also a physical log book for this project. Not all notes will be stored here.
 
+
 TODO
 ----
-- Get I2C working on T85.
 - Get PWM sound working on T85.
 - Get interrupt sound working on T85.
 - Design hat pattern using cardboard.
@@ -27,7 +28,7 @@ TODO
 +--------------+------------+------------+--------+
 | Robes        |     M      |     XH     |        |
 +--------------+------------+------------+--------+
-| Belt         |     L      |     XH     |   30%  |
+| Belt         |     L      |     XH     |  30%   |
 +--------------+------------+------------+--------+
 | Bag          |     M      |     M      |        |
 +--------------+------------+------------+--------+
@@ -39,7 +40,7 @@ TODO
 #==============#============#============#========#
 | WEAPONS                                         |
 #==============#============#============#========#
-| Fire Rod     |     H      |     XH     |   7%   |
+| Fire Rod     |     H      |     XH     |  10%   |
 +--------------+------------+------------+--------+
 | Ice Rod      |     H      |     H      |        |
 +--------------+------------+------------+--------+
@@ -80,6 +81,7 @@ TODO
 | Book         |     M      |     XL     |        |
 +--------------+------------+------------+--------+
 
+
 Microcontrols
 -------------
 ATtiny85 (T85)
@@ -94,6 +96,7 @@ http://www.technoblogy.com/show?QVN
 http://www.technoblogy.com/show?20W6
 http://www.technoblogy.com/show?25TN
 https://github.com/corna/watch/tree/master/software
+
 
 Datasheets and References
 -------------------------
