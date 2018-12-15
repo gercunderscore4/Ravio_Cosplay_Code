@@ -121,8 +121,8 @@ void accelRead (int16_t* x, int16_t* y, int16_t* z) {
      *
      */
     
-    USI_TWI_Start_Transceiver_With_Data(data1, sizeof(data1), false);
-    USI_TWI_Start_Transceiver_With_Data(data2, sizeof(data2), false);
+    USI_TWI_Start_Transceiver_With_Data_Stop(data1, sizeof(data1), false);
+    USI_TWI_Start_Transceiver_With_Data_Stop(data2, sizeof(data2), false);
 
     // read WHO_AM_I register
     //data1[0] = 0x30;
