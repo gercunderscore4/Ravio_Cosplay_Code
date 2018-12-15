@@ -124,29 +124,9 @@ void accelRead (int16_t* x, int16_t* y, int16_t* z) {
     USI_TWI_Start_Transceiver_With_Data_Stop(data1, sizeof(data1), false);
     USI_TWI_Start_Transceiver_With_Data_Stop(data2, sizeof(data2), false);
 
-    // read WHO_AM_I register
-    //data1[0] = 0x30;
-    //data1[1] = 0x8F;
-    //data2[0] = 0x31;
-    //data2[1] = 0x00;
-    //USI_TWI_Start_Transceiver_With_Data_Stop(data1, sizeof(data1), false);
-    //USI_TWI_Start_Transceiver_With_Data_Stop(data2, 2, true);
-    
-    //if (true == i2c_read(LIS2DH12_ADDR, LIS2DH12_OUT_X_L, data, 6)) {
-
-    //data[0] = 0x30;
-    //if (USI_TWI_Start_Transceiver_With_Data_Stop(&(data[0]), 1, false)) {
-    //    if (USI_TWI_Start_Transceiver_With_Data_Stop(&(data[1]), 1, false)) {
-    //        data[0] = 0x31;
-    //        if (USI_TWI_Start_Transceiver_With_Data_Stop(&(data[0]), 1, false)) {
-    //            if (USI_TWI_Start_Transceiver_With_Data_Stop(data, sizeof(data), true)) {
-    //                *x = (data[1]<<8) | data[0];
-    //                *y = (data[3]<<8) | data[2];
-    //                *z = (data[5]<<8) | data[4];
-    //            }
-    //        }
-    //    }
-    //}
+    *x = (data[2]<<8) | data[1];
+    *y = (data[4]<<8) | data[3];
+    *z = (data[6]<<8) | data[5];
 }
 
 void accelUpdate (int16_t* x, int16_t* y, int16_t* z, uint8_t* r, uint8_t* g, uint8_t* b, uint16_t* f) {
