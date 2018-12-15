@@ -76,7 +76,7 @@ void accelProcessData (int16_t x, int16_t y, int16_t z, uint8_t* r, uint8_t* g, 
 void accelInit (void) {
     uint8_t data[] = {0x30, 0xA0, 0x7F, 0x00, 0x00, 0x30, 0x00, 0x00};
     USI_TWI_Master_Initialise();
-    USI_TWI_Start_Transceiver_With_Data(data, sizeof(data));
+    USI_TWI_Start_Transceiver_With_Data_Stop(data, sizeof(data), false);
 }
 
 void accelRead (int16_t* x, int16_t* y, int16_t* z) {
@@ -121,8 +121,8 @@ void accelRead (int16_t* x, int16_t* y, int16_t* z) {
      *
      */
     
-    USI_TWI_Start_Transceiver_With_Data(data1, sizeof(data1));
-    USI_TWI_Start_Transceiver_With_Data(data2, sizeof(data2));
+    USI_TWI_Start_Transceiver_With_Data(data1, sizeof(data1), false);
+    USI_TWI_Start_Transceiver_With_Data(data2, sizeof(data2), false);
 
     // read WHO_AM_I register
     //data1[0] = 0x30;
