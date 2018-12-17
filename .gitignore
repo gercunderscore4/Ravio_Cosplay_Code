@@ -6,8 +6,3 @@
 *.ps1
 *.psm1
 *.psd1
-
-# Ignore and sh script called Sheerow.sh
-# (used for automation on Linux)
-sheerow.sh
-Sheerow.sh
