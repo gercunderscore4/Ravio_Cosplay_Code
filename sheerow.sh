@@ -13,6 +13,7 @@ make clean
 echo ''
 echo '################ UPDATE'
 git pull
+git log -n 1
 
 echo ''
 echo '################ MAKE'
