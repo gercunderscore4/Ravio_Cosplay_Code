@@ -40,9 +40,9 @@ void end_tone(void) {
 }
 
 void inc_whole (uint8_t* divindex, uint8_t* octave) {
-    if ((*divindex) < (DIVISIORS_SIZE - 2)) {
+    if ((*divindex) < (DIVISORS_SIZE - 2)) {
         (*divindex) += 2;
-    } else if ((*divindex) == (DIVISIORS_SIZE - 2)) {
+    } else if ((*divindex) == (DIVISORS_SIZE - 2)) {
         (*divindex) = 0;
         (*octave) += 1;
     } else {
@@ -52,7 +52,7 @@ void inc_whole (uint8_t* divindex, uint8_t* octave) {
 }
 
 void inc_half (uint8_t* divindex, uint8_t* octave) {
-    if ((*divindex) < (DIVISIORS_SIZE - 1)) {
+    if ((*divindex) < (DIVISORS_SIZE - 1)) {
         (*divindex) += 1;
     } else {
         (*divindex) = 0;

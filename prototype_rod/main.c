@@ -48,7 +48,8 @@ int main (void)
     rgb_color leds[LED_COUNT];
     APA102Init(leds, LED_COUNT);
 
-    int16_t x,y,z;
+    int16_t x, y, z;
+    uint8_t r, g, b;
     uint8_t d, divindex, octave;
     uint16_t f;
     accelInit();
@@ -56,16 +57,18 @@ int main (void)
     init_audio();
 
     while (1) {
-        accelUpdate(&x, &y, &z, &(leds[0].red), &(leds[0].green), &(leds[0].blue), &d, &f);
+        accelUpdate(&x, &y, &z, &r, &g, &b, &d, &f);
 
+        leds[0].red   = r >> 0;
+        leds[0].green = g >> 0;
+        leds[0].blue  = b >> 0;
         APA102WriteColors(leds, LED_COUNT);
 
-        if (d > DIVISIORS_SIZE) {
-            divindex = d - DIVISIORS_SIZE;
-            octave = 1;
-        } else {
-            divindex = d;
-            octave = 0;
+        divindex = d<<3;
+        octave = 0;
+        while (divindex >= DIVISORS_SIZE) {
+            divindex -= DIVISORS_SIZE;
+            octave += 1;
         }
         begin_tone(divindex, octave);
     }
