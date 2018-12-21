@@ -12,6 +12,7 @@
 /* LEAVE THE REST ALONE */
 
 #include <avr/io.h>
+#include <util/delay.h>
 
 #define BIT_AO (1 << AUDIO_PORT)
 

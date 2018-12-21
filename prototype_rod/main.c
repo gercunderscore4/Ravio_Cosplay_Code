@@ -67,6 +67,7 @@ int main (void)
             divindex = d;
             octave = 0;
         }
+        begin_tone(uint8_t divindex, uint8_t octave);
     }
     return 1;
 }
