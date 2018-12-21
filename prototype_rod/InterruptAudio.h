@@ -15,7 +15,7 @@
 #include <util/delay.h>
 
 #define BIT_AO (1 << AUDIO_PORT)
-#define DIVISIORS_SIZE (sizeof(DIVISORS)/sizeof(DIVISORS[0]))
+#define DIVISIORS_SIZE 12
 
 void init_audio (void);
 void tone (uint8_t divindex, uint8_t octave, uint8_t duration);
