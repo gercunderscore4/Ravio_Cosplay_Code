@@ -7,6 +7,18 @@
 
 #include "APA102.h"
 
+void APA102Init (rgb_color* colors, uint8_t count)
+{
+    DDRB |= BIT_DO | BIT_CO;
+
+    for (int i = 0; i < count; i++)
+    {
+        colors[i].blue  = 0x01;
+        colors[i].green = 0x01;
+        colors[i].red   = 0x01;
+    }
+}
+
 void APA102Transfer (uint8_t b)
 {
     PORTB = (b & (1 << 7)) ? (PORTB | BIT_DO) : (PORTB & ~BIT_DO);
@@ -29,10 +41,6 @@ void APA102Transfer (uint8_t b)
 
 void APA102WriteColors (rgb_color* colors, uint8_t count)
 {
-    // redundant after the first time, but should be quick
-    // and I don't need to optimize THAT much
-    DDRB |= BIT_DO | BIT_CO;
-
     // set DI and CI to zero
     PORTB &= ~(BIT_DO | BIT_CO);
 

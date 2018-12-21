@@ -37,7 +37,7 @@ const uint8_t SQRT_BY_DIGIT[] = {  0,  //  0, sqrt(     0 * 1.5),
                                  157,  // 15, sqrt( 16384 * 1.5),
                                  222}; // 16, sqrt( 32768 * 1.5),
 
-void accelProcessData (int16_t x, int16_t y, int16_t z, uint8_t* r, uint8_t* g, uint8_t* b, uint16_t* f) {
+void accelProcessData (int16_t x, int16_t y, int16_t z, uint8_t* r, uint8_t* g, uint8_t* b, uint8_t* d, uint16_t* f) {
     // max possibile are 0x7FFF and -0x8000
     // shrink to one byte, take absolute
     x = abs(x / 0x100);
@@ -47,14 +47,14 @@ void accelProcessData (int16_t x, int16_t y, int16_t z, uint8_t* r, uint8_t* g, 
     // max is 3 * 0x80 * 0x80 = 0xC000
     uint32_t t = ((uint16_t) (x * x) + (y * y) + (z * z));
     // get leading digit
-    uint8_t d = 0;
+    *d = 0;
     while (t > 0)
     {
         t >>= 1;
-        d++;
+        (*d)++;
     }
     // get estimated sqrt by digit
-    *f = (uint16_t) SQRT_BY_DIGIT[d];
+    *f = (uint16_t) SQRT_BY_DIGIT[*d];
 
     // normalize so that largest is 255
     // get max
