@@ -31,6 +31,8 @@ const uint8_t DIVISORS[] = {239,  // C
 
 void init_audio (void);
 void tone (uint8_t divindex, uint8_t octave, uint8_t duration);
+void begin_tone (uint8_t divindex, uint8_t octave);
+void end_tone(void);
 void inc_whole (uint8_t* divindex, uint8_t* octave);
 void inc_half (uint8_t* divindex, uint8_t* octave);
 void play_quad (uint8_t divindex, uint8_t octave);
