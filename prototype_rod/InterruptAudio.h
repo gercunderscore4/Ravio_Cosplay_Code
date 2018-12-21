@@ -15,19 +15,6 @@
 #include <util/delay.h>
 
 #define BIT_AO (1 << AUDIO_PORT)
-
-const uint8_t DIVISORS[] = {239,  // C
-                            225,  // C#
-                            213,  // D
-                            201,  // D#
-                            190,  // E
-                            179,  // F
-                            169,  // F#
-                            159,  // G
-                            150,  // G#
-                            142,  // A
-                            134,  // A#
-                            127}; // B
 #define DIVISIORS_SIZE (sizeof(DIVISORS)/sizeof(DIVISORS[0]))
 
 void init_audio (void);

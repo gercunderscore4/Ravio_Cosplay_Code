@@ -4,6 +4,19 @@
 
 #include "InterruptAudio.h"
 
+const uint8_t DIVISORS[] = {239,  // C
+                            225,  // C#
+                            213,  // D
+                            201,  // D#
+                            190,  // E
+                            179,  // F
+                            169,  // F#
+                            159,  // G
+                            150,  // G#
+                            142,  // A
+                            134,  // A#
+                            127}; // B
+
 void init_audio (void) {
     DDRB |= BIT_AO;
 }
