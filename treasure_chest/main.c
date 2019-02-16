@@ -2,24 +2,28 @@
 
    David Johnson-Davies - www.technoblogy.com - 16th March 2016
    ATtiny85 @ 16 MHz (internal PLL; 4.3 V BOD)
-   
+
    CC BY 4.0
-   Licensed under a Creative Commons Attribution 4.0 International license: 
+   Licensed under a Creative Commons Attribution 4.0 International license:
    http://creativecommons.org/licenses/by/4.0/
 */
 
-int Scale[] = { 
-  680,  721,  764,  809,  857,  908,  962, 1020, 1080, 1144, 1212, 1284, 
+#include <avr/io.h>
+#include <avr/pgmspace.h>
+#include <avr/interrupt.h>
+
+int Scale[] = {
+  680,  721,  764,  809,  857,  908,  962, 1020, 1080, 1144, 1212, 1284,
  1361, 1442, 1528, 1618, 1715, 1817, 1925, 2039, 2160, 2289, 2425, 2569,
  2722, 2884, 3055, 3237, 3429, 3633, 3849, 4078 };
- 
-const int Channels = 4;
+
+#define CHANNELS 4
 const int Tempo = 4;      // 4 = 4 beats per second
 const int Decay = 9;      // Length of note decay; max 10
 
-volatile unsigned int Acc[Channels];
-volatile unsigned int Freq[Channels];
-volatile unsigned int Amp[Channels];
+volatile unsigned int Acc[CHANNELS];
+volatile unsigned int Freq[CHANNELS];
+volatile unsigned int Amp[CHANNELS];
 
 // Play Happy Birthday
 
@@ -96,7 +100,7 @@ ISR(WDT_vect) {
     if ((Chord & 0x80000000) != 0) {
       Freq[Chan] = Scale[Note];
       Amp[Chan] = 1<<(Decay+5);
-      Chan = (Chan + 1) % Channels;
+      Chan = (Chan + 1) % CHANNELS;
     }
     Chord = Chord<<1;
   }
@@ -105,8 +109,8 @@ ISR(WDT_vect) {
 // Generate square waves on 4 channels
 ISR(TIMER0_COMPA_vect) {
   signed char Temp, Mask, Env, Note, Sum=0;
-  for (int c = 0; c < Channels; c++) {
-    Acc[c] = Acc[c] + Freq[c];  
+  for (int c = 0; c < CHANNELS; c++) {
+    Acc[c] = Acc[c] + Freq[c];
     Amp[c] = Amp[c] - (Amp[c] != 0);
     Temp = Acc[c] >> 8;
     Mask = Temp >> 7;
@@ -142,4 +146,3 @@ int main (void) {
 
   return 0;
 }
-
