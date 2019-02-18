@@ -33,24 +33,71 @@
 #include "APA102.h"
 #include "InterruptAudio.h"
 
-#define LED_COUNT 1
+#define LED_COUNT 65
+#define SPARKLE_COUNT ((LED_COUNT * 2) - 1)
+#define JIFFY_MS 25
+
+rgb_color sparkles[SPARKLE_COUNT];
+uint8_t sparkle_index = 0
+
+void init_sparkle (void) {
+    for (uint8_t i = 0; i < SPARKLE_COUNT; i++) {
+        if ((i % 16) < 8) {
+            sparkles[i] = i % 8;
+        } else {
+            sparkles[i] = 7 - (i % 8)
+        }
+    }
+}
+
+void sparkle (uint8_t jiffies) {
+    for (uint8_t i = 0; i < jiffies; i++) {
+        sparkle_index++;
+        sparkle_index %= LED_COUNT;
+        APA102WriteColors(&(sparkles[sparkle_index]), LED_COUNT);
+        _delay_ms(JIFFY_MS);
+    }
+}
+
+void stop_sparkle (void) {
+    APA102WriteBlack(LED_COUNT);
+}
+
+/*
+void item_song (void) {
+    uint8_t divindex = 4;
+    uint8_t octave = 4;
+    for (uint8_t i = 0; i < 4; i++) {
+        play_quad(divindex, octave, 2);
+        play_quad(divindex, octave, 2);
+        inc_half(&divindex, &octave);
+    }
+    for (uint8_t i = 0; i < 4; i++) {
+        play_quad(divindex, octave, 2);
+        inc_half(&divindex, &octave);
+    }
+    rest(8);
+    inc_whole(&divindex, &octave);
+    inc_whole(&divindex, &octave);
+    inc_whole(&divindex, &octave);
+    for (uint8_t i = 0; i < 3; i++) {
+        tone(divindex, octave, 4);
+        inc_half(&divindex, &octave);
+    }
+    tone(divindex, octave, 8);
+}
+*/
 
 int main (void)
 {
-    rgb_color leds[LED_COUNT];
-    APA102Init(leds, LED_COUNT);
-
+    init_sparkle();
     init_audio();
+    stop_sparkle();
 
     while (1) {
 
-        leds[0].red   = 0;
-        leds[0].green = 0;
-        leds[0].blue  = 0;
-        APA102WriteColors(leds, LED_COUNT);
-
+        sparkle(80);
         item_song();
-        rest(50);
     }
 
     return 1;
