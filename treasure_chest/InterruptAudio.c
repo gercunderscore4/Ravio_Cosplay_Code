@@ -21,6 +21,13 @@ void init_audio (void) {
     DDRB |= BIT_AO;
 }
 
+void rest (uint8_t duration_ds) {
+    TCCR1 = TCCR1_BITS;
+    for (uint8_t i = 0; i < duration_ds; i++) {
+        _delay_ms(100);
+    }
+}
+
 void tone (uint8_t divindex, uint8_t octave, uint8_t duration_ds) {
     TCCR1 = TCCR1_BITS | (11-octave);
     OCR1C = DIVISORS[divindex]-1;
@@ -71,27 +78,24 @@ void play_quad (uint8_t divindex, uint8_t octave, uint8_t duration_ds) {
 }
 
 void item_song (void) {
-    //uint8_t divindex = 4;
-    //uint8_t octave = 4;
-    //for (uint8_t i = 0; i < 4; i++) {
-    //    play_quad(divindex, octave, 15);
-    //    play_quad(divindex, octave, 15);
-    //    inc_half(&divindex, &octave);
-    //}
-    //for (uint8_t i = 0; i < 4; i++) {
-    //    play_quad(divindex, octave, 15);
-    //    inc_half(&divindex, &octave);
-    //}
-    //tone(0, 0, 60);
-    //inc_whole(&divindex, &octave);
-    //inc_whole(&divindex, &octave);
-    //inc_whole(&divindex, &octave);
-    //for (uint8_t i = 0; i < 3; i++) {
-    //    tone(divindex, octave, 30);
-    //    inc_half(&divindex, &octave);
-    //}
-    //tone(divindex, octave, 60);
-    //tone(0, 0, 100);
-    tone(4, 4, 50);
-    tone(0, 0, 10);
+    uint8_t divindex = 4;
+    uint8_t octave = 4;
+    for (uint8_t i = 0; i < 4; i++) {
+        play_quad(divindex, octave, 2);
+        play_quad(divindex, octave, 2);
+        inc_half(&divindex, &octave);
+    }
+    for (uint8_t i = 0; i < 4; i++) {
+        play_quad(divindex, octave, 2);
+        inc_half(&divindex, &octave);
+    }
+    rest(8);
+    inc_whole(&divindex, &octave);
+    inc_whole(&divindex, &octave);
+    inc_whole(&divindex, &octave);
+    for (uint8_t i = 0; i < 3; i++) {
+        tone(divindex, octave, 4);
+        inc_half(&divindex, &octave);
+    }
+    tone(divindex, octave, 8);
 }

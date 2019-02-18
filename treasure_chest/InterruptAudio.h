@@ -19,6 +19,7 @@
 #define TCCR1_BITS (1 << CTC1) | (1 << COM1A0)
 
 void init_audio (void);
+void rest (uint8_t duration_ds);
 void tone (uint8_t divindex, uint8_t octave, uint8_t duration_ds);
 void begin_tone (uint8_t divindex, uint8_t octave);
 void end_tone(void);

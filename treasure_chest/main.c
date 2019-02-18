@@ -50,6 +50,7 @@ int main (void)
         APA102WriteColors(leds, LED_COUNT);
 
         item_song();
+        rest(50);
     }
 
     return 1;
