@@ -38,15 +38,21 @@
 #define JIFFY_MS 25
 
 rgb_color sparkles[SPARKLE_COUNT];
-uint8_t sparkle_index = 0
+uint8_t sparkle_index = 0;
 
 void init_sparkle (void) {
+    APA102Init();
+
+    uint8_t temp = 0;
     for (uint8_t i = 0; i < SPARKLE_COUNT; i++) {
-        if ((i % 16) < 8) {
-            sparkles[i] = i % 8;
+        if ((i % 14) < 7) {
+            temp = (0x01 << (i % 7));
         } else {
-            sparkles[i] = 7 - (i % 8)
+            temp = (0x80 >> (i % 7));
         }
+        sparkles[i].red   = temp;
+        sparkles[i].green = temp;
+        sparkles[i].blue  = 0x00;
     }
 }
 

@@ -38,5 +38,6 @@ typedef struct rgb_color
 void APA102Init (void);
 void APA102Transfer (uint8_t b);
 void APA102WriteColors (rgb_color* colors, uint8_t count);
+void APA102WriteBlack (uint8_t count);
 
 #endif // __APA102_H__
