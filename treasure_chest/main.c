@@ -23,9 +23,9 @@
  * PB5 : NC
  *
  * NC  -+----+- VCC
- * DO  -+O   +- SCL
+ * DO  -+O   +- NC
  * CO  -+    +- PWM
- * GND -+----+- SDA
+ * GND -+----+- NC
  */
 
 #include <avr/io.h>
@@ -42,12 +42,13 @@ int main (void)
 
     while (1) {
 
-        leds[0].red   = r >> 0;
-        leds[0].green = g >> 0;
-        leds[0].blue  = b >> 0;
+        leds[0].red   = 0;
+        leds[0].green = 0;
+        leds[0].blue  = 0;
         APA102WriteColors(leds, LED_COUNT);
-        
-        
+
+        item_song();
     }
+
     return 1;
 }
