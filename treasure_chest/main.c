@@ -33,6 +33,8 @@
 #include "APA102.h"
 #include "InterruptAudio.h"
 
+#define LED_COUNT 1
+
 int main (void)
 {
     rgb_color leds[LED_COUNT];

@@ -8,11 +8,11 @@ void init_audio (void) {
     DDRB |= BIT_AO;
 }
 
-void tone (uint8_t divindex, uint8_t octave, uint8_t duration_cs) {
+void tone (uint8_t divindex, uint8_t octave, uint8_t duration_ds) {
     TCCR1 = TCCR1_BITS | (11-octave);
     OCR1C = DIVISORS[divindex]-1;
-    for (uint8_t i = 0; i < duration_cs; i++) {
-        _delay_ms(10);
+    for (uint8_t i = 0; i < duration_ds; i++) {
+        _delay_ms(100);
     }
     TCCR1 = TCCR1_BITS;
 }
@@ -79,6 +79,6 @@ void item_song (void) {
     //}
     //tone(divindex, octave, 60);
     //tone(0, 0, 100);
-    tone(divindex, octave, 500);
-    tone(0, 0, 100);
+    tone(divindex, octave, 50);
+    tone(0, 0, 10);
 }
