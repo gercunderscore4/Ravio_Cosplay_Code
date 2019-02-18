@@ -36,6 +36,7 @@
 #define LED_COUNT 65
 #define SPARKLE_COUNT ((LED_COUNT * 2) - 1)
 #define JIFFY_MS 25
+#define BEAT_IN_JIFFIES 10
 
 rgb_color sparkles[SPARKLE_COUNT];
 uint8_t sparkle_index = 0;
@@ -69,30 +70,59 @@ void stop_sparkle (void) {
     APA102WriteBlack(LED_COUNT);
 }
 
-/*
-void item_song (void) {
-    uint8_t divindex = 4;
-    uint8_t octave = 4;
-    for (uint8_t i = 0; i < 4; i++) {
-        play_quad(divindex, octave, 2);
-        play_quad(divindex, octave, 2);
-        inc_half(&divindex, &octave);
-    }
-    for (uint8_t i = 0; i < 4; i++) {
-        play_quad(divindex, octave, 2);
-        inc_half(&divindex, &octave);
-    }
-    rest(8);
-    inc_whole(&divindex, &octave);
-    inc_whole(&divindex, &octave);
-    inc_whole(&divindex, &octave);
-    for (uint8_t i = 0; i < 3; i++) {
-        tone(divindex, octave, 4);
-        inc_half(&divindex, &octave);
-    }
-    tone(divindex, octave, 8);
+void play_sparkle_tone (uint8_t divindex, uint8_t octave, uint8_t jiffies)
+    begin_tone (divindex, octave);
+    sparkle(jiffies);
+    end_tone();
 }
-*/
+
+void play_quad (uint8_t divindex, uint8_t octave) {
+    play_sparkle_tone(divindex, octave, BEAT_IN_JIFFIES);
+    inc_whole(&divindex, &octave);
+    play_sparkle_tone(divindex, octave, BEAT_IN_JIFFIES);
+    inc_whole(&divindex, &octave);
+    play_sparkle_tone(divindex, octave, BEAT_IN_JIFFIES);
+    inc_whole(&divindex, &octave);
+    play_sparkle_tone(divindex, octave, BEAT_IN_JIFFIES);
+}
+
+void play_section_0 (uint8_t divindex, uint8_t octave) {
+    (*divindex) = 4;
+    (*octave) = 4;
+}
+
+void play_section_1 (uint8_t* divindex, uint8_t* octave) {
+    play_quad((*divindex), (*octave), 2);
+    play_quad((*divindex), (*octave), 2);
+    inc_half(divindex, octave);
+}
+
+void play_section_2 (uint8_t* divindex, uint8_t* octave) {
+    play_quad((*divindex), (*octave), 2);
+    inc_half(divindex, octave);
+}
+
+void play_section_3 (uint8_t* divindex, uint8_t* octave) {
+    sparkle(BEAT_IN_JIFFIES * 4);
+}
+
+void play_section_3 (uint8_t* divindex, uint8_t* octave) {
+    sparkle(BEAT_IN_JIFFIES * 4);
+}
+
+void play_section_4 (uint8_t* divindex, uint8_t* octave) {
+    inc_whole(divindex, octave);
+    inc_whole(divindex, octave);
+    inc_whole(divindex, octave);
+
+    play_sparkle_tone((*divindex), (*octave), BEAT_IN_JIFFIES * 2);
+    inc_half(divindex, octave);
+    play_sparkle_tone((*divindex), (*octave), BEAT_IN_JIFFIES * 2);
+    inc_half(divindex, octave);
+    play_sparkle_tone((*divindex), (*octave), BEAT_IN_JIFFIES * 2);
+    inc_half(divindex, octave);
+    play_sparkle_tone((*divindex), (*octave), BEAT_IN_JIFFIES * 4);
+}
 
 int main (void)
 {
@@ -103,7 +133,13 @@ int main (void)
     while (1) {
 
         sparkle(80);
-        item_song();
+        uint8_t divindex = 4;
+        uint8_t octave   = 4;
+        play_section_0(&divindex, &octave);
+        play_section_1(&divindex, &octave);
+        play_section_2(&divindex, &octave);
+        play_section_3(&divindex, &octave);
+        play_section_4(&divindex, &octave);
     }
 
     return 1;
