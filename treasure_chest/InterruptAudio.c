@@ -47,14 +47,14 @@ void inc_half (uint8_t* divindex, uint8_t* octave) {
     }
 }
 
-void play_quad (uint8_t divindex, uint8_t octave, uint8_t duration_cs) {
-    tone(divindex, octave, duration_cs);
+void play_quad (uint8_t divindex, uint8_t octave, uint8_t duration_ds) {
+    tone(divindex, octave, duration_ds);
     inc_whole(&divindex, &octave);
-    tone(divindex, octave, duration_cs);
+    tone(divindex, octave, duration_ds);
     inc_whole(&divindex, &octave);
-    tone(divindex, octave, duration_cs);
+    tone(divindex, octave, duration_ds);
     inc_whole(&divindex, &octave);
-    tone(divindex, octave, duration_cs);
+    tone(divindex, octave, duration_ds);
 }
 
 void item_song (void) {
@@ -79,6 +79,6 @@ void item_song (void) {
     //}
     //tone(divindex, octave, 60);
     //tone(0, 0, 100);
-    tone(divindex, octave, 50);
+    tone(4, 4, 50);
     tone(0, 0, 10);
 }
