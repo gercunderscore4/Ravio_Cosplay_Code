@@ -70,13 +70,13 @@ void stop_sparkle (void) {
     APA102WriteBlack(LED_COUNT);
 }
 
-void play_sparkle_tone (uint8_t divindex, uint8_t octave, uint8_t jiffies)
+void play_sparkle_tone (uint8_t divindex, uint8_t octave, uint8_t jiffies) {
     begin_tone (divindex, octave);
     sparkle(jiffies);
     end_tone();
 }
 
-void play_quad (uint8_t divindex, uint8_t octave) {
+void play_sparkle_quad (uint8_t divindex, uint8_t octave) {
     play_sparkle_tone(divindex, octave, BEAT_IN_JIFFIES);
     inc_whole(&divindex, &octave);
     play_sparkle_tone(divindex, octave, BEAT_IN_JIFFIES);
@@ -86,24 +86,20 @@ void play_quad (uint8_t divindex, uint8_t octave) {
     play_sparkle_tone(divindex, octave, BEAT_IN_JIFFIES);
 }
 
-void play_section_0 (uint8_t divindex, uint8_t octave) {
+void play_section_0 (uint8_t* divindex, uint8_t* octave) {
     (*divindex) = 4;
     (*octave) = 4;
 }
 
 void play_section_1 (uint8_t* divindex, uint8_t* octave) {
-    play_quad((*divindex), (*octave), 2);
-    play_quad((*divindex), (*octave), 2);
+    play_sparkle_quad((*divindex), (*octave));
+    play_sparkle_quad((*divindex), (*octave));
     inc_half(divindex, octave);
 }
 
 void play_section_2 (uint8_t* divindex, uint8_t* octave) {
-    play_quad((*divindex), (*octave), 2);
+    play_sparkle_quad((*divindex), (*octave));
     inc_half(divindex, octave);
-}
-
-void play_section_3 (uint8_t* divindex, uint8_t* octave) {
-    sparkle(BEAT_IN_JIFFIES * 4);
 }
 
 void play_section_3 (uint8_t* divindex, uint8_t* octave) {
@@ -137,6 +133,12 @@ int main (void)
         uint8_t octave   = 4;
         play_section_0(&divindex, &octave);
         play_section_1(&divindex, &octave);
+        play_section_1(&divindex, &octave);
+        play_section_1(&divindex, &octave);
+        play_section_1(&divindex, &octave);
+        play_section_2(&divindex, &octave);
+        play_section_2(&divindex, &octave);
+        play_section_2(&divindex, &octave);
         play_section_2(&divindex, &octave);
         play_section_3(&divindex, &octave);
         play_section_4(&divindex, &octave);
