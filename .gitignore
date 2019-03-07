@@ -1,8 +1,8 @@
 # Untracked Files
 #----------------
 
-# Ignore all PowerShell scripts
-# (used for automation from Windows)
+# Ignore all Windows scripts
+*.bat
 *.ps1
 *.psm1
 *.psd1
