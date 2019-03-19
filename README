@@ -14,8 +14,25 @@ There is also a physical log book for this project. Not all notes will be stored
 
 TODO
 ----
-- Get PWM sound working on T85.
-- Update todo list.
+- Code
+    PWM sound on ATtiny
+    Solendoid for motor
+    Accelerometer
+- Design
+    Hookshot
+    accelerometer circuit
+    stall detection circuit
+- Program
+    Fire Rod (template for Ice, Sand)
+    Not-Bomb
+- Buy
+    boots
+    lasercut chest
+    lasercut hookshot
+    thin EVA foam (for chest)
+    anti-static foam
+    transparent plastic shapes
+
 
 #==============#============#============#========#
 | PART         | DIFFICULTY | IMPORTANCE | STATUS |
@@ -32,7 +49,7 @@ TODO
 +--------------+------------+------------+--------+
 | Wig          |     L      |     M      |   20%  |
 +--------------+------------+------------+--------+
-| Ears         |     L      |     M      |        |
+| Ears         |     L      |     M      |  100%  |
 +--------------+------------+------------+--------+
 | Shoes        |     L      |     XL     |        |
 +--------------+------------+------------+--------+
@@ -52,7 +69,7 @@ TODO
 +--------------+------------+------------+--------+
 | Sand Rod     |     H      |     M      |   50%  |
 +--------------+------------+------------+--------+
-| Hookshot     |     H      |     M      |        |
+| Hookshot     |     H      |     M      |   15%  |
 +--------------+------------+------------+--------+
 | Boomerang    |     L      |     M      |        |
 +--------------+------------+------------+--------+
@@ -62,7 +79,7 @@ TODO
 #==============#============#============#========#
 | Chest        |     H      |     H      |   40%  |
 +--------------+------------+------------+--------+
-| Rupees       |     L      |     M      |   95%  |
+| Rupees       |     L      |     M      |  100%  |
 +--------------+------------+------------+--------+
 | Item Ears    |     M      |     L      |        |
 +--------------+------------+------------+--------+
@@ -107,3 +124,8 @@ http://www.engbedded.com/fusecalc/
 http://ww1.microchip.com/downloads/en/DeviceDoc/ATmega48A-PA-88A-PA-168A-PA-328-P-DS-DS40002061A.pdf
 https://store.arduino.cc/usa/arduino-uno-rev3
 https://www.arduino.cc/reference/en/
+
+Misc
+----
+http://sox.sourceforge.net/soxformat.html 
+
