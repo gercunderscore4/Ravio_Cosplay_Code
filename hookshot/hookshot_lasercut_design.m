@@ -1,4 +1,5 @@
 % draw chain for hookshot
+% Modelled on The Legend of Zelda: A Link Between Worlds
 clear;
 clc;
 more off;
@@ -149,23 +150,45 @@ T = [T;
 
 % stabilization lines
 H = [];
+% bar connectors going forward
 for ii = 1:count
     fact = ii * 2 - 1;
     thisline = w*[fact*sind(thetatophi), cosd(thetatophi)];
-    if thisline(end,1) >= max(M(:,1))
-        break
+    if max(thisline(:,1)) >= max(M(:,1))
+        ct = hw/2;
+    else
+        ct = bw/2;
     end
+    thiscontour = add_thickness(thisline, ct);
     
-    H = [
-         H; 
-         thisline;
+    H = [H;
+         thiscontour;
          NaN, NaN;
          ];
+    
+    if max(thisline(:,1)) >= max(M(:,1))
+        break
+    end
 end
+% bar connectors going back
+thisline = w*[-sind(thetatophi), cosd(thetatophi)];
+thiscontour = add_thickness(thisline, hw/2);
 H = [H;
+     thiscontour;
+     ];
+% copy and reflect all stabilizers so far
+H = [H;
+     NaN, NaN;
      flipud([H(:,1), -H(:,2)]);
      ];
-
+% center line
+thisline = [0, 0; rhi*2*count, 0];
+thiscontour = add_thickness(thisline, hw/2);
+H = [H;
+     NaN, NaN;
+     thiscontour;
+     ];
+ 
 P_stable = [
             M;
             NaN,NaN;
@@ -232,6 +255,7 @@ for jj = 1:length(angles)
         plot(w + NP(:,1), delta_y + +NP(:,2), 'r');
         plot(w + NP(:,1), delta_y + -NP(:,2), 'b');
     end
+    % end bars
     w = 2*(count)*abs(delta_x);
     plot(w + NE(:,1), delta_y +  NE(:,2), 'r');
     plot(w + NE(:,1), delta_y + -NE(:,2), 'b');
@@ -242,13 +266,14 @@ for jj = 1:length(angles)
     % handle
     plot(delta_x + P_handle(:,1), delta_y + P_handle(:,2), 'g');
     
+    % hook
+    plot(w + P_hook(:,1), delta_y + P_hook(:,2), 'g');
+    
     % fixed origin point
     %plot(0,delta_y,'g*');
-    
-    plot(w + P_hook(:,1), delta_y + P_hook(:,2), 'g');
 end
 axis('equal');
 axis('off');
-hold off
+hold off;
 saveas(1, 'lasercut_hookshot.svg')
 

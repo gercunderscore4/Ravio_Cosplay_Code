@@ -1,7 +1,7 @@
 % draw chain for hookshot
-clear
-clc
-more off
+clear;
+clc;
+more off;
 
 % Hey! Look! A Link!
 %    __________
@@ -120,8 +120,8 @@ H = [H;
      ];
 
 fig = figure(1);
-clf
-hold on
+clf;
+hold on;
 angles = linspace(0,55,5);
 for jj = 1:length(angles)
     phi = angles(jj);
@@ -151,8 +151,5 @@ plot([0,0],[0,(1.5*length(angles)+0.25)]-1);
 %plot((rho*3-bt)*[sa;ca],(rho-bt)*[-ca;sa]+3);
 axis('equal');
 axis('off');
-saveas(fig, 'nice_hook.eps');
-hold off
-
-
-
+hold off;
+saveas(fig, 'nice_hook.svg');
