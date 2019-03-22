@@ -1,5 +1,29 @@
-% draw chain for hookshot
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% HOOKSHOT LASER-CUT DESIGN
 % Modelled on The Legend of Zelda: A Link Between Worlds
+
+% This hookshot has diamond-shaped sections.
+% The actual hook will be made of fabric and sewn to the hook piece provided here.
+% The bolts need to be sized and added to the design in advance.
+% The stabilizer requires that certain bolts be longer (reach through the
+% tracks).
+% There will be multiple layers of stabilizer, the first lets the heads of
+% untracked bolts flow freely.
+% The second layer has tracks for the tracked bolts (some my have spacers).
+% Then another layer to help protect the heads.
+% The laser-cut matieral needs to be sized to the bolt/head width.
+% Either get thicker material or double-up certain layers.
+
+% TODO:
+%   - Figure out how to make the handle slide smoothly.
+%   - Finish the first stabilizer.
+%   - Design the second stabilizer.
+%   - Determine thickness.
+%   - Design the covers.
+%   - Set exterior sizes to help sand into a cylinder.
+%   - Edit SVG manually to finess edges.
+%   - Order cut.
+
 clear;
 clc;
 more off;
@@ -11,11 +35,11 @@ more off;
 cc = 50;
 
 bar_length = 10; % length of each individual bar
-count = 8;  % number of bar pairs
+count = 7;  % number of bar pairs
 theta = 12; % angle the bars make with the horizontal when fully extended, in deg
 
-hw = 2.54/2;   % head/nut width for bolt
-sw = 2.54/3.7; % body     width for bolt
+hw = 2.54*0.4375;   % head/nut width for bolt
+sw = 2.54/3; % body     width for bolt
 bw = 2.54/4;   % spacer   width for bolt
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -172,7 +196,7 @@ for ii = 1:count
 end
 % bar connectors going back
 thisline = w*[-sind(thetatophi), cosd(thetatophi)];
-thiscontour = add_thickness(thisline, hw/2);
+thiscontour = add_thickness(thisline, sw/2);
 H = [H;
      thiscontour;
      ];
@@ -201,14 +225,13 @@ P_stable = [
 % HOOK
 
 % need this to squeeze between the scissoring bolts
-bolt_sep = 2*t*cosd(theta) - bw * 2;
+bolt_sep = rhi - bw/2;
 
 % need to reach back with an open slot 
 % to use other bolts for stabilization
 back_reach = 2*w*cosd(theta) + bw / 2;
 
 T = [
-     ([+sa, -ca]*bw/2 + [-bw*3/2, 0]);
      ([+ca, +sa]*bw/2 + [-bw*3/2, 0]);
      -back_reach, bw/2;
      -back_reach, bolt_sep;
@@ -224,6 +247,16 @@ P_hook = [T;
           NaN,NaN;
           U*bw/2;
          ];
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PRINT
+
+fprintf('bar (pair) count = %d\n', count)
+fprintf('bar dimensions = %5.2f x %5.2f\n', 2*w, 2*t)
+fprintf('angle = %5.1f\n', theta)
+fprintf('retracted_length = %5.2f\n', 2*rhi*count)
+fprintf('extended_length  = %5.2f\n', 2*rho*count)
+fprintf('ratio = %5.2f\n', rho/rhi)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % PLOT AND SAVE
@@ -270,7 +303,7 @@ for jj = 1:length(angles)
     plot(w + P_hook(:,1), delta_y + P_hook(:,2), 'g');
     
     % fixed origin point
-    %plot(0,delta_y,'g*');
+    plot(0,delta_y,'g*');
 end
 axis('equal');
 axis('off');
