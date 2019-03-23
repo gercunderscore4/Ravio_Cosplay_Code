@@ -1,12 +1,26 @@
-% treasure chest laser-cut design for The Legend of Zelda: A Link Between Worlds
-clear
-clc
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TREASURE CHEST LASER-CUT DESIGN
+% Modelled on The Legend of Zelda: A Link Between Worlds
+
+% Gold/brass trim will be made with 2mm EVA foam
+% Pieces along the top will need the bottom edges sanded to fit.
+% Pieces along angled jigsaws (the base) will also need to be sanded to fit.
+% Ignore the slight veritcal mismatch in the flattened version.
+
+% TODO:
+%   - Draw out on paper.
+%   - Determine how much EVA is needed.
+%   - Order cut.
+
+clear;
+clc;
+more off;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SET THESE
 
 % any same unit
-MATERIAL_THICKNESS = 0.5;
+MATERIAL_THICKNESS = 2.54/4;
 WIDTH = 30;
 
 TOP_JIGSAW      = [1 0 0 0 1]; % 1 = side,   0 = top
@@ -368,19 +382,19 @@ for ii = 1:size(Name_Mat_Norm,1)
     Name_Mat_Norm{ii,3} = R * Name_Mat_Norm{ii,3};
 end
 
-figure(1);
-clf;
-hold on;
-axis('equal');
-for ii = 1:size(Name_Mat_Norm,1)
-    plot3(Name_Mat_Norm{ii,2}(1,:), Name_Mat_Norm{ii,2}(2,:), Name_Mat_Norm{ii,2}(3,:))
-end
-% draw axes
-plot3([0 1], [0 0], [0 0], 'r')
-plot3([0 0], [0 1], [0 0], 'g')
-plot3([0 0], [0 0], [0 1], 'b')
-hold off;
-view(Name_Mat_Norm{13,3}) % view from a slight angle
+%figure(1);
+%clf;
+%hold on;
+%axis('equal');
+%for ii = 1:size(Name_Mat_Norm,1)
+%    plot3(Name_Mat_Norm{ii,2}(1,:), Name_Mat_Norm{ii,2}(2,:), Name_Mat_Norm{ii,2}(3,:))
+%end
+%% draw axes
+%plot3([0 1], [0 0], [0 0], 'r')
+%plot3([0 0], [0 1], [0 0], 'g')
+%plot3([0 0], [0 0], [0 1], 'b')
+%hold off;
+%view(Name_Mat_Norm{13,3}) % view from a slight angle
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -418,38 +432,35 @@ for jj = 1:N_TOP_PANELS
     Name_Mat_Norm{ii,2} = bsxfun(@plus, Name_Mat_Norm{ii,2}, [0; (jj - 0.5) * PANEL_HEIGHT; 0]);
     ii = ii + 1;
 end
+% try to move to the z=0 plane
+for jj = 1:size(Name_Mat_Norm,1)
+    Name_Mat_Norm{jj,2}(3,:) = Name_Mat_Norm{jj,2}(3,:) - (TOP_LENGTH / 2);
+end
 % all lower pieces out of order for folding purposes
-M = [0; 0; TOP_LENGTH/2];
 for jj = 1:5
-    Name_Mat_Norm{ii + jj - 1,2} = bsxfun(@minus, Name_Mat_Norm{ii + jj - 1,2}, M);
     Name_Mat_Norm{ii + jj - 1,2} = rotx(-FRONT_ANGLE) * Name_Mat_Norm{ii + jj - 1,2};
-    Name_Mat_Norm{ii + jj - 1,2} = bsxfun(@plus,  Name_Mat_Norm{ii + jj - 1,2}, M);
 end
 ii = ii + 1;
-M = [0; -FRONT_HEIGHT; TOP_LENGTH/2];
+M = [0; -FRONT_HEIGHT; 0];
 for jj = 1:4
     Name_Mat_Norm{ii + jj - 1,2} = bsxfun(@minus, Name_Mat_Norm{ii + jj - 1,2}, M);
     Name_Mat_Norm{ii + jj - 1,2} = rotx(-90 + FRONT_ANGLE) * Name_Mat_Norm{ii + jj - 1,2};
     Name_Mat_Norm{ii + jj - 1,2} = bsxfun(@plus,  Name_Mat_Norm{ii + jj - 1,2}, M);
 end
-M = [0; -(FRONT_HEIGHT + BOTTOM_LENGTH); TOP_LENGTH/2];
+M = [0; -(FRONT_HEIGHT + BOTTOM_LENGTH); 0];
 Name_Mat_Norm{ii,2} = bsxfun(@minus, Name_Mat_Norm{ii,2}, M);
 Name_Mat_Norm{ii,2} = rotx(-90 + FRONT_ANGLE) * Name_Mat_Norm{ii,2};
 Name_Mat_Norm{ii,2} = bsxfun(@plus,  Name_Mat_Norm{ii,2}, M);
 ii = ii + 1;
-M = [(BOTTOM_WIDTH/2); -(FRONT_HEIGHT + BOTTOM_LENGTH); TOP_LENGTH/2];
+M = [(BOTTOM_WIDTH/2); -(FRONT_HEIGHT + BOTTOM_LENGTH); 0];
 Name_Mat_Norm{ii,2} = bsxfun(@minus, Name_Mat_Norm{ii,2}, M);
 Name_Mat_Norm{ii,2} = roty(-(90 - SIDE_ANGLE)) * Name_Mat_Norm{ii,2};
 Name_Mat_Norm{ii,2} = bsxfun(@plus,  Name_Mat_Norm{ii,2}, M);
 ii = ii + 1;
-M = [-(BOTTOM_WIDTH/2); -(FRONT_HEIGHT + BOTTOM_LENGTH); TOP_LENGTH/2];
+M = [-(BOTTOM_WIDTH/2); -(FRONT_HEIGHT + BOTTOM_LENGTH); 0];
 Name_Mat_Norm{ii,2} = bsxfun(@minus, Name_Mat_Norm{ii,2}, M);
 Name_Mat_Norm{ii,2} = roty( (90 - SIDE_ANGLE)) * Name_Mat_Norm{ii,2};
 Name_Mat_Norm{ii,2} = bsxfun(@plus,  Name_Mat_Norm{ii,2}, M);
-% try to moze to zero plan
-for ii = 1:size(Name_Mat_Norm,1)
-    Name_Mat_Norm{ii,2}(3,:) = Name_Mat_Norm{ii,2}(3,:) - (TOP_LENGTH / 2);
-end
 % moving jigsaws together
 ii = 4 + N_TOP_PANELS + 2;
 Name_Mat_Norm{ii,2}(2,:) = Name_Mat_Norm{ii,2}(2,:) + 2 * MATERIAL_THICKNESS;
@@ -476,20 +487,25 @@ Name_Mat_Norm{ii,2}(2,:) = Name_Mat_Norm{ii,2}(2,:) + 1 * MATERIAL_THICKNESS;
 figure(3);
 clf;
 hold on;
-axis('equal');
 for ii = 1:size(Name_Mat_Norm,1)
     % draw >0 green, <0 red, =0 black
-    if sum(Name_Mat_Norm{ii,2}(3,:)) > 1E-5
+    if sum(Name_Mat_Norm{ii,2}(3,:)) > 0
         c = 'g';
-    elseif sum(Name_Mat_Norm{ii,2}(3,:)) < -1E-5
+    elseif sum(Name_Mat_Norm{ii,2}(3,:)) < 0
         c = 'r';
     else
         c = 'k';
     end
+    %plot3(Name_Mat_Norm{ii,2}(1,:), Name_Mat_Norm{ii,2}(2,:), Name_Mat_Norm{ii,2}(3,:), c);
+    
+    % blue for cut
+    c = 'b';
     plot(Name_Mat_Norm{ii,2}(1,:), Name_Mat_Norm{ii,2}(2,:), c);
 end
 %plot3([0 1], [0 0], [0 0], 'r')
 %plot3([0 0], [0 1], [0 0], 'g')
 %plot3([0 0], [0 0], [0 1], 'b')
+axis('equal');
+axis('off');
 hold off;
 saveas(3, 'lasercut_chest.svg');

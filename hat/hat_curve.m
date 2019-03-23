@@ -1,6 +1,6 @@
 % split a sphere into lunes (outside of the wedge)
 clear;
-clc;
+%clc;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % USER INPUTS
@@ -45,14 +45,23 @@ y2 = repelem(ty,3);
 % EXTERIOR LINES
 
 total_visible_width = q * 2 * nr;
-(2 * nr) / 2.54
 
 x3 = repmat([0 1 NaN]*total_visible_width, n + 1);
 y3 = repelem(ty, 3);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% PLOT
+% PRINT
 
+lune_width = (2 * nr) / 2.54
+
+disp('width list')
+blarg = tx' * 2 / 2.54;
+for ii = blarg
+    disp(sprintf('%10.2f\n', ii))
+end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PLOT
 
 figure(1);
 clf;

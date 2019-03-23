@@ -22,6 +22,7 @@
 %   - Design the covers.
 %   - Set exterior sizes to help sand into a cylinder.
 %   - Edit SVG manually to finess edges.
+%   - Format SVG for cutting.
 %   - Order cut.
 
 clear;
