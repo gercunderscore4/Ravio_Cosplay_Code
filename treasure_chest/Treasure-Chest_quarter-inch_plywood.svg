@@ -15,7 +15,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="HotPopFactory-LaserTemplate-Illustrator-Metric.svg"
+   sodipodi:docname="Treasure-Chest_quarter-inch_plywood.svg"
    style="fill-rule:evenodd">
   <metadata
      id="metadata266">
@@ -45,7 +45,8 @@
      id="namedview262"
      showgrid="false"
      units="cm"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="layer2"
+     inkscape:document-units="cm" />
   <g
      id="g4"
      transform="translate(27.3094,-817.68479)">
@@ -684,178 +685,191 @@
      inkscape:groupmode="layer"
      id="layer1"
      inkscape:label="Cut"
-     sodipodi:insensitive="true"
-     style="display:inline">
-    <polyline
-       points="242.49,175.238 242.418,174.829 241.931,172.067 239.614,172.476 238.153,164.191 240.47,163.783 239.983,161.021 239.704,160.253 238.302,157.824 236.264,159.001 232.057,151.716 234.095,150.539 232.693,148.11 232.168,147.484 230.02,145.682 228.507,147.485 222.063,142.077 223.575,140.274 221.427,138.472 220.719,138.063 218.084,137.104 217.28,139.315 209.374,136.438 210.179,134.227 207.544,133.268 206.739,133.126 203.935,133.126 203.935,135.479 195.522,135.479 195.522,133.126 192.718,133.126 191.913,133.268 189.278,134.227 190.083,136.438 182.178,139.315 181.373,137.104 178.738,138.063 178.03,138.472 175.882,140.274 177.395,142.077 170.95,147.485 169.438,145.682 167.289,147.484 166.764,148.11 165.362,150.539 167.4,151.716 163.194,159.001 161.156,157.824 159.754,160.253 159.474,161.021 158.987,163.783 161.305,164.191 159.844,172.476 157.526,172.067 157.039,174.829 156.967,175.238 242.49,175.238"
-       id="polyline21"
-       style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.18000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-       transform="matrix(-7.6399986,0,0,-7.6399992,2026.9484,2665.4608)" />
+     style="display:inline"
+     sodipodi:insensitive="true">
     <polyline
        points="353.67,175.238 353.742,174.829 354.229,172.067 356.546,172.476 358.007,164.191 355.69,163.783 356.177,161.021 356.456,160.253 357.858,157.824 359.896,159.001 364.103,151.716 362.065,150.539 363.467,148.11 363.992,147.484 366.14,145.682 367.653,147.485 374.097,142.077 372.585,140.274 374.733,138.472 375.44,138.063 378.076,137.104 378.88,139.315 386.786,136.438 385.981,134.227 388.616,133.268 389.421,133.126 392.225,133.126 392.225,135.479 400.638,135.479 400.638,133.126 403.442,133.126 404.247,133.268 406.882,134.227 406.077,136.438 413.982,139.315 414.787,137.104 417.422,138.063 418.13,138.472 420.278,140.274 418.765,142.077 425.21,147.485 426.722,145.682 428.871,147.484 429.396,148.11 430.798,150.539 428.76,151.716 432.966,159.001 435.004,157.824 436.406,160.253 436.686,161.021 437.173,163.783 434.855,164.191 436.316,172.476 438.634,172.067 439.121,174.829 439.193,175.238 353.67,175.238"
        id="polyline23"
-       style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.18000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-       transform="matrix(7.6399986,0,0,7.6399992,-2532.8144,-922.58692)" />
-    <polyline
-       points="439.193,175.238 439.193,175.238 440.167,169.714 437.849,169.306 438.336,166.544 440.654,166.953 441.627,161.43 441.627,161.43 444.432,156.573 442.394,155.396 443.796,152.967 445.834,154.144 448.638,149.287 448.638,149.287 452.934,145.682 451.422,143.879 453.57,142.077 455.082,143.88 459.379,140.275 459.379,140.275 464.649,138.356 463.844,136.145 466.479,135.186 467.284,137.397 472.554,135.479 472.554,135.479 478.162,135.479 478.162,133.126 480.967,133.126 480.967,135.479 486.575,135.479 486.575,135.479 491.845,137.397 492.65,135.186 495.285,136.145 494.48,138.356 499.75,140.275 499.75,140.275 504.047,143.88 505.559,142.077 507.708,143.879 506.195,145.682 510.491,149.287 510.491,149.287 513.295,154.144 515.333,152.967 516.735,155.396 514.697,156.573 517.502,161.43 517.502,161.43 518.475,166.953 520.793,166.544 521.28,169.306 518.962,169.714 519.936,175.238 519.936,175.238 513.774,175.238 511.711,163.537 505.77,153.248 496.669,145.612 485.505,141.548 473.624,141.548 462.46,145.612 453.359,153.248 447.418,163.537 445.355,175.238 439.193,175.238"
-       id="polyline27"
-       style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.18000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-       transform="matrix(7.6399986,0,0,7.6399992,-2532.8144,-922.58692)" />
-    <polyline
-       points="351.317,175.238 351.317,172.433 353.67,172.433 353.67,164.021 351.317,164.021 351.317,161.217 244.843,161.217 244.843,164.021 242.49,164.021 242.49,172.433 244.843,172.433 244.843,175.238 351.317,175.238"
-       id="polyline29"
-       style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.18000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-       transform="matrix(0,-7.6399992,7.6399986,0,-286.83732,3148.7679)" />
-    <polyline
-       points="299.257,166.825 299.257,169.629 296.903,169.629 296.903,166.825 299.257,166.825"
-       id="polyline31"
-       style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.18000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-       transform="matrix(0,-7.6399992,7.6399986,0,-286.83732,3148.7679)" />
-    <polyline
-       points="351.317,161.217 351.317,158.412 353.67,158.412 353.67,150 351.317,150 351.317,147.196 244.843,147.196 244.843,150 242.49,150 242.49,158.412 244.843,158.412 244.843,161.217 351.317,161.217"
-       id="polyline33"
-       style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.18000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-       transform="matrix(0,-7.6399992,7.6399986,0,-286.83732,3148.7679)" />
-    <polyline
-       points="299.257,152.804 299.257,155.608 296.903,155.608 296.903,152.804 299.257,152.804"
-       id="polyline35"
-       style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.18000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-       transform="matrix(0,-7.6399992,7.6399986,0,-286.83732,3148.7679)" />
-    <polyline
-       points="351.317,147.196 351.317,144.391 353.67,144.391 353.67,135.979 351.317,135.979 351.317,133.175 244.843,133.175 244.843,135.979 242.49,135.979 242.49,144.391 244.843,144.391 244.843,147.196 351.317,147.196"
-       id="polyline37"
-       style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.18000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-       transform="matrix(0,-7.6399992,7.6399986,0,-286.83732,3148.7679)" />
-    <polyline
-       points="299.257,138.783 299.257,141.587 296.903,141.587 296.903,138.783 299.257,138.783"
-       id="polyline39"
-       style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.18000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-       transform="matrix(0,-7.6399992,7.6399986,0,-286.83732,3148.7679)" />
-    <polyline
-       points="351.317,133.175 351.317,130.37 353.67,130.37 353.67,121.958 351.317,121.958 351.317,119.154 244.843,119.154 244.843,121.958 242.49,121.958 242.49,130.37 244.843,130.37 244.843,133.175 351.317,133.175"
-       id="polyline41"
-       style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.18000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-       transform="matrix(0,-7.6399992,7.6399986,0,-286.83732,3148.7679)" />
-    <polyline
-       points="299.257,124.762 299.257,127.566 296.903,127.566 296.903,124.762 299.257,124.762"
-       id="polyline43"
-       style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.18000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-       transform="matrix(0,-7.6399992,7.6399986,0,-286.83732,3148.7679)" />
-    <polyline
-       points="351.317,119.154 351.317,116.349 353.67,116.349 353.67,107.937 351.317,107.937 351.317,105.133 244.843,105.133 244.843,107.937 242.49,107.937 242.49,116.349 244.843,116.349 244.843,119.154 351.317,119.154"
-       id="polyline45"
-       style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.18000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-       transform="matrix(0,-7.6399992,7.6399986,0,-286.83732,3148.7679)" />
-    <polyline
-       points="299.257,110.741 299.257,113.545 296.903,113.545 296.903,110.741 299.257,110.741"
-       id="polyline47"
-       style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.18000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-       transform="matrix(0,-7.6399992,7.6399986,0,-286.83732,3148.7679)" />
-    <polyline
-       points="351.317,105.133 351.317,102.328 353.67,102.328 353.67,93.9158 351.317,93.9158 351.317,91.1116 244.843,91.1116 244.843,93.9158 242.49,93.9158 242.49,102.328 244.843,102.328 244.843,105.133 351.317,105.133"
-       id="polyline49"
-       style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.18000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-       transform="matrix(0,-7.6399992,7.6399986,0,-286.83732,3148.7679)" />
-    <polyline
-       points="299.257,96.72 299.257,99.5242 296.903,99.5242 296.903,96.72 299.257,96.72"
-       id="polyline51"
-       style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.18000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-       transform="matrix(0,-7.6399992,7.6399986,0,-286.83732,3148.7679)" />
-    <polyline
-       points="351.317,91.1116 351.317,88.3074 353.67,88.3074 353.67,79.8948 351.317,79.8948 351.317,77.0906 244.843,77.0906 244.843,79.8948 242.49,79.8948 242.49,88.3074 244.843,88.3074 244.843,91.1116 351.317,91.1116"
-       id="polyline53"
-       style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.18000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-       transform="matrix(0,-7.6399992,7.6399986,0,-286.83732,3148.7679)" />
-    <polyline
-       points="299.257,82.699 299.257,85.5032 296.903,85.5032 296.903,82.699 299.257,82.699"
-       id="polyline55"
-       style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.18000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-       transform="matrix(0,-7.6399992,7.6399986,0,-286.83732,3148.7679)" />
-    <polyline
-       points="351.317,77.0906 351.317,74.2864 353.67,74.2864 353.67,65.8738 351.317,65.8738 351.317,63.0696 244.843,63.0696 244.843,65.8738 242.49,65.8738 242.49,74.2864 244.843,74.2864 244.843,77.0906 351.317,77.0906"
-       id="polyline57"
-       style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.18000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-       transform="matrix(0,-7.6399992,7.6399986,0,-286.83732,3148.7679)" />
-    <polyline
-       points="299.257,68.678 299.257,71.4822 296.903,71.4822 296.903,68.678 299.257,68.678"
-       id="polyline59"
-       style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.18000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-       transform="matrix(0,-7.6399992,7.6399986,0,-286.83732,3148.7679)" />
-    <polyline
-       points="351.317,63.0696 351.317,60.2654 353.67,60.2654 353.67,51.8529 351.317,51.8529 351.317,49.0487 244.843,49.0487 244.843,51.8529 242.49,51.8529 242.49,60.2654 244.843,60.2654 244.843,63.0696 351.317,63.0696"
-       id="polyline61"
-       style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.18000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-       transform="matrix(0,-7.6399992,7.6399986,0,-286.83732,3148.7679)" />
-    <polyline
-       points="299.257,54.6571 299.257,57.4612 296.903,57.4612 296.903,54.6571 299.257,54.6571"
-       id="polyline63"
-       style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.18000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-       transform="matrix(0,-7.6399992,7.6399986,0,-286.83732,3148.7679)" />
-    <polyline
-       points="341.311,237.311 343.715,221.786 346.041,222.146 348.445,206.621 346.12,206.261 348.524,190.735 350.85,191.095 353.254,175.57 350.928,175.21 245.232,175.21 242.906,175.57 245.31,191.095 247.636,190.735 250.04,206.261 247.715,206.621 250.119,222.146 252.445,221.786 254.849,237.311 254.849,237.311 272.141,237.311 272.141,239.665 289.434,239.665 289.434,237.311 306.726,237.311 306.726,239.665 324.018,239.665 324.018,237.311 341.311,237.311 341.311,237.311"
-       id="polyline65"
-       style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.18000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-       transform="matrix(0,-7.6399992,7.6399986,0,-286.83732,3148.7679)" />
-    <polyline
-       points="254.849,305.73 252.445,321.255 250.119,320.895 247.715,336.42 250.04,336.781 247.636,352.306 245.31,351.946 242.906,367.471 245.232,367.831 350.928,367.831 353.254,367.471 350.85,351.946 348.524,352.306 346.12,336.781 348.445,336.42 346.041,320.895 343.715,321.255 341.311,305.73 341.311,305.73 324.018,305.73 324.018,303.376 306.726,303.376 306.726,305.73 289.434,305.73 289.434,303.376 272.141,303.376 272.141,305.73 254.849,305.73 254.849,305.73"
-       id="polyline67"
-       style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.18000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-       transform="matrix(0,-7.6399992,7.6399986,0,-286.83732,3148.7679)" />
-    <polyline
-       points="343.692,303.355 343.38,305.688 358.951,307.773 359.264,305.441 374.835,307.526 374.523,309.859 390.094,311.944 390.406,309.612 405.978,311.697 405.978,231.344 390.406,233.429 390.094,231.097 374.523,233.182 374.835,235.515 359.264,237.6 358.951,235.268 343.38,237.353 343.692,239.686 343.692,239.686 343.692,252.42 341.339,252.42 341.339,265.154 343.692,265.154 343.692,277.888 341.339,277.888 341.339,290.621 343.692,290.621 343.692,303.355 343.692,303.355"
-       id="polyline69"
-       style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.18000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-       transform="matrix(0,-7.6399992,7.6399986,0,-286.83732,3148.7679)" />
-    <polyline
-       points="252.468,239.686 252.78,237.353 237.209,235.268 236.896,237.6 221.325,235.515 221.637,233.182 206.066,231.097 205.753,233.429 190.182,231.344 190.182,311.697 205.753,309.612 206.066,311.944 221.637,309.859 221.325,307.526 236.896,305.441 237.209,307.773 252.78,305.688 252.468,303.355 252.468,303.355 252.468,290.621 254.821,290.621 254.821,277.888 252.468,277.888 252.468,265.154 254.821,265.154 254.821,252.42 252.468,252.42 252.468,239.686 252.468,239.686"
-       id="polyline71"
-       style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.18000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-       transform="matrix(0,-7.6399992,7.6399986,0,-286.83732,3148.7679)" />
+       style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.08575916;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       transform="matrix(0,7.6399993,-7.6399985,0,2491.0204,-2620.5217)" />
+    <g
+       id="g4336"
+       transform="translate(3.1999994,0)">
+      <polyline
+         transform="matrix(-7.6399986,0,0,-7.6399992,3291.4178,1376.6374)"
+         style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.08575916;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="polyline21"
+         points="242.49,175.238 242.418,174.829 241.931,172.067 239.614,172.476 238.153,164.191 240.47,163.783 239.983,161.021 239.704,160.253 238.302,157.824 236.264,159.001 232.057,151.716 234.095,150.539 232.693,148.11 232.168,147.484 230.02,145.682 228.507,147.485 222.063,142.077 223.575,140.274 221.427,138.472 220.719,138.063 218.084,137.104 217.28,139.315 209.374,136.438 210.179,134.227 207.544,133.268 206.739,133.126 203.935,133.126 203.935,135.479 195.522,135.479 195.522,133.126 192.718,133.126 191.913,133.268 189.278,134.227 190.083,136.438 182.178,139.315 181.373,137.104 178.738,138.063 178.03,138.472 175.882,140.274 177.395,142.077 170.95,147.485 169.438,145.682 167.289,147.484 166.764,148.11 165.362,150.539 167.4,151.716 163.194,159.001 161.156,157.824 159.754,160.253 159.474,161.021 158.987,163.783 161.305,164.191 159.844,172.476 157.526,172.067 157.039,174.829 156.967,175.238 242.49,175.238" />
+      <polyline
+         transform="matrix(-7.6369474,-0.21590218,0.21590213,-7.636948,5385.1241,1675.8884)"
+         style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.08575916;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="polyline27"
+         points="439.193,175.238 439.193,175.238 440.167,169.714 437.849,169.306 438.336,166.544 440.654,166.953 441.627,161.43 441.627,161.43 444.432,156.573 442.394,155.396 443.796,152.967 445.834,154.144 448.638,149.287 448.638,149.287 452.934,145.682 451.422,143.879 453.57,142.077 455.082,143.88 459.379,140.275 459.379,140.275 464.649,138.356 463.844,136.145 466.479,135.186 467.284,137.397 472.554,135.479 472.554,135.479 478.162,135.479 478.162,133.126 480.967,133.126 480.967,135.479 486.575,135.479 486.575,135.479 491.845,137.397 492.65,135.186 495.285,136.145 494.48,138.356 499.75,140.275 499.75,140.275 504.047,143.88 505.559,142.077 507.708,143.879 506.195,145.682 510.491,149.287 510.491,149.287 513.295,154.144 515.333,152.967 516.735,155.396 514.697,156.573 517.502,161.43 517.502,161.43 518.475,166.953 520.793,166.544 521.28,169.306 518.962,169.714 519.936,175.238 519.936,175.238 513.774,175.238 511.711,163.537 505.77,153.248 496.669,145.612 485.505,141.548 473.624,141.548 462.46,145.612 453.359,153.248 447.418,163.537 445.355,175.238 439.193,175.238" />
+    </g>
+    <g
+       id="g4316"
+       transform="matrix(0,-1.0000001,0.9999999,0,-144.19353,2312.6343)">
+      <polyline
+         transform="matrix(0,-7.6399992,7.6399986,0,223.9057,3552.795)"
+         style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.08575916;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="polyline29"
+         points="351.317,175.238 351.317,172.433 353.67,172.433 353.67,164.021 351.317,164.021 351.317,161.217 244.843,161.217 244.843,164.021 242.49,164.021 242.49,172.433 244.843,172.433 244.843,175.238 351.317,175.238" />
+      <polyline
+         transform="matrix(0,-7.6399992,7.6399986,0,223.9057,3552.795)"
+         style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.08575916;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="polyline31"
+         points="299.257,166.825 299.257,169.629 296.903,169.629 296.903,166.825 299.257,166.825" />
+      <polyline
+         transform="matrix(0,-7.6399992,7.6399986,0,223.9057,3552.795)"
+         style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.08575916;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="polyline33"
+         points="351.317,161.217 351.317,158.412 353.67,158.412 353.67,150 351.317,150 351.317,147.196 244.843,147.196 244.843,150 242.49,150 242.49,158.412 244.843,158.412 244.843,161.217 351.317,161.217" />
+      <polyline
+         transform="matrix(0,-7.6399992,7.6399986,0,223.9057,3552.795)"
+         style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.08575916;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="polyline35"
+         points="299.257,152.804 299.257,155.608 296.903,155.608 296.903,152.804 299.257,152.804" />
+      <polyline
+         transform="matrix(0,-7.6399992,7.6399986,0,223.9057,3552.795)"
+         style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.08575916;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="polyline37"
+         points="351.317,147.196 351.317,144.391 353.67,144.391 353.67,135.979 351.317,135.979 351.317,133.175 244.843,133.175 244.843,135.979 242.49,135.979 242.49,144.391 244.843,144.391 244.843,147.196 351.317,147.196" />
+      <polyline
+         transform="matrix(0,-7.6399992,7.6399986,0,223.9057,3552.795)"
+         style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.08575916;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="polyline39"
+         points="299.257,138.783 299.257,141.587 296.903,141.587 296.903,138.783 299.257,138.783" />
+      <polyline
+         transform="matrix(0,-7.6399992,7.6399986,0,223.9057,3552.795)"
+         style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.08575916;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="polyline41"
+         points="351.317,133.175 351.317,130.37 353.67,130.37 353.67,121.958 351.317,121.958 351.317,119.154 244.843,119.154 244.843,121.958 242.49,121.958 242.49,130.37 244.843,130.37 244.843,133.175 351.317,133.175" />
+      <polyline
+         transform="matrix(0,-7.6399992,7.6399986,0,223.9057,3552.795)"
+         style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.08575916;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="polyline43"
+         points="299.257,124.762 299.257,127.566 296.903,127.566 296.903,124.762 299.257,124.762" />
+      <polyline
+         transform="matrix(0,-7.6399992,7.6399986,0,223.9057,3552.795)"
+         style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.08575916;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="polyline45"
+         points="351.317,119.154 351.317,116.349 353.67,116.349 353.67,107.937 351.317,107.937 351.317,105.133 244.843,105.133 244.843,107.937 242.49,107.937 242.49,116.349 244.843,116.349 244.843,119.154 351.317,119.154" />
+      <polyline
+         transform="matrix(0,-7.6399992,7.6399986,0,223.9057,3552.795)"
+         style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.08575916;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="polyline47"
+         points="299.257,110.741 299.257,113.545 296.903,113.545 296.903,110.741 299.257,110.741" />
+      <polyline
+         transform="matrix(0,-7.6399992,7.6399986,0,223.9057,3552.795)"
+         style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.08575916;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="polyline49"
+         points="351.317,105.133 351.317,102.328 353.67,102.328 353.67,93.9158 351.317,93.9158 351.317,91.1116 244.843,91.1116 244.843,93.9158 242.49,93.9158 242.49,102.328 244.843,102.328 244.843,105.133 351.317,105.133" />
+      <polyline
+         transform="matrix(0,-7.6399992,7.6399986,0,223.9057,3552.795)"
+         style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.08575916;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="polyline51"
+         points="299.257,96.72 299.257,99.5242 296.903,99.5242 296.903,96.72 299.257,96.72" />
+      <polyline
+         transform="matrix(0,-7.6399992,7.6399986,0,223.9057,3552.795)"
+         style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.08575916;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="polyline53"
+         points="351.317,91.1116 351.317,88.3074 353.67,88.3074 353.67,79.8948 351.317,79.8948 351.317,77.0906 244.843,77.0906 244.843,79.8948 242.49,79.8948 242.49,88.3074 244.843,88.3074 244.843,91.1116 351.317,91.1116" />
+      <polyline
+         transform="matrix(0,-7.6399992,7.6399986,0,223.9057,3552.795)"
+         style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.08575916;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="polyline55"
+         points="299.257,82.699 299.257,85.5032 296.903,85.5032 296.903,82.699 299.257,82.699" />
+      <polyline
+         transform="matrix(0,-7.6399992,7.6399986,0,223.9057,3552.795)"
+         style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.08575916;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="polyline57"
+         points="351.317,77.0906 351.317,74.2864 353.67,74.2864 353.67,65.8738 351.317,65.8738 351.317,63.0696 244.843,63.0696 244.843,65.8738 242.49,65.8738 242.49,74.2864 244.843,74.2864 244.843,77.0906 351.317,77.0906" />
+      <polyline
+         transform="matrix(0,-7.6399992,7.6399986,0,223.9057,3552.795)"
+         style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.08575916;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="polyline59"
+         points="299.257,68.678 299.257,71.4822 296.903,71.4822 296.903,68.678 299.257,68.678" />
+      <polyline
+         transform="matrix(0,-7.6399992,7.6399986,0,223.9057,3552.795)"
+         style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.08575916;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="polyline61"
+         points="351.317,63.0696 351.317,60.2654 353.67,60.2654 353.67,51.8529 351.317,51.8529 351.317,49.0487 244.843,49.0487 244.843,51.8529 242.49,51.8529 242.49,60.2654 244.843,60.2654 244.843,63.0696 351.317,63.0696" />
+      <polyline
+         transform="matrix(0,-7.6399992,7.6399986,0,223.9057,3552.795)"
+         style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.08575916;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="polyline63"
+         points="299.257,54.6571 299.257,57.4612 296.903,57.4612 296.903,54.6571 299.257,54.6571" />
+    </g>
+    <g
+       id="g4308"
+       transform="translate(3.1999994,1.5999998)">
+      <polyline
+         transform="matrix(0,7.6399991,-7.6399987,0,3893.1423,-1731.2053)"
+         style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.08575916;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="polyline65"
+         points="341.311,237.311 343.715,221.786 346.041,222.146 348.445,206.621 346.12,206.261 348.524,190.735 350.85,191.095 353.254,175.57 350.928,175.21 245.232,175.21 242.906,175.57 245.31,191.095 247.636,190.735 250.04,206.261 247.715,206.621 250.119,222.146 252.445,221.786 254.849,237.311 254.849,237.311 272.141,237.311 272.141,239.665 289.434,239.665 289.434,237.311 306.726,237.311 306.726,239.665 324.018,239.665 324.018,237.311 341.311,237.311 341.311,237.311" />
+      <polyline
+         transform="matrix(0,7.6399991,-7.6399987,0,4887.4629,-979.3909)"
+         style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.08575916;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="polyline67"
+         points="254.849,305.73 252.445,321.255 250.119,320.895 247.715,336.42 250.04,336.781 247.636,352.306 245.31,351.946 242.906,367.471 245.232,367.831 350.928,367.831 353.254,367.471 350.85,351.946 348.524,352.306 346.12,336.781 348.445,336.42 346.041,320.895 343.715,321.255 341.311,305.73 341.311,305.73 324.018,305.73 324.018,303.376 306.726,303.376 306.726,305.73 289.434,305.73 289.434,303.376 272.141,303.376 272.141,305.73 254.849,305.73 254.849,305.73" />
+    </g>
+    <g
+       id="g4312"
+       transform="translate(-4.7999991,1.5999998)">
+      <polyline
+         transform="matrix(7.6399984,0,0,7.6399994,-1039.6913,-1232.5444)"
+         style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.08575916;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="polyline69"
+         points="343.692,303.355 343.38,305.688 358.951,307.773 359.264,305.441 374.835,307.526 374.523,309.859 390.094,311.944 390.406,309.612 405.978,311.697 405.978,231.344 390.406,233.429 390.094,231.097 374.523,233.182 374.835,235.515 359.264,237.6 358.951,235.268 343.38,237.353 343.692,239.686 343.692,239.686 343.692,252.42 341.339,252.42 341.339,265.154 343.692,265.154 343.692,277.888 341.339,277.888 341.339,290.621 343.692,290.621 343.692,303.355 343.692,303.355" />
+      <polyline
+         transform="matrix(7.6399984,0,0,7.6399994,130.92178,-664.4705)"
+         style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.08575916;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         id="polyline71"
+         points="252.468,239.686 252.78,237.353 237.209,235.268 236.896,237.6 221.325,235.515 221.637,233.182 206.066,231.097 205.753,233.429 190.182,231.344 190.182,311.697 205.753,309.612 206.066,311.944 221.637,309.859 221.325,307.526 236.896,305.441 237.209,307.773 252.78,305.688 252.468,303.355 252.468,303.355 252.468,290.621 254.821,290.621 254.821,277.888 252.468,277.888 252.468,265.154 254.821,265.154 254.821,252.42 252.468,252.42 252.468,239.686 252.468,239.686" />
+    </g>
     <polyline
        points="343.692,305.73 343.692,303.376 343.692,290.634 341.339,290.634 341.339,277.892 343.692,277.892 343.692,265.149 341.339,265.149 341.339,252.407 343.692,252.407 343.692,239.665 343.692,237.311 341.339,237.311 324.035,237.311 324.035,239.665 306.732,239.665 306.732,237.311 289.428,237.311 289.428,239.665 272.125,239.665 272.125,237.311 254.821,237.311 252.468,237.311 252.468,239.665 252.468,252.407 254.821,252.407 254.821,265.149 252.468,265.149 252.468,277.892 254.821,277.892 254.821,290.634 252.468,290.634 252.468,303.376 252.468,305.73 254.821,305.73 272.125,305.73 272.125,303.376 289.428,303.376 289.428,305.73 306.732,305.73 306.732,303.376 324.035,303.376 324.035,305.73 341.339,305.73 343.692,305.73"
        id="polyline73"
-       style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.18000001;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-       transform="matrix(0,-7.6399992,7.6399986,0,-286.83732,3148.7679)" />
+       style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.08575916;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       transform="matrix(0,-7.6399991,7.6399987,0,-1189.2443,2655.9126)" />
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Score"
-     sodipodi:insensitive="true"
      style="display:inline">
-    <g
-       transform="matrix(0,-7.6399992,7.6399986,0,-289.42316,3148.9812)"
-       id="g4297">
-      <path
-         inkscape:connector-curvature="0"
-         id="path4271"
-         d="m 250.22951,205.84918 95.84262,0"
-         style="fill:none;fill-rule:evenodd;stroke:#ff0000;stroke-width:0.16;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-      <path
-         inkscape:connector-curvature="0"
-         id="path4273"
-         d="m 374.87213,235.12131 0,72.47213"
-         style="fill:none;fill-rule:evenodd;stroke:#ff0000;stroke-width:0.16;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-      <path
-         inkscape:connector-curvature="0"
-         id="path4275"
-         d="m 345.36394,336.86558 -95.3705,0"
-         style="fill:none;fill-rule:evenodd;stroke:#ff0000;stroke-width:0.16;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-      <path
-         inkscape:connector-curvature="0"
-         id="path4277"
-         d="m 220.72131,307.59344 0,-72.47213"
-         style="fill:none;fill-rule:evenodd;stroke:#ff0000;stroke-width:0.16;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-      <path
-         inkscape:connector-curvature="0"
-         id="path4279"
-         d="m 254.71475,265.3377 85.92787,0"
-         style="fill:none;fill-rule:evenodd;stroke:#ff0000;stroke-width:0.16;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-      <path
-         inkscape:connector-curvature="0"
-         id="path4281"
-         d="m 254.95082,290.59672 86.16393,0"
-         style="fill:none;fill-rule:evenodd;stroke:#ff0000;stroke-width:0.16;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    </g>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#ff0000;stroke-width:1.22239983;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 2315.0871,1666.1182 0,-732.23754"
+       id="path4271"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#ff0000;stroke-width:1.22239983;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 1818.9675,564.75069 0,553.68711"
+       id="path4273"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#ff0000;stroke-width:1.22239983;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 2321.9961,184.63546 0,728.63053"
+       id="path4275"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#ff0000;stroke-width:1.22239983;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 1817.3697,1690.2596 0,-553.687"
+       id="path4277"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#ff0000;stroke-width:1.22239983;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 836.46547,708.49186 0,-660.884066"
+       id="path4279"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#ff0000;stroke-width:1.22239983;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 1030.1769,709.02081 0,-660.489939"
+       id="path4281"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
   </g>
 </svg>
