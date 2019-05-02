@@ -15,19 +15,28 @@ There is also a physical log book for this project. Not all notes will be stored
 TODO
 ----
 - Code
-    PWM sound on ATtiny
-    Solendoid for motor
-    Accelerometer
+    - PWM sound on ATtiny
+    - Solendoid for motor
+    - Accelerometer
 - Design
-    Hookshot
-    accelerometer circuit
-    stall detection circuit
+    - Hookshot
+    - Accelerometer circuit
+    - Stall detection circuit
 - Program
-    Fire Rod (template for Ice, Sand)
-    Not-Bomb
+    - Fire Rod (template for Ice, Sand)
+    - Not-Bomb
 - Buy
-    boots
-    lasercut hookshot
+    - Boots
+    - Lasercut hookshot
+- Swimsuit version
+    - Craft foam
+    - Purple hawaian shirt
+    - Sandals
+    - Pool Noodles
+- Extras
+    - Re-rew right eye
+    - Add telestereoscope
+    - Add comb to hat to hold hat in place
 
 
 #==============#============#============#========#
@@ -35,13 +44,13 @@ TODO
 #==============#============#============#========#
 | COSTUME                                         |
 #==============#============#============#========#
-| Hat          |     H      |     XH     |   70%  |
+| Hat          |     H      |     XH     |  100%  |
 +--------------+------------+------------+--------+
 | Robes        |     M      |     XH     |   90%  |
 +--------------+------------+------------+--------+
-| Belt         |     L      |     XH     |  100%  |
+| Belt         |     L      |     XH     |   90%  |
 +--------------+------------+------------+--------+
-| Bag          |     M      |     M      |   90%  |
+| Bag          |     M      |     M      |  100%  |
 +--------------+------------+------------+--------+
 | Wig          |     L      |     M      |   20%  |
 +--------------+------------+------------+--------+
@@ -61,15 +70,15 @@ TODO
 +--------------+------------+------------+--------+
 | Tornado Rod  |     M      |     H      |        |
 +--------------+------------+------------+--------+
-| Hammer       |     L      |     H      |    5%  |
+| Hammer       |     L      |     H      |   10%  |
 +--------------+------------+------------+--------+
 | Sand Rod     |     H      |     M      |   50%  |
 +--------------+------------+------------+--------+
 | Hookshot     |     H      |     M      |   15%  |
 +--------------+------------+------------+--------+
-| Boomerang    |     L      |     M      |        |
+| Boomerang    |     L      |     M      |   50%  |
 +--------------+------------+------------+--------+
-| Bow          |     L      |     L      |        |
+| Bow          |     L      |     L      |   10%  |
 #==============#============#============#========#
 | SHOP                                            |
 #==============#============#============#========#
@@ -83,9 +92,9 @@ TODO
 +--------------+------------+------------+--------+
 | Pot          |     M      |     L      |        |
 +--------------+------------+------------+--------+
-| Bush         |     L      |     L      |        |
+| Bush         |     L      |     L      |   90%  |
 +--------------+------------+------------+--------+
-| Maps         |     L      |     L      |        |
+| Maps         |     L      |     L      |   90%  |
 +--------------+------------+------------+--------+
 | Sheerow      |     H      |     XL     |        |
 +--------------+------------+------------+--------+
