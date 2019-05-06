@@ -33,7 +33,7 @@ more off;
 % USER EDITABLE SETTINGS
 
 % circle count, number of points in a calculated arc
-CURVE_SIZE = 50;
+CURVE_SIZE = 30;
 
 BOLT_DIA   = 0.6;  % body     width for bolt
 HEAD_DIA   = 1.2;  % head/nut width for bolt
@@ -49,7 +49,7 @@ BAR_HL = BAR_L / 2;
 BAR_HW = BAR_W / 2;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% USEFUL ANGLE CALCULATIONS
+% USEFUL CALCULATIONS
 
 % THETA is the final angle of the bar with the horizon.
 % 0deg would create perfectly flat lines, ideal, but impossible
@@ -68,9 +68,15 @@ THETA = asind(2 * BAR_HW / BAR_HL) / 2;
 PHI = 90 - THETA;
 OMEGA = PHI - THETA;
 
+THETA_TO_PHI = linspace(THETA, PHI, CURVE_SIZE)';
+
 % separation between points when fully extended (long) and retracted (short)
 REACH_LONG  = BAR_HL * cosd(THETA);
 REACH_SHORT = BAR_HL * sind(THETA);
+
+FRONT_EDGE = (2 * BAR_COUNT + 1) * REACH_SHORT;
+BACK_EDGE  = -(6 * REACH_SHORT + REACH_LONG);
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % GENERIC CIRCLE (FOR EASY PLOTTING)
@@ -89,7 +95,6 @@ REACH_SHORT = BAR_HL * sind(THETA);
 % CCW 3: [-c, -s]
 % CCW 4: [ s, -c]
 %
-CURVE_SIZE = 30;
 UNIT_CIRCLE = linspace(0, 90, CURVE_SIZE)';
 COS_ARC = cosd(UNIT_CIRCLE);
 SIN_ARC = flipud(COS_ARC);
@@ -158,7 +163,7 @@ BAR_SR = BAR_HW * tand(2 * THETA);
 BAR_CR = BAR_HW * secd(2 * THETA);
 OMEGA_RANGE = linspace(-OMEGA, +OMEGA, CURVE_SIZE)';
 % create curves at end
-BAR_POINTS = [0, BAR_HL + BAR_LE - BAR_SR] + BAR_CR * [sind(OMEGA_RANGE), cosd(OMEGA_RANGE)]
+BAR_POINTS = [0, BAR_HL + BAR_LE - BAR_SR] + BAR_CR * [sind(OMEGA_RANGE), cosd(OMEGA_RANGE)];
 % duplicate and rotate 180deg
 BAR_POINTS = [BAR_POINTS; -1*BAR_POINTS];
 % return to start
@@ -174,9 +179,19 @@ BAR_POINTS = [BAR_POINTS;
               (UNIT_CIRCLE * BOLT_RAD + [0, BAR_HL]); % hole at front
              ];
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BAR ENDS
+
+PSI = 45;
+CORNER_OFFSET = BAR_HW * cot(PSI);
+
 % final bar (half-length)
-P_end = [BAR_CR * (+sind(OMEGA_RANGE)), -(  BAR_LE-BAR_SR+BAR_CR * cosd(OMEGA_RANGE)); % back
-         BAR_CR * (-sind(OMEGA_RANGE)), +(BAR_HL+BAR_LE-BAR_SR+BAR_CR * cosd(OMEGA_RANGE)); % front
+P_end = [
+         BAR_CR * (-sind(OMEGA_RANGE)), +(BAR_HL+BAR_LE-BAR_SR+BAR_CR * cosd(OMEGA_RANGE)); % back
+         -BAR_HW, -CORNER_OFFSET;
+         BAR_HL * cosd(PSI) - BAR_HW * cosd(PSI - 90), - BAR_HL * sind(PSI) + BAR_HW * sind(PSI - 90);
+         BAR_HL * cosd(PSI) + BAR_HW * cosd(PSI - 90), - BAR_HL * sind(PSI) - BAR_HW * sind(PSI - 90);
+         +BAR_HW, +CORNER_OFFSET;
         ];
 P_end = [P_end;
          P_end(1,:);
@@ -204,8 +219,7 @@ H = [H;H(1,:)];
 
 % outside
 M = [
-     -1 * REACH_SHORT,                            0;
-      0 * REACH_SHORT,                            0;
+     -1 * REACH_SHORT,   (           - REACH_SHORT);
      +1 * REACH_SHORT, + (             REACH_SHORT);
      +1 * REACH_SHORT, + (REACH_LONG + REACH_SHORT);
      -6 * REACH_SHORT, + (REACH_LONG + REACH_SHORT);
@@ -236,22 +250,18 @@ P_handle = [
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % INNER STABILIZER
 
-THETA_TO_PHI = linspace(THETA, PHI, CURVE_SIZE)';
-
-FRONT_EDGE = (2 * BAR_COUNT + 1) * REACH_SHORT;
-BACK_EDGE  = -(6 * REACH_SHORT + REACH_LONG)
-
 % center line
 M = [([2 * REACH_SHORT, 0] +  HEAD_RAD * [-COS_ARC,  SIN_ARC]);
      FRONT_EDGE, HEAD_RAD;
      FRONT_EDGE, REACH_LONG + BAR_W;
      BACK_EDGE,  REACH_LONG + BAR_W;
      BACK_EDGE,  REACH_LONG + REACH_SHORT;
-             0,  REACH_LONG + REACH_SHORT;
-             0,               REACH_SHORT;
-     -REACH_SHORT,                      0;
     ];
 M = [M;
+     0,        REACH_LONG + REACH_SHORT;
+     0,                               REACH_SHORT;
+     -2 * REACH_SHORT,              - REACH_SHORT;
+     -2 * REACH_SHORT, - REACH_LONG - REACH_SHORT;
      flipud([M(:,1), -M(:,2)]);
      M(1,:)];
 
@@ -266,7 +276,7 @@ for ii = 1:BAR_COUNT
     H = [H;
          thiscontour;
          NaN, NaN;
-         ];
+         ]; %#ok<AGROW>
     
     if max(thisline(:,1)) >= max(M(:,1))
         break
@@ -293,9 +303,6 @@ STABLE_INNER = [
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % OUTER STABILIZER
 
-FRONT_EDGE = (2 * BAR_COUNT + 1) * REACH_SHORT;
-BACK_EDGE  = -(6 * REACH_SHORT + REACH_LONG)
-
 % outer frme
 M = [FRONT_EDGE, REACH_LONG + BAR_W;
      BACK_EDGE,  REACH_LONG + BAR_W;
@@ -312,15 +319,11 @@ H = [H; flipud([H(:,1), -H(:,2)]); H(1,:)];
 % slots going back
 T = BAR_HL * [-cosd(THETA_TO_PHI), sind(THETA_TO_PHI)];
 T = add_thickness(T, HEAD_RAD);
-T = [T; flipud([T(:,1), -T(:,2)])];
-
-Y = [FRONT_EDGE, REACH_LONG + BAR_W;
-     BACK_EDGE,  REACH_LONG + BAR_W;
-     BACK_EDGE,  REACH_LONG + BAR_HW;
-     FRONT_EDGE, REACH_LONG + BAR_HW;
-    ];
-Y = [Y; Y(1,:)];
-Y = [Y; flipud([Y(:,1), -Y(:,2)])];
+T = [
+     T; 
+     NaN, NaN;
+     flipud([T(:,1), -T(:,2)])
+     ];
 
 STABLE_OUTER = [
                 M;
@@ -329,10 +332,63 @@ STABLE_OUTER = [
                 NaN,NaN;
                 T;
                 NaN,NaN;
-                Y;
-                NaN,NaN;
                 UNIT_CIRCLE * BOLT_RAD;
                 ];
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TOP PIECE
+
+Y = [FRONT_EDGE, REACH_LONG + BAR_W;
+     BACK_EDGE,  REACH_LONG + BAR_W;
+     BACK_EDGE,  REACH_LONG + REACH_SHORT;
+     FRONT_EDGE, REACH_LONG + REACH_SHORT;
+    ];
+Y = [Y; Y(1,:)];
+Y = [
+     Y; 
+     NaN, NaN;
+     flipud([Y(:,1), -Y(:,2)]);
+     ];
+
+TOP_PIECE = Y;
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% HANDLE PIECE
+
+% outside
+M = [
+     -6 * REACH_SHORT, + (REACH_LONG + REACH_SHORT);
+     -1 * REACH_SHORT, + (REACH_LONG + REACH_SHORT);
+     ];
+% back to start
+M = [M; flipud([M(:,1), -M(:,2)])];
+M = [M; M(1,:)];
+
+% handle hole
+T = [
+     ([-5 * BAR_HW,-(REACH_LONG)]);
+     ([-2 * BAR_HW,-(REACH_LONG)]);
+     ];
+T = [T;
+     flipud([T(:,1), -T(:,2)]);
+     T(1,:)];
+
+% put it all together
+HANDLE_PIECE = [
+                M;
+                NaN,NaN;
+                T;
+                ];
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% HOOK
+
+% put it all together
+HOOK = [
+        BAR_HW * UNIT_CIRCLE;
+        NaN, NaN;
+        HEAD_RAD * UNIT_CIRCLE;
+        ];
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % PRINT
@@ -353,9 +409,9 @@ clf;
 hold on;
 angles = linspace(THETA, PHI, 3);
 for jj = 1:length(angles)
-    PHI = angles(jj);
-    R = [+cosd(PHI) -sind(PHI); 
-         +sind(PHI) +cosd(PHI)];
+    ZETA = angles(jj);
+    R = [+cosd(ZETA) -sind(ZETA); 
+         +sind(ZETA) +cosd(ZETA)];
     NL = (R * (LINE)')';
     NP = (R * (BAR_POINTS)')';
     NE = (R * (P_end)')';
@@ -363,23 +419,26 @@ for jj = 1:length(angles)
     delta_x = NL(end, 1);
     
     for ii = 1:BAR_COUNT
-        BAR_HL = 2 * (ii-1) * abs(delta_x);
+        BAR_REACH = 2 * (ii-1) * abs(delta_x);
         
         % guides
-        %plot(BAR_HL + NL(:,1),          jj +  NL(:,2), 'g');
-        %plot(BAR_HL + NL(:,1),          jj + -NL(:,2), 'g');
-        %plot(BAR_HL + NL([1,n],1),      jj + -NL([1,n],2), 'g * ');
-        %plot(BAR_HL + NL([1,n],1),      jj +  NL([1,n],2), 'g * ');
-        %plot(BAR_HL + NL(floor(n/2),1), jj +  NL(floor(n/2),2), 'g * ');
+        %plot(BAR_REACH + NL(:,1),          jj +  NL(:,2), 'g');
+        %plot(BAR_REACH + NL(:,1),          jj + -NL(:,2), 'g');
+        %plot(BAR_REACH + NL([1,n],1),      jj + -NL([1,n],2), 'g * ');
+        %plot(BAR_REACH + NL([1,n],1),      jj +  NL([1,n],2), 'g * ');
+        %plot(BAR_REACH + NL(floor(n/2),1), jj +  NL(floor(n/2),2), 'g * ');
         
         % bars
-        plot(BAR_HL + NP(:,1), delta_y + +NP(:,2), 'r');
-        plot(BAR_HL + NP(:,1), delta_y + -NP(:,2), 'b');
+        plot(BAR_REACH + NP(:,1), delta_y + +NP(:,2), 'r');
+        plot(BAR_REACH + NP(:,1), delta_y + -NP(:,2), 'b');
     end
     % end bars
-    BAR_HL = 2 * (BAR_COUNT) * abs(delta_x);
-    plot(BAR_HL + NE(:,1), delta_y +  NE(:,2), 'r');
-    plot(BAR_HL + NE(:,1), delta_y + -NE(:,2), 'b');
+    BAR_FAR_REACH = 2 * (BAR_COUNT) * abs(delta_x);
+    plot(BAR_FAR_REACH + NE(:,1), delta_y +  NE(:,2), 'r');
+    plot(BAR_FAR_REACH + NE(:,1), delta_y + -NE(:,2), 'b');
+    
+    % hook
+    plot(BAR_FAR_REACH + HOOK(:,1), delta_y + HOOK(:,2), 'g');
     
     % stablizer
     plot(STABLE_INNER(:,1), delta_y + STABLE_INNER(:,2), 'k');
@@ -402,38 +461,56 @@ saveas(1, 'lasercut_hookshot.svg')
 figure(2);
 clf;
 hold on;
-X_SEP = 1.0;
-X_START = 0.0;
+Y_SEP = BAR_L * 1.5;
 
-X_MIN = min(BAR_POINTS(:,1));
-X_MAX = max(BAR_POINTS(:,1));
-Y_MIN = min(BAR_POINTS(:,2));
-plot(BAR_POINTS(:,1) + X_START - X_MIN, BAR_POINTS(:,2) - Y_MIN)
-X_START = X_START + X_SEP + X_MAX - X_MIN;
+R = [+cosd(THETA) -sind(THETA); 
+     +sind(THETA) +cosd(THETA)];
+NL = (R * (LINE)')';
+NP = (R * (BAR_POINTS)')';
+NE = (R * (P_end)')';
+delta_x = NL(end, 1);
+delta_y = 0;
+BAR_FAR_REACH = 2 * (BAR_COUNT) * abs(delta_x);
 
-X_MIN = min(P_end(:,1));
-X_MAX = max(P_end(:,1));
-Y_MIN = min(P_end(:,2));
-plot(P_end(:,1) + X_START - X_MIN, P_end(:,2) - Y_MIN)
-X_START = X_START + X_SEP + X_MAX - X_MIN;
+% OUTER STABILIZER 1
+delta_y = delta_y + Y_SEP;
+plot(STABLE_OUTER(:,1), delta_y + STABLE_OUTER(:,2), 'c');
 
-X_MIN = min(STABLE_INNER(:,1));
-X_MAX = max(STABLE_INNER(:,1));
-Y_MIN = min(STABLE_INNER(:,2));
-plot(STABLE_INNER(:,1) + X_START - X_MIN, STABLE_INNER(:,2) - Y_MIN)
-X_START = X_START + X_SEP + X_MAX - X_MIN;
+% INNER STABILIZER 1
+delta_y = delta_y + Y_SEP;
+plot(delta_x + P_handle(:,1), delta_y - P_handle(:,2), 'g');
+plot(STABLE_INNER(:,1), delta_y - STABLE_INNER(:,2), 'g');
+plot(BAR_FAR_REACH + HOOK(:,1), delta_y + HOOK(:,2), 'g');
 
-X_MIN = min(STABLE_OUTER(:,1));
-X_MAX = max(STABLE_OUTER(:,1));
-Y_MIN = min(STABLE_OUTER(:,2));
-plot(STABLE_OUTER(:,1) + X_START - X_MIN, STABLE_OUTER(:,2) - Y_MIN)
-X_START = X_START + X_SEP + X_MAX - X_MIN;
+% BARS 1
+delta_y = delta_y + Y_SEP;
+for ii = 1:BAR_COUNT
+    BAR_REACH = 2 * (ii-1) * abs(delta_x);
+    plot(BAR_REACH + NP(:,1), delta_y + +NP(:,2), 'r');
+end
+plot(BAR_FAR_REACH + NE(:,1), delta_y +  NE(:,2), 'r');
+plot(delta_x + HANDLE_PIECE(:,1), delta_y - HANDLE_PIECE(:,2), 'r');
+plot(TOP_PIECE(:,1), delta_y + TOP_PIECE(:,2), 'r');
 
-X_MIN = min(P_handle(:,1));
-X_MAX = max(P_handle(:,1));
-Y_MIN = min(P_handle(:,2));
-plot(P_handle(:,1) + X_START - X_MIN, P_handle(:,2) - Y_MIN)
-X_START = X_START + X_SEP + X_MAX - X_MIN;
+% BARS 2
+delta_y = delta_y + Y_SEP;
+for ii = 1:BAR_COUNT
+    BAR_REACH = 2 * (ii-1) * abs(delta_x);
+    plot(BAR_REACH + NP(:,1), delta_y + -NP(:,2), 'b');
+end
+plot(BAR_FAR_REACH + NE(:,1), delta_y + -NE(:,2), 'b');
+plot(delta_x + HANDLE_PIECE(:,1), delta_y - HANDLE_PIECE(:,2), 'b');
+plot(TOP_PIECE(:,1), delta_y + TOP_PIECE(:,2), 'b');
+
+% INNER STABILIZER 2
+delta_y = delta_y + Y_SEP;
+plot(delta_x + P_handle(:,1), delta_y + P_handle(:,2), 'g');
+plot(STABLE_INNER(:,1), delta_y + STABLE_INNER(:,2), 'g');
+plot(BAR_FAR_REACH + HOOK(:,1), delta_y + HOOK(:,2), 'g');
+
+% OUTER STABILIZER 2
+delta_y = delta_y + Y_SEP;
+plot(STABLE_OUTER(:,1), delta_y + STABLE_OUTER(:,2), 'c');
 
 axis('equal');
 axis('off');
