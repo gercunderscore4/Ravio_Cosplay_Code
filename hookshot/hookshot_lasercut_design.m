@@ -219,8 +219,8 @@ H = [H;H(1,:)];
 
 % outside
 M = [
-     -1 * REACH_SHORT,   (           - REACH_SHORT);
-     +1 * REACH_SHORT, + (             REACH_SHORT);
+     -1 * REACH_SHORT,   (           - REACH_SHORT - BOLT_RAD);
+     +1 * REACH_SHORT, + (             REACH_SHORT - BOLT_RAD);
      +1 * REACH_SHORT, + (REACH_LONG + REACH_SHORT);
      -6 * REACH_SHORT, + (REACH_LONG + REACH_SHORT);
      -6 * REACH_SHORT, - (REACH_LONG + REACH_SHORT);
@@ -258,9 +258,9 @@ M = [([2 * REACH_SHORT, 0] +  HEAD_RAD * [-COS_ARC,  SIN_ARC]);
      BACK_EDGE,  REACH_LONG + REACH_SHORT;
     ];
 M = [M;
-     0,        REACH_LONG + REACH_SHORT;
-     0,                               REACH_SHORT;
-     -2 * REACH_SHORT,              - REACH_SHORT;
+     0,                  REACH_LONG + REACH_SHORT;
+     0,                               REACH_SHORT - BOLT_RAD;
+     -2 * REACH_SHORT,              - REACH_SHORT - BOLT_RAD;
      -2 * REACH_SHORT, - REACH_LONG - REACH_SHORT;
      flipud([M(:,1), -M(:,2)]);
      M(1,:)];
