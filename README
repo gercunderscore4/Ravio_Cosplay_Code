@@ -14,28 +14,115 @@ There is also a physical log book for this project. Not all notes will be stored
 
 TODO
 ----
-- Code
-    - PWM sound on ATtiny
-    - Solendoid for motor
-    - Accelerometer
-- Design
-    - Hookshot
-    - Accelerometer circuit
-    - Stall detection circuit
-- Program
-    - Fire Rod (template for Ice, Sand)
-    - Not-Bomb
-- Buy
-    - Boots
-    - Lasercut hookshot
-- Swimsuit version
-    - Craft foam
-    - Purple hawaian shirt
-    - Pool Noodles
-- Extras
-    - Re-rew right eye
-    - Add telestereoscope
+Hammer:
+    - Cut handle hole
+    - Sew fabric
+    - Glue handle
+    - Close fabric by hand
+    - wrap handle
+Boomerang:
+>   - Wait for paint to dry (Wednesday evening)
+    - Paint yellow
+>   - Wait for yellow paint to dry
+Bow:
+    - Finalize design
+    - Cut pipes and wooden handle
+    - Sand wooden handle to be flatter and fit in pipes
+    - Cut three layers of EVA foam
+    - Glue foam with pipes
+    - Shape and sand
+    - Heat
+    - Caulk gaps
+>   - Wait for caulk to dry
+    - Spray plastic
+>   - Wait for plastic to dry
+    - Spray paint
+>   - Wait for paint to dry
+    - Wrap handle
+Arrow:
+    - Cut dowel
+    - Find a fake feather to use
+    - Cut slot in back
+    - Glue fake feather into slot
+    - Cut tip out of rubber foam
+    - Sew grey cloth over tip
+    - Glue tip to front
+Chest:
+    - Second coat of gold
+    - Cut latch out of thick EVA foam
+    - Heat latch
+    - Spray latch with plastic
+>   - Wait for plastic to dry
+    - Paint latch
+>   - Wait for paint to dry
+    - Draw circuit
+    - Solder circuit
+    - Glue circuit to base
+    - Finish gluing base pieces
+    - Glue base to chest
+    - Glue trim to chest
+Boots:
+    - Buy at Payless or Walmart
+Hookshot:
+    - Finalize SVG file
+    - Send to get cut
+>   - Get cut pieces
+    - Paint
+>   - Wait for paint to dry
+    - Buy more bolts
+    - Bolt and glue
+    - Cut EVA to shape
+    - Heat EVA
+>   - Spray EVA with plastic
+    - Paint EVA
+>   - Wait for paint to dry
+    - Glue EVA
+    - Cut hook foam
+    - Cut fabric to cover foam
+    - Sew fabric over foam
+    - Tie hook to hookshot
+Maps:
+    - Determine best orientation and size on paper
+    - Test tea method on any random paper
+    - Order 300
+>   - Weather all
+Rod:
+    - Shape and sand rod base
+    - Glue connector to rod
+    - Cover connecting parts
+    - Spray rod and connector with plastic
+>   - Wait for plastic to dry
+    - Paint rod
+>   - Wait for paint to dry
+    - Program PWM sound on ATtiny
+    - Program sequence
+    -
+Not-Bomb:
+    - Design circuit
+    - Test pressure button
+    - 
+Tornado Rod:
+    - Buy wide pipe
+    - Buy more EVA foam
+    - Design stall detection circuit
+    - Solder circuit
+    - 
+Swimsuit version:
+    - Make mask pattern
+    - Cut craft foam
+    - Glue craft foam 
+    - Glue foam to sunglasses
+    - Find 
+    - Find bakc pool noodle material
+    - Cut black pool-noodle material to fin inside blue noodle
+    - Cut blue noodle into measured sections (match scarf)
+    - Place blue sections on black core and glue end pieces
+    - Sew purple hawaian shirt
+Extras:
+    - Re-sew right eye
+    - Add telestereoscope to hat
     - Add comb to hat to hold hat in place
+    - Style wig
 
 
 #==============#============#============#========#
@@ -69,13 +156,13 @@ TODO
 +--------------+------------+------------+--------+
 | Tornado Rod  |     M      |     H      |        |
 +--------------+------------+------------+--------+
-| Hammer       |     L      |     H      |   50%  |
+| Hammer       |     L      |     H      |   60%  |
 +--------------+------------+------------+--------+
 | Sand Rod     |     H      |     M      |   50%  |
 +--------------+------------+------------+--------+
-| Hookshot     |     H      |     M      |   30%  |
+| Hookshot     |     H      |     M      |   40%  |
 +--------------+------------+------------+--------+
-| Boomerang    |     L      |     M      |   75%  |
+| Boomerang    |     L      |     M      |   80%  |
 +--------------+------------+------------+--------+
 | Bow          |     L      |     L      |   10%  |
 #==============#============#============#========#
