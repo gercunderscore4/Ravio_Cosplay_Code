@@ -12,6 +12,10 @@ I'll admit it, I'd keep this code private, except that I really like the conveni
 There is also a physical log book for this project. Not all notes will be stored here.
 
 
+SHOPPING LIST
+-------------
+
+
 TODO
 ----
 Hammer:
@@ -62,7 +66,7 @@ Chest:
     - Glue base to chest
     - Glue trim to chest
 Boots:
-    - Buy at Payless or Walmart
+    - Buy
 Hookshot:
     - Finalize SVG file
     - Send to get cut
@@ -86,8 +90,9 @@ Maps:
     - Test tea method on any random paper
     - Order 300
 >   - Weather all
-Rod:
+Fire/Ice Rod (and electronics for Sand):
     - Shape and sand rod base
+    - Fill top with pink foam around edge (to inner radius of connector)
     - Glue connector to rod
     - Cover connecting parts
     - Spray rod and connector with plastic
@@ -96,24 +101,60 @@ Rod:
 >   - Wait for paint to dry
     - Program PWM sound on ATtiny
     - Program sequence
-    -
+    - Solder circuit
+    - Drill hole in lower connector for speaker connector
+    - Cut pink foam into shape
+    - Design cross-guard pattern
+    - Sew cross-guard in place
+    - Paint gem interior
+    - Place LEDs and polyfill in gem
+    - Join gem to top connector
+    - Seal gem
+    - Connect electronics
+    - Insert electronics
+    - Connect gem to rod
 Not-Bomb:
-    - Design circuit
-    - Test pressure button
-    - 
+    - Design pressure button (use ATtiny sleep function?)
+    - Design rest of circuit
+        - Vibration motors with solenoid
+        - Fuse LEDs
+        - Red LEDs
+        - Speaker
+    - Program sequence (requires PWM sound)
+    - Solder circuit
+    - Seal circuits in anti-static bags (grey)
+    - Cut rubber foam into shape (include cylinder on top and fuse)
+    - Cut small longitudinal slit near cylinder to access hollowed center
+    - Place circuit in foam (insert lights into shallow cuts)
+    - Sew bomb exterior (simple ladder stitch over main slit)
 Tornado Rod:
     - Buy wide pipe
     - Buy more EVA foam
+    - Fill base with EVA foam
+    - Glue thick layer of EVA foam around rod
+    - Shape EVA foam (cut slot for switch)
+    - Heat EVA foam
+    - Spray plastic on EVA foam
+>   - Wait for plastic to dry
+    - Paint
+>   - Wait for paint to dry
+    - Cut rubber foam into fan section
+    - Glue RC car tire into rubber foam base
+    - Sew fabric over rubber foam
+    - Connect motor to wheel
     - Design stall detection circuit
     - Solder circuit
-    - 
+    - Hot glue circuits and pink foam in place (tell people to be gentle)
+
+TO-NOT-DO
+---------
 Swimsuit version:
     - Make mask pattern
     - Cut craft foam
     - Glue craft foam 
     - Glue foam to sunglasses
     - Find 
-    - Find bakc pool noodle material
+    - Find black pool noodle material
     - Cut black pool-noodle material to fin inside blue noodle
     - Cut blue noodle into measured sections (match scarf)
     - Place blue sections on black core and glue end pieces
