@@ -13,17 +13,9 @@
 % Then another layer to help protect the heads.
 % The laser-cut matieral needs to be sized to the bolt/head width.
 % Either get thicker material or double-up certain layers.
-
-% TODO:
-%   - Figure out how to make the handle slide smoothly.
-%   - Finish the first stabilizer.
-%   - Design the second stabilizer.
-%   - Determine thickness.
-%   - Design the covers.
-%   - Set exterior sizes to help sand into a cylinder.
-%   - Edit SVG manually to finess edges.
-%   - Format SVG for cutting.
-%   - Order cut.
+%
+% There are some sight adjustments that were made in the SVG file.
+% I'm not going to fix those unless I see a point in it (e.g. future use). 
 
 clear;
 clc;
@@ -76,7 +68,10 @@ REACH_SHORT = BAR_HL * sind(THETA);
 
 FRONT_EDGE = (2 * BAR_COUNT + 1) * REACH_SHORT;
 BACK_EDGE  = -(6 * REACH_SHORT + REACH_LONG);
+TOP_HEIGHT = REACH_LONG + BAR_W;
 
+BOX_LENGTH = FRONT_EDGE - BACK_EDGE
+BOX_HEIGHT = TOP_HEIGHT * 2
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % GENERIC CIRCLE (FOR EASY PLOTTING)
@@ -252,7 +247,7 @@ P_handle = [
 
 % center line
 M = [([2 * REACH_SHORT, 0] +  HEAD_RAD * [-COS_ARC,  SIN_ARC]);
-     FRONT_EDGE, HEAD_RAD;
+     FRONT_EDGE + BAR_COUNT * HEAD_RAD * (SIN_ARC - 1), HEAD_RAD + HEAD_RAD * (1 - COS_ARC);
      FRONT_EDGE, REACH_LONG + BAR_W;
      BACK_EDGE,  REACH_LONG + BAR_W;
      BACK_EDGE,  REACH_LONG + REACH_SHORT;
@@ -381,16 +376,6 @@ HANDLE_PIECE = [
                 ];
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% HOOK
-
-% put it all together
-HOOK = [
-        BAR_HW * UNIT_CIRCLE;
-        NaN, NaN;
-        HEAD_RAD * UNIT_CIRCLE;
-        ];
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % PRINT
 
 fprintf('bar (pair) count = %d\n', BAR_COUNT)
@@ -420,29 +405,18 @@ for jj = 1:length(angles)
     
     for ii = 1:BAR_COUNT
         BAR_REACH = 2 * (ii-1) * abs(delta_x);
-        
-        % guides
-        %plot(BAR_REACH + NL(:,1),          jj +  NL(:,2), 'g');
-        %plot(BAR_REACH + NL(:,1),          jj + -NL(:,2), 'g');
-        %plot(BAR_REACH + NL([1,n],1),      jj + -NL([1,n],2), 'g * ');
-        %plot(BAR_REACH + NL([1,n],1),      jj +  NL([1,n],2), 'g * ');
-        %plot(BAR_REACH + NL(floor(n/2),1), jj +  NL(floor(n/2),2), 'g * ');
-        
         % bars
         plot(BAR_REACH + NP(:,1), delta_y + +NP(:,2), 'r');
-        plot(BAR_REACH + NP(:,1), delta_y + -NP(:,2), 'b');
+        plot(BAR_REACH + NP(:,1), delta_y + -NP(:,2), 'c');
     end
     % end bars
     BAR_FAR_REACH = 2 * (BAR_COUNT) * abs(delta_x);
     plot(BAR_FAR_REACH + NE(:,1), delta_y +  NE(:,2), 'r');
-    plot(BAR_FAR_REACH + NE(:,1), delta_y + -NE(:,2), 'b');
-    
-    % hook
-    plot(BAR_FAR_REACH + HOOK(:,1), delta_y + HOOK(:,2), 'g');
+    plot(BAR_FAR_REACH + NE(:,1), delta_y + -NE(:,2), 'c');
     
     % stablizer
-    plot(STABLE_INNER(:,1), delta_y + STABLE_INNER(:,2), 'k');
-    plot(STABLE_OUTER(:,1), delta_y + STABLE_OUTER(:,2), 'c');
+    plot(STABLE_INNER(:,1), delta_y + STABLE_INNER(:,2), 'g');
+    plot(STABLE_OUTER(:,1), delta_y + STABLE_OUTER(:,2), 'b');
     
     % handle
     plot(delta_x + P_handle(:,1), delta_y + P_handle(:,2), 'g');
@@ -474,13 +448,12 @@ BAR_FAR_REACH = 2 * (BAR_COUNT) * abs(delta_x);
 
 % OUTER STABILIZER 1
 delta_y = delta_y + Y_SEP;
-plot(STABLE_OUTER(:,1), delta_y + STABLE_OUTER(:,2), 'c');
+plot(STABLE_OUTER(:,1), delta_y + STABLE_OUTER(:,2), 'b');
 
 % INNER STABILIZER 1
 delta_y = delta_y + Y_SEP;
 plot(delta_x + P_handle(:,1), delta_y - P_handle(:,2), 'g');
 plot(STABLE_INNER(:,1), delta_y - STABLE_INNER(:,2), 'g');
-plot(BAR_FAR_REACH + HOOK(:,1), delta_y + HOOK(:,2), 'g');
 
 % BARS 1
 delta_y = delta_y + Y_SEP;
@@ -491,26 +464,6 @@ end
 plot(BAR_FAR_REACH + NE(:,1), delta_y +  NE(:,2), 'r');
 plot(delta_x + HANDLE_PIECE(:,1), delta_y - HANDLE_PIECE(:,2), 'r');
 plot(TOP_PIECE(:,1), delta_y + TOP_PIECE(:,2), 'r');
-
-% BARS 2
-delta_y = delta_y + Y_SEP;
-for ii = 1:BAR_COUNT
-    BAR_REACH = 2 * (ii-1) * abs(delta_x);
-    plot(BAR_REACH + NP(:,1), delta_y + -NP(:,2), 'b');
-end
-plot(BAR_FAR_REACH + NE(:,1), delta_y + -NE(:,2), 'b');
-plot(delta_x + HANDLE_PIECE(:,1), delta_y - HANDLE_PIECE(:,2), 'b');
-plot(TOP_PIECE(:,1), delta_y + TOP_PIECE(:,2), 'b');
-
-% INNER STABILIZER 2
-delta_y = delta_y + Y_SEP;
-plot(delta_x + P_handle(:,1), delta_y + P_handle(:,2), 'g');
-plot(STABLE_INNER(:,1), delta_y + STABLE_INNER(:,2), 'g');
-plot(BAR_FAR_REACH + HOOK(:,1), delta_y + HOOK(:,2), 'g');
-
-% OUTER STABILIZER 2
-delta_y = delta_y + Y_SEP;
-plot(STABLE_OUTER(:,1), delta_y + STABLE_OUTER(:,2), 'c');
 
 axis('equal');
 axis('off');
