@@ -14,34 +14,29 @@ There is also a physical log book for this project. Not all notes will be stored
 
 TASKS FOR TODAY
 ---------------
-    - Spray plastic on rod base and connector (2/4)
-    - Glue bow (3/5)
+    - Order remaining electronic parts:
+        - motor and wheel
+        - accelerometers
+        - several T85s and T84s
+        - several single/double AA/AAA holders
+        - connector cables
+        - small speakers
     - Shape bow
-    - Solder chest circuit (1/2)
-    - Glue chest circuit
     - Insert chest base
-    - Glue chest trim
+    - Glue chest trim (5/7)
 
 
 SHOPPING LIST
 -------------
-    - Thinner acrylic paints
     - Boots
     - More rug fabrics
-    - More bolts (need one >1.5")
-    - Bolt thread adhesive
 
 
 TODO
 ----
 Hammer:
-    - Cut handle hole
-    - Sew fabric
-    - Glue handle
-    - Close fabric by hand
     - wrap handle
 Bow:
-   - Glue foam
     - Drill hole through EVA for string
     - Shape and sand
     - Caulk gaps
@@ -57,9 +52,6 @@ Arrow:
     - Sew grey cloth over tip
     - Glue tip to front
 Chest:
-    - Solder circuit
-    - Glue circuit to base
-    - Finish gluing base pieces
     - Glue base to chest
     - Glue trim to chest
 Boots:
@@ -83,8 +75,6 @@ Hookshot:
 Maps:
     - Weather with tea
 Fire/Ice Rod (and electronics for Sand):
-    - Spray rod and connector with plastic
->   - Wait for plastic to dry
     - Paint rod
 >   - Wait for paint to dry
     - Program PWM sound on ATtiny
@@ -116,7 +106,6 @@ Not-Bomb:
     - Place circuit in foam (insert lights into shallow cuts)
     - Sew bomb exterior (simple ladder stitch over main slit)
 Tornado Rod:
-    - Buy wide pipe
     - Buy more EVA foam
     - Fill base with EVA foam
     - Glue thick layer of EVA foam around rod
@@ -193,7 +182,7 @@ Extras:
 +--------------+------------+------------+--------+
 | Tornado Rod  |     M      |     H      |        |
 +--------------+------------+------------+--------+
-| Hammer       |     L      |     H      |   65%  |
+| Hammer       |     L      |     H      |   90%  |
 +--------------+------------+------------+--------+
 | Sand Rod     |     H      |     M      |   50%  |
 +--------------+------------+------------+--------+
@@ -201,11 +190,11 @@ Extras:
 +--------------+------------+------------+--------+
 | Boomerang    |     L      |     M      |  100%  |
 +--------------+------------+------------+--------+
-| Bow          |     L      |     L      |   60%  |
+| Bow          |     L      |     L      |   70%  |
 #==============#============#============#========#
 | SHOP                                            |
 #==============#============#============#========#
-| Chest        |     H      |     H      |   80%  |
+| Chest        |     H      |     H      |   90%  |
 +--------------+------------+------------+--------+
 | Rupees       |     L      |     M      |  100%  |
 +--------------+------------+------------+--------+
