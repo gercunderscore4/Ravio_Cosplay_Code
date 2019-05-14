@@ -14,6 +14,7 @@ There is also a physical log book for this project. Not all notes will be stored
 
 TASKS FOR TODAY
 ---------------
+    - Connect to new accelerometer
     - Order remaining electronic parts:
         - motor and wheel
         - accelerometers
@@ -22,8 +23,7 @@ TASKS FOR TODAY
         - connector cables
         - small speakers
     - Shape bow
-    - Insert chest base
-    - Glue chest trim (5/7)
+    - Glue final switch to chest
 
 
 SHOPPING LIST
@@ -34,8 +34,6 @@ SHOPPING LIST
 
 TODO
 ----
-Hammer:
-    - wrap handle
 Bow:
     - Drill hole through EVA for string
     - Shape and sand
@@ -52,8 +50,7 @@ Arrow:
     - Sew grey cloth over tip
     - Glue tip to front
 Chest:
-    - Glue base to chest
-    - Glue trim to chest
+    - Glue final switch to chest
 Boots:
     - Buy
 Hookshot:
@@ -127,8 +124,6 @@ Rug:
     - Buy orange fabric (what?)
     - Sew two long sections together into a square (French seam)
     - Hem edges
-    - Cut detail patterns
-    - Sew on details
 
 
 TO-NOT-DO
@@ -144,11 +139,17 @@ Swimsuit version:
     - Cut blue noodle into measured sections (match scarf)
     - Place blue sections on black core and glue end pieces
     - Sew purple hawaian shirt
-Extras:
+Hat:
     - Re-sew right eye
     - Add telestereoscope to hat
     - Add comb to hat to hold hat in place
+Wig:
     - Style wig
+Chest:
+    - Touch up chest paint
+Rug:
+    - Cut detail patterns
+    - Sew on details
 
 
 #==============#============#============#========#
@@ -182,7 +183,7 @@ Extras:
 +--------------+------------+------------+--------+
 | Tornado Rod  |     M      |     H      |        |
 +--------------+------------+------------+--------+
-| Hammer       |     L      |     H      |   90%  |
+| Hammer       |     L      |     H      |  100%  |
 +--------------+------------+------------+--------+
 | Sand Rod     |     H      |     M      |   50%  |
 +--------------+------------+------------+--------+
@@ -194,7 +195,7 @@ Extras:
 #==============#============#============#========#
 | SHOP                                            |
 #==============#============#============#========#
-| Chest        |     H      |     H      |   90%  |
+| Chest        |     H      |     H      |   99%  |
 +--------------+------------+------------+--------+
 | Rupees       |     L      |     M      |  100%  |
 +--------------+------------+------------+--------+
