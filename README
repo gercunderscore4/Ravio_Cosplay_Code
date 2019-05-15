@@ -14,16 +14,7 @@ There is also a physical log book for this project. Not all notes will be stored
 
 TASKS FOR TODAY
 ---------------
-    - Connect to new accelerometer
-    - Order remaining electronic parts:
-        - motor and wheel
-        - accelerometers
-        - several T85s and T84s
-        - several single/double AA/AAA holders
-        - connector cables
-        - small speakers
     - Shape bow
-    - Glue final switch to chest
 
 
 SHOPPING LIST
@@ -49,8 +40,6 @@ Arrow:
     - Cut tip out of rubber foam
     - Sew grey cloth over tip
     - Glue tip to front
-Chest:
-    - Glue final switch to chest
 Boots:
     - Buy
 Hookshot:
@@ -72,7 +61,6 @@ Hookshot:
 Maps:
     - Weather with tea
 Fire/Ice Rod (and electronics for Sand):
-    - Paint rod
 >   - Wait for paint to dry
     - Program PWM sound on ATtiny
     - Program sequence
@@ -103,22 +91,22 @@ Not-Bomb:
     - Place circuit in foam (insert lights into shallow cuts)
     - Sew bomb exterior (simple ladder stitch over main slit)
 Tornado Rod:
-    - Buy more EVA foam
-    - Fill base with EVA foam
+    - Fill with EVA foam
     - Glue thick layer of EVA foam around rod
     - Shape EVA foam (cut slot for switch)
     - Heat EVA foam
     - Spray plastic on EVA foam
 >   - Wait for plastic to dry
-    - Paint
+    - Paint brown
+>   - Wait for paint to dry
+    - Paint dark green
+>   - Wait for paint to dry
+    - Paint light green
 >   - Wait for paint to dry
     - Cut rubber foam into fan section
     - Glue RC car tire into rubber foam base
     - Sew fabric over rubber foam
-    - Connect motor to wheel
-    - Design stall detection circuit
-    - Solder circuit
-    - Hot glue circuits and pink foam in place (tell people to be gentle)
+    - Build elatic car motor contraption into fan arms
 Rug:
     - Buy more fabric, 4 times width
     - Buy orange fabric (what?)
@@ -150,6 +138,8 @@ Chest:
 Rug:
     - Cut detail patterns
     - Sew on details
+Pet:
+
 
 
 #==============#============#============#========#
@@ -170,18 +160,16 @@ Rug:
 | Ears         |     L      |     L      |  100%  |
 +--------------+------------+------------+--------+
 | Shoes        |     L      |     XL     |    5%  |
-+--------------+------------+------------+--------+
-| LED Shirt    |     H      |     XL     |    1%  |
 #==============#============#============#========#
 | WEAPONS                                         |
 #==============#============#============#========#
-| Fire Rod     |     H      |     XH     |   20%  |
+| Fire Rod     |     H      |     XH     |   25%  |
 +--------------+------------+------------+--------+
-| Ice Rod      |     H      |     H      |        |
+| Ice Rod      |     H      |     H      |   20%  |
 +--------------+------------+------------+--------+
-| Not-Bomb     |     H      |     H      |        |
+| Not-Bomb     |     H      |     H      |    5%  |
 +--------------+------------+------------+--------+
-| Tornado Rod  |     M      |     H      |        |
+| Tornado Rod  |     M      |     H      |   10%  |
 +--------------+------------+------------+--------+
 | Hammer       |     L      |     H      |  100%  |
 +--------------+------------+------------+--------+
@@ -195,21 +183,21 @@ Rug:
 #==============#============#============#========#
 | SHOP                                            |
 #==============#============#============#========#
-| Chest        |     H      |     H      |   99%  |
+| Chest        |     H      |     H      |  100%  |
 +--------------+------------+------------+--------+
 | Rupees       |     L      |     M      |  100%  |
 +--------------+------------+------------+--------+
-| Item Ears    |     M      |     L      |        |
+| Item Ears    |     M      |     L      |   N/A  |
 +--------------+------------+------------+--------+
 | Rug          |     M      |     L      |   10%  |
 +--------------+------------+------------+--------+
-| Pot          |     M      |     L      |        |
+| Pot          |     M      |     L      |   N/A  |
 +--------------+------------+------------+--------+
 | Bush         |     L      |     L      |   90%  |
 +--------------+------------+------------+--------+
 | Maps         |     L      |     L      |   95%  |
 +--------------+------------+------------+--------+
-| Sheerow      |     H      |     XL     |        |
+| Pet          |     H      |     XL     |   N/A  |
 +--------------+------------+------------+--------+
 | Sign         |     L      |     XL     |        |
 +--------------+------------+------------+--------+
