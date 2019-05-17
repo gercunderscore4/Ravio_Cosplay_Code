@@ -14,7 +14,6 @@ There is also a physical log book for this project. Not all notes will be stored
 
 TASKS FOR TODAY
 ---------------
-    - Shape bow
 
 
 SHOPPING LIST
@@ -25,28 +24,15 @@ SHOPPING LIST
 
 TODO
 ----
-Bow:
-    - Drill hole through EVA for string
-    - Shape and sand
-    - Caulk gaps
->   - Wait for caulk to dry
-    - Tie string
 Arrow:
-    - Wait for bow
-    - Cut dowel
-    - Find a fake feather to use
-    - Cut slot in back
+    - Cut thin EVA for fletching
     - Glue fake feather into slot
-    - Cut tip out of rubber foam
-    - Sew grey cloth over tip
     - Glue tip to front
 Boots:
     - Buy
 Hookshot:
->   - Get cut pieces
     - Paint
 >   - Wait for paint to dry
-    - Buy more bolts
     - Bolt and glue
     - Cut EVA to shape
     - Heat EVA
@@ -58,10 +44,7 @@ Hookshot:
     - Cut fabric to cover foam
     - Sew fabric over foam
     - Tie hook to hookshot
-Maps:
-    - Weather with tea
 Fire/Ice Rod (and electronics for Sand):
->   - Wait for paint to dry
     - Program PWM sound on ATtiny
     - Program sequence
     - Solder circuit
@@ -155,7 +138,7 @@ Pet:
 +--------------+------------+------------+--------+
 | Bag          |     M      |     M      |  100%  |
 +--------------+------------+------------+--------+
-| Wig          |     L      |     L      |   20%  |
+| Wig          |     L      |     L      |   N/A  |
 +--------------+------------+------------+--------+
 | Ears         |     L      |     L      |  100%  |
 +--------------+------------+------------+--------+
@@ -175,11 +158,11 @@ Pet:
 +--------------+------------+------------+--------+
 | Sand Rod     |     H      |     M      |   50%  |
 +--------------+------------+------------+--------+
-| Hookshot     |     H      |     M      |   50%  |
+| Hookshot     |     H      |     M      |   55%  |
 +--------------+------------+------------+--------+
 | Boomerang    |     L      |     M      |  100%  |
 +--------------+------------+------------+--------+
-| Bow          |     L      |     L      |   70%  |
+| Bow          |     L      |     L      |   90%  |
 #==============#============#============#========#
 | SHOP                                            |
 #==============#============#============#========#
@@ -220,6 +203,7 @@ http://www.technoblogy.com/show?20W6
 http://www.technoblogy.com/show?25TN
 https://github.com/corna/watch/tree/master/software
 https://blog.podkalicki.com/attiny13-pseudo-random-numbers/
+https://github.com/adafruit/Adafruit_TinyFlash
 
 
 Datasheets and References
