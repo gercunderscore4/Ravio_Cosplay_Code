@@ -5,7 +5,7 @@
 DEVICE     = attiny85
 CLOCK      = 8000000
 PROGRAMMER = -c usbtiny
-LIBRARIES  = sound.h
+LIBRARIES  = 
 OBJECTS    = main.o
 OBJECTS   += $(LIBRARIES)
 # for ATTiny85

@@ -35,9 +35,10 @@
 #include "APA102.h"
 #include "InterruptAudio.h"
 #include "Accel.h"
+#include "stdlib.h"
 
 
-#define LED_COUNT 1
+#define LED_COUNT 14
 
 /****************************************************************
  * MAIN
@@ -49,28 +50,234 @@ int main (void)
     APA102Init(leds, LED_COUNT);
 
     int16_t x, y, z;
-    uint8_t r, g, b;
-    uint8_t d, divindex, octave;
-    uint16_t f;
+    //uint8_t r, g, b;
+    //uint16_t f;
     accelInit();
 
+    //uint8_t d;
+    uint8_t divindex = NOTE_C;
+    uint8_t octave = 4;
     init_audio();
 
+    int i;
+
+
     while (1) {
-        accelUpdate(&x, &y, &z, &r, &g, &b, &d, &f);
+        // activate if over 4 gravities
+        accelRead(&x,&y,&z);
+        if (abs(y / 0x4000)) {
+            // magic sound
+            // C4 -> E4
+            // F4 -> G#4, loop 4 times
 
-        leds[0].red   = r >> 0;
-        leds[0].green = g >> 0;
-        leds[0].blue  = b >> 0;
-        APA102WriteColors(leds, LED_COUNT);
+            // lights:
+            // C4 -> E4, F4 -> G#4
+            // red travels along LEDs
+            // F4 -> G#4
+            // yellow travels along LEDs, fast pace
+            // F4 -> G#4, F4 -> G#4
+            // darkness travels along LEDs, fast pace
+            
+            // NNN  0  1  2  3  4  5  6  7  8  9 10 11 12
+            // C4   .  .  .  .  .  .  .  .  .  .  .  .  .
+            // C#4  R  .  .  .  .  .  .  .  .  .  .  .  .
+            // D4   R  R  .  .  .  .  .  .  .  .  .  .  .
+            // D#4  R  R  R  .  .  .  .  .  .  .  .  .  .
+            // E4   R  R  R  R  R  .  .  .  .  .  .  .  .
+            // F4   R  R  R  R  R  R  R  .  .  .  .  .  .
+            // F#4  R  R  R  R  R  R  R  R  R  .  .  .  .
+            // G4   R  R  R  R  R  R  R  R  R  R  R  R  .
+            // G#4  R  R  R  R  R  R  R  R  R  R  R  R  R
 
-        divindex = d<<3;
-        octave = 0;
-        while (divindex >= DIVISORS_SIZE) {
-            divindex -= DIVISORS_SIZE;
-            octave += 1;
+            divindex = NOTE_C;
+            octave = 4;
+            i = 0;
+
+            // C4
+            tone(divindex, octave, 1);
+            inc_half(&divindex, &octave);
+            APA102WriteColors(leds, LED_COUNT);
+            // C#4 0
+            leds[i++].red = 0xFF;
+            tone(divindex, octave, 1);
+            inc_half(&divindex, &octave);
+            APA102WriteColors(leds, LED_COUNT);
+            // D4  1
+            leds[i++].red = 0xFF;
+            tone(divindex, octave, 1);
+            inc_half(&divindex, &octave);
+            APA102WriteColors(leds, LED_COUNT);
+            // D#4 2
+            leds[i++].red = 0xFF;
+            tone(divindex, octave, 1);
+            inc_half(&divindex, &octave);
+            APA102WriteColors(leds, LED_COUNT);
+            // E4  3,4
+            leds[i++].red = 0xFF;
+            leds[i++].red = 0xFF;
+            tone(divindex, octave, 1);
+            inc_half(&divindex, &octave);
+            APA102WriteColors(leds, LED_COUNT);
+            // F4  5,6
+            leds[i++].red = 0xFF;
+            leds[i++].red = 0xFF;
+            tone(divindex, octave, 1);
+            inc_half(&divindex, &octave);
+            APA102WriteColors(leds, LED_COUNT);
+            // F#4 7,8
+            leds[i++].red = 0xFF;
+            leds[i++].red = 0xFF;
+            tone(divindex, octave, 1);
+            inc_half(&divindex, &octave);
+            APA102WriteColors(leds, LED_COUNT);
+            // G4  9,10,11
+            leds[i++].red = 0xFF;
+            leds[i++].red = 0xFF;
+            leds[i++].red = 0xFF;
+            tone(divindex, octave, 1);
+            inc_half(&divindex, &octave);
+            APA102WriteColors(leds, LED_COUNT);
+            // G#4 12
+            leds[i++].red = 0xFF;
+            tone(divindex, octave, 1);
+            inc_half(&divindex, &octave);
+            APA102WriteColors(leds, LED_COUNT);
+
+            // NNN  0  1  2  3  4  5  6  7  8  9 10 11 12
+            // F4   Y  Y  Y  R  R  R  R  R  R  R  R  R  R
+            // F#4  Y  Y  Y  Y  Y  Y  R  R  R  R  R  R  R
+            // G4   Y  Y  Y  Y  Y  Y  Y  Y  Y  R  R  R  R
+            // G#4  Y  Y  Y  Y  Y  Y  Y  Y  Y  Y  Y  Y  Y
+            divindex = NOTE_F;
+            i = 0;
+            // F4  0,1,2
+            leds[i++].green = 0xFF;
+            leds[i++].green = 0xFF;
+            leds[i++].green = 0xFF;
+            tone(divindex, octave, 1);
+            inc_half(&divindex, &octave);
+            APA102WriteColors(leds, LED_COUNT);
+            // F#4 3,4,5
+            leds[i++].green = 0xFF;
+            leds[i++].green = 0xFF;
+            leds[i++].green = 0xFF;
+            tone(divindex, octave, 1);
+            inc_half(&divindex, &octave);
+            APA102WriteColors(leds, LED_COUNT);
+            // G4  6,7,8
+            leds[i++].green = 0xFF;
+            leds[i++].green = 0xFF;
+            leds[i++].green = 0xFF;
+            tone(divindex, octave, 1);
+            inc_half(&divindex, &octave);
+            APA102WriteColors(leds, LED_COUNT);
+            // G#4  9,10,11,12
+            leds[i++].green = 0xFF;
+            leds[i++].green = 0xFF;
+            leds[i++].green = 0xFF;
+            leds[i++].green = 0xFF;
+            tone(divindex, octave, 1);
+            inc_half(&divindex, &octave);
+            APA102WriteColors(leds, LED_COUNT);
+
+            // repeat with blue
+            divindex = NOTE_F;
+            i = 0;
+            // F4  0,1,2
+            leds[i++].blue = 0xFF;
+            leds[i++].blue = 0xFF;
+            leds[i++].blue = 0xFF;
+            tone(divindex, octave, 1);
+            inc_half(&divindex, &octave);
+            APA102WriteColors(leds, LED_COUNT);
+            // F#4 3,4,5
+            leds[i++].blue = 0xFF;
+            leds[i++].blue = 0xFF;
+            leds[i++].blue = 0xFF;
+            tone(divindex, octave, 1);
+            inc_half(&divindex, &octave);
+            APA102WriteColors(leds, LED_COUNT);
+            // G4  6,7,8
+            leds[i++].blue = 0xFF;
+            leds[i++].blue = 0xFF;
+            leds[i++].blue = 0xFF;
+            tone(divindex, octave, 1);
+            inc_half(&divindex, &octave);
+            APA102WriteColors(leds, LED_COUNT);
+            // G#4  9,10,11,12
+            leds[i++].blue = 0xFF;
+            leds[i++].blue = 0xFF;
+            leds[i++].blue = 0xFF;
+            leds[i++].blue = 0xFF;
+            tone(divindex, octave, 1);
+            inc_half(&divindex, &octave);
+            APA102WriteColors(leds, LED_COUNT);
+
+            // repeat with black
+            divindex = NOTE_F;
+            i = 0;
+            // F4  0,1,2
+            leds[i].red = 0x00;
+            leds[i].green = 0x00;
+            leds[i++].blue = 0x00;
+            leds[i].red = 0x00;
+            leds[i].green = 0x00;
+            leds[i++].blue = 0x00;
+            leds[i].red = 0x00;
+            leds[i].green = 0x00;
+            leds[i++].blue = 0x00;
+            tone(divindex, octave, 1);
+            inc_half(&divindex, &octave);
+            APA102WriteColors(leds, LED_COUNT);
+            // F#4 3,4,5
+            leds[i].red = 0x00;
+            leds[i].green = 0x00;
+            leds[i++].blue = 0x00;
+            leds[i].red = 0x00;
+            leds[i].green = 0x00;
+            leds[i++].blue = 0x00;
+            leds[i].red = 0x00;
+            leds[i].green = 0x00;
+            leds[i++].blue = 0x00;
+            tone(divindex, octave, 1);
+            inc_half(&divindex, &octave);
+            APA102WriteColors(leds, LED_COUNT);
+            // G4  6,7,8
+            leds[i].red = 0x00;
+            leds[i].green = 0x00;
+            leds[i++].blue = 0x00;
+            leds[i].red = 0x00;
+            leds[i].green = 0x00;
+            leds[i++].blue = 0x00;
+            leds[i].red = 0x00;
+            leds[i].green = 0x00;
+            leds[i++].blue = 0x00;
+            tone(divindex, octave, 1);
+            inc_half(&divindex, &octave);
+            APA102WriteColors(leds, LED_COUNT);
+            // G#4  9,10,11,12
+            leds[i].red = 0x00;
+            leds[i].green = 0x00;
+            leds[i++].blue = 0x00;
+            leds[i].red = 0x00;
+            leds[i].green = 0x00;
+            leds[i++].blue = 0x00;
+            leds[i].red = 0x00;
+            leds[i].green = 0x00;
+            leds[i++].blue = 0x00;
+            leds[i].red = 0x00;
+            leds[i].green = 0x00;
+            leds[i++].blue = 0x00;
+            tone(divindex, octave, 1);
+            inc_half(&divindex, &octave);
+            APA102WriteColors(leds, LED_COUNT);
+
+            for (i = 0; i < LED_COUNT; i++) {
+                leds[i].red   = 0x00;
+                leds[i].green = 0x00;
+                leds[i].blue  = 0x00;
+            }
         }
-        begin_tone(divindex, octave);
     }
     return 1;
 }

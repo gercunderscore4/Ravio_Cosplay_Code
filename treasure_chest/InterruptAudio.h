@@ -18,6 +18,19 @@
 #define DIVISORS_SIZE 12
 #define TCCR1_BITS (1 << CTC1) | (1 << COM1A0)
 
+#define NOTE_C   0
+#define NOTE_CS  1
+#define NOTE_D   2
+#define NOTE_DS  3
+#define NOTE_E   4
+#define NOTE_F   5
+#define NOTE_FS  6
+#define NOTE_G   7
+#define NOTE_GS  8
+#define NOTE_A   9
+#define NOTE_AS 10
+#define NOTE_B  11
+
 void init_audio (void);
 void rest (uint8_t duration_ds);
 void tone (uint8_t divindex, uint8_t octave, uint8_t duration_ds);
