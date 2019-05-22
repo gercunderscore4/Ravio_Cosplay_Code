@@ -24,15 +24,28 @@ SHOPPING LIST
 
 TODO
 ----
-Arrow:
-    - Cut thin EVA for fletching
-    - Glue fake feather into slot
-    - Glue tip to front
+Fire/Ice Rod (and electronics for Sand):
+    - Cut, paint, and glue ice gem
+    - Solder circuit
+    - Seal circuits in anti-static bags (grey)
+    - Insert electronics
+Not-Bomb:
+    - Cut rubber foam into shape (include cylinder on top and fuse)
+    - Cut small longitudinal slit near cylinder to access hollowed center
+    - Sew bomb exterior (except seam for electronics, do later with ladder)
+    - Design pressure button (use ATtiny sleep function?)
+    - Design rest of circuit
+        - Vibration motors with solenoid
+        - Fuse LEDs
+        - Red LEDs
+        - Speaker
+    - Program sequence (requires PWM sound)
+    - Solder circuit
+    - Seal circuits in anti-static bags (grey)
+    - Place circuit in foam (insert lights into shallow cuts)
 Boots:
     - Buy
 Hookshot:
-    - Paint
->   - Wait for paint to dry
     - Bolt and glue
     - Cut EVA to shape
     - Heat EVA
@@ -44,40 +57,9 @@ Hookshot:
     - Cut fabric to cover foam
     - Sew fabric over foam
     - Tie hook to hookshot
-Fire/Ice Rod (and electronics for Sand):
-    - Program PWM sound on ATtiny
-    - Program sequence
-    - Solder circuit
-    - Drill hole in lower connector for speaker connector
-    - Cut pink foam into shape
-    - Design cross-guard pattern
-    - Sew cross-guard in place
-    - Paint gem interior
-    - Place LEDs and polyfill in gem
-    - Join gem to top connector
-    - Seal gem
-    - Connect electronics
-    - Insert electronics
-    - Connect gem to rod
-Not-Bomb:
-    - Design pressure button (use ATtiny sleep function?)
-    - Design rest of circuit
-        - Vibration motors with solenoid
-        - Fuse LEDs
-        - Red LEDs
-        - Speaker
-    - Program sequence (requires PWM sound)
-    - Solder circuit
-    - Seal circuits in anti-static bags (grey)
-    - Cut rubber foam into shape (include cylinder on top and fuse)
-    - Cut small longitudinal slit near cylinder to access hollowed center
-    - Place circuit in foam (insert lights into shallow cuts)
-    - Sew bomb exterior (simple ladder stitch over main slit)
 Tornado Rod:
-    - Fill with EVA foam
-    - Glue thick layer of EVA foam around rod
-    - Shape EVA foam (cut slot for switch)
-    - Heat EVA foam
+    - Shape layers of EVA foam (cut slot for switch)
+    - Glue layers
     - Spray plastic on EVA foam
 >   - Wait for plastic to dry
     - Paint brown
@@ -87,9 +69,8 @@ Tornado Rod:
     - Paint light green
 >   - Wait for paint to dry
     - Cut rubber foam into fan section
-    - Glue RC car tire into rubber foam base
+    - Build elastic car contraption into fan arms
     - Sew fabric over rubber foam
-    - Build elatic car motor contraption into fan arms
 Rug:
     - Buy more fabric, 4 times width
     - Buy orange fabric (what?)
@@ -122,7 +103,8 @@ Rug:
     - Cut detail patterns
     - Sew on details
 Pet:
-
+Book:
+    - Design cover for log book
 
 
 #==============#============#============#========#
@@ -146,23 +128,23 @@ Pet:
 #==============#============#============#========#
 | WEAPONS                                         |
 #==============#============#============#========#
-| Fire Rod     |     H      |     XH     |   25%  |
+| Fire Rod     |     H      |     XH     |   90%  |
 +--------------+------------+------------+--------+
-| Ice Rod      |     H      |     H      |   20%  |
+| Ice Rod      |     H      |     H      |   70%  |
 +--------------+------------+------------+--------+
-| Not-Bomb     |     H      |     H      |    5%  |
+| Not-Bomb     |     H      |     H      |   10%  |
 +--------------+------------+------------+--------+
 | Tornado Rod  |     M      |     H      |   10%  |
 +--------------+------------+------------+--------+
 | Hammer       |     L      |     H      |  100%  |
 +--------------+------------+------------+--------+
-| Sand Rod     |     H      |     M      |   50%  |
+| Sand Rod     |     H      |     M      |   60%  |
 +--------------+------------+------------+--------+
 | Hookshot     |     H      |     M      |   55%  |
 +--------------+------------+------------+--------+
 | Boomerang    |     L      |     M      |  100%  |
 +--------------+------------+------------+--------+
-| Bow          |     L      |     L      |   90%  |
+| Bow          |     L      |     L      |  100%  |
 #==============#============#============#========#
 | SHOP                                            |
 #==============#============#============#========#
@@ -178,13 +160,13 @@ Pet:
 +--------------+------------+------------+--------+
 | Bush         |     L      |     L      |   90%  |
 +--------------+------------+------------+--------+
-| Maps         |     L      |     L      |   95%  |
+| Maps         |     L      |     L      |  100%  |
 +--------------+------------+------------+--------+
 | Pet          |     H      |     XL     |   N/A  |
 +--------------+------------+------------+--------+
-| Sign         |     L      |     XL     |        |
+| Sign         |     L      |     XL     |   50%  |
 +--------------+------------+------------+--------+
-| Book         |     M      |     XL     |        |
+| Book         |     M      |     XL     |   N/A  |
 +--------------+------------+------------+--------+
 
 
