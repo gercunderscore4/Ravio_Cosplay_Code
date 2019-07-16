@@ -34,29 +34,44 @@ BOLT_RAD   = BOLT_DIA / 2;
 HEAD_RAD   = HEAD_DIA / 2;
 SPACER_RAD = SPACER_DIA / 2;
 
-BAR_COUNT = 7;  % number of bar pairs
-BAR_L = 10; % length of each individual bar
-BAR_W = 1.4 * max(HEAD_DIA, SPACER_DIA); % width of each individual bar
-BAR_HL = BAR_L / 2;
-BAR_HW = BAR_W / 2;
+BAR_COUNT = 5;  % number of bar pairs
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% USEFUL CALCULATIONS
+% comment out one, it will be calculated instead of defined
+BAR_W = 1.4 * max(HEAD_DIA, SPACER_DIA); % width of each individual bar
+%BAR_L = 10; % length of each individual bar
+THETA = 15.0; % final angle of the bar with the horizon, deg
+
+if exist('BAR_W', 'var') && exist('BAR_L', 'var') && ~exist('THETA', 'var')
+    THETA = asind(2 * BAR_W / BAR_L) / 2;
+elseif exist('BAR_W', 'var') && ~exist('BAR_L', 'var') && exist('THETA', 'var')
+    BAR_L = BAR_W / (sind(2 * THETA) / 2);
+elseif ~exist('BAR_W', 'var') && exist('BAR_L', 'var') && exist('THETA', 'var')
+    BAR_W = BAR_L * sind(2 * THETA) / 2;
+else
+    disp('ERROR: Bars are overdefined.')
+    disp('PICK 2: BAR_L, BAR_W, THETA')
+end
 
 % THETA is the final angle of the bar with the horizon.
 % 0deg would create perfectly flat lines, ideal, but impossible
 % anything 45deg and above makes no sense
 %
-% BAR_HW = BAR_HL * sind(THETA) * cosd(THETA)
-% BAR_HW = BAR_HL * sind(2 * THETA) / 2
-% 2 * BAR_HW / BAR_HL = sind(2 * THETA)
-% arcsind(2 * BAR_HW / BAR_HL) = 2 * THETA
-% arcsind(2 * BAR_HW / BAR_HL) / 2 = THETA
-% THETA = asind(2 * BAR_HW / BAR_HL) / 2
+% BAR_W = BAR_L * sind(THETA) * cosd(THETA)
+% BAR_W = BAR_L * sind(2 * THETA) / 2
+% 2 * BAR_W / BAR_L = sind(2 * THETA)
+% arcsind(2 * BAR_W / BAR_L) = 2 * THETA
+% arcsind(2 * BAR_W / BAR_L) / 2 = THETA
+% THETA = asind(2 * BAR_W / BAR_L) / 2
 %
 % note: sin(2 * x) = 2 * sin(x) * cos(x)
-%
-THETA = asind(2 * BAR_HW / BAR_HL) / 2;
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% USEFUL CALCULATIONS
+
+% half-length/width
+BAR_HL = BAR_L / 2;
+BAR_HW = BAR_W / 2;
+
 PHI = 90 - THETA;
 OMEGA = PHI - THETA;
 
@@ -431,7 +446,7 @@ saveas(1, 'lasercut_hookshot.svg')
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SHOW UNIQUE PIECES
-
+%{
 figure(2);
 clf;
 hold on;
@@ -469,3 +484,4 @@ axis('equal');
 axis('off');
 hold off;
 saveas(2, 'lasercut_pieces.svg')
+%}
