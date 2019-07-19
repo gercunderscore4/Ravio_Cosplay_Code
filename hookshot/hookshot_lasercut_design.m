@@ -45,6 +45,8 @@ end
 
 % rope radius, inner radius of the rotor along which the rope is slotted
 ROPE_R = 0.7 * (BAR_L / 2);
+% space for rotor to rotate freely
+ROTOR_E = 0.5;
 
 % THETA is the final angle of the bar with the horizon.
 % 0deg would create perfectly flat lines, ideal, but impossible
@@ -72,7 +74,7 @@ OMEGA = PHI - THETA;
 THETA_TO_PHI = linspace(THETA, PHI, CURVE_SIZE)';
 
 % length of rope
-ROPE_L = ROPE_R * (90 - (2 * THETA));
+ROPE_L = ROPE_R * (90 - (2 * THETA)) * 2*pi/180;
 
 % separation between points when fully extended (long) and retracted (short)
 REACH_LONG  = BAR_HL * cosd(THETA);
@@ -233,11 +235,17 @@ CORNER_OFFSET = BAR_HW * cot(PSI);
 
 % final bar (half-length)
 END_BAR_POINTS = [
-                  BAR_CR * (-sind(OMEGA_RANGE)), +(BAR_CS + BAR_CR * cosd(OMEGA_RANGE)); % back
-                  -BAR_HW, -CORNER_OFFSET;
                   BAR_HL * cosd(PSI) - BAR_HW * cosd(PSI - 90), - BAR_HL * sind(PSI) + BAR_HW * sind(PSI - 90);
                   BAR_HL * cosd(PSI) + BAR_HW * cosd(PSI - 90), - BAR_HL * sind(PSI) - BAR_HW * sind(PSI - 90);
-                  +BAR_HW, +CORNER_OFFSET;
+                  BAR_HW, CORNER_OFFSET;
+                  BAR_CR * (-sind(OMEGA_RANGE)), +(BAR_CS + BAR_CR * cosd(OMEGA_RANGE)); % back
+                 ];
+[a1, ~] = getTangentialLineToCircle(END_BAR_POINTS(1,:), [0 0], BAR_HW);
+[~, a2] = getTangentialLineToCircle(END_BAR_POINTS(end,:), [0 0], BAR_HW);
+A_RANGE = linspace(a2, a1, CURVE_SIZE)';
+END_BAR_POINTS = [
+                  END_BAR_POINTS;
+                  (BAR_HW) * [cosd(A_RANGE), sind(A_RANGE)];
                  ];
 % conect end to start
 END_BAR_POINTS = [
@@ -252,6 +260,8 @@ END_BAR_POINTS = [
                   NaN, NaN;
                   (UNIT_CIRCLE * BOLT_RAD + [0,+BAR_HL]); % hole in middle
                  ];
+% flip vertically
+END_BAR_POINTS = [END_BAR_POINTS(:,1), -END_BAR_POINTS(:,2)];
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ROTOR
@@ -265,9 +275,7 @@ ROTOR_POINTS = [
                 -BAR_HW, 0;
                 BAR_CR * cosd(END_RANGE), BAR_CS + BAR_CR * sind(END_RANGE); % back
                ];
-R = [+cosd(-THETA) -sind(-THETA); 
-     +sind(-THETA) +cosd(-THETA)];
-ROTOR_POINTS = (R * (ROTOR_POINTS'))';
+ROTOR_POINTS = (rotccwd(-THETA) * (ROTOR_POINTS)')';
 % add curves
 ROTOR_POINTS = [
                 ROTOR_POINTS;
@@ -275,8 +283,8 @@ ROTOR_POINTS = [
                 ROPE_R * [cosd(ROPE_RANGE), sind(ROPE_RANGE)];
                ];
 % attach tangentially to circle around center hole
-a1 = max(getTangentialLineToCircle(ROTOR_POINTS(1,:), [0 0], BAR_HW));
-a2 = min(getTangentialLineToCircle(ROTOR_POINTS(end,:), [0 0], BAR_HW));
+[~, a1] = getTangentialLineToCircle(ROTOR_POINTS(1,:), [0 0], BAR_HW);
+[a2, ~] = getTangentialLineToCircle(ROTOR_POINTS(end,:), [0 0], BAR_HW);
 A_RANGE = linspace(a2, a1, CURVE_SIZE)';
 ROTOR_POINTS = [
                 ROTOR_POINTS;
@@ -292,165 +300,76 @@ ROTOR_POINTS = [ROTOR_POINTS;
                 NaN, NaN;
                 (UNIT_CIRCLE * BOLT_RAD + [0, 0]); % hole at back
                ];
+% rotate to match start bar
+ROTOR_POINTS = (rotccwd(THETA) * (ROTOR_POINTS)')';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % HANDLE
 
-% slot
+X = [
+     BAR_HW;
+     BAR_HW + BAR_W + ROPE_L + BAR_HW + BAR_W + BAR_W;
+     ];
+Y = [
+     ROPE_R + BAR_W;
+     ROPE_R + BAR_W;
+     ];
 H = [
-     ([ SIN_ARC, -COS_ARC] * BOLT_RAD + [0, REACH_SHORT]);
-     ([ COS_ARC,  SIN_ARC] * BOLT_RAD + [0, REACH_LONG]);
-     ([-SIN_ARC,  COS_ARC] * BOLT_RAD + [0, REACH_LONG]);
-     ([-COS_ARC, -SIN_ARC] * BOLT_RAD + [0, REACH_SHORT]);
+     -X, Y
+     flipud([-X -Y])
      ];
-% return to start
-H = [H;H(1,:)];
-
-% outside
-M = [
-     -1 * REACH_SHORT,   (           - REACH_SHORT - BOLT_RAD);
-     +1 * REACH_SHORT, + (             REACH_SHORT - BOLT_RAD);
-     +1 * REACH_SHORT, + (REACH_LONG + REACH_SHORT);
-     -6 * REACH_SHORT, + (REACH_LONG + REACH_SHORT);
-     -6 * REACH_SHORT, - (REACH_LONG + REACH_SHORT);
-     -1 * REACH_SHORT, - (REACH_LONG + REACH_SHORT);
+H = [
+     H;
+     H(1,:);
      ];
-% back to start
-M = [M; M(1,:)];
 
-% handle hole
-T = [
-     ([-5 * BAR_HW,-(REACH_LONG)]);
-     ([-2 * BAR_HW,-(REACH_LONG)]);
+X = [
+     BAR_HW + BAR_W;
+     BAR_HW + BAR_W + ROPE_L + BAR_HW + BAR_W;
      ];
-T = [T;
-     flipud([T(:,1), -T(:,2)]);
-     T(1,:)];
-
-% put it all together
-ADV_HNDL_POINTS = [
-            H;
-            NaN,NaN;
-            M;
-            NaN,NaN;
-            T;
-            ];
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% HANDLE PIECE
-
-% outside
-M = [
-     -6 * REACH_SHORT, + (REACH_LONG + REACH_SHORT);
-     -1 * REACH_SHORT, + (REACH_LONG + REACH_SHORT);
+Y = [
+     ROPE_R;
+     ROPE_R;
      ];
-% back to start
-M = [M; flipud([M(:,1), -M(:,2)])];
-M = [M; M(1,:)];
-
-% handle hole
-T = [
-     ([-5 * BAR_HW,-(REACH_LONG)]);
-     ([-2 * BAR_HW,-(REACH_LONG)]);
+B = [
+     -X, Y
+     flipud([-X -Y])
      ];
-T = [T;
-     flipud([T(:,1), -T(:,2)]);
-     T(1,:)];
-
-% put it all together
-SMPL_HNDL_POINTS = [
-                M;
-                NaN,NaN;
-                T;
-                ];
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% INNER STABILIZER
-
-% center line
-M = [([2 * REACH_SHORT, 0] +  HEAD_RAD * [-COS_ARC,  SIN_ARC]);
-     FRONT_EDGE + BAR_COUNT * HEAD_RAD * (SIN_ARC - 1), HEAD_RAD + HEAD_RAD * (1 - COS_ARC);
-     FRONT_EDGE, REACH_LONG + BAR_W;
-     BACK_EDGE,  REACH_LONG + BAR_W;
-     BACK_EDGE,  REACH_LONG + REACH_SHORT;
-    ];
-M = [M;
-     0,                  REACH_LONG + REACH_SHORT;
-     0,                               REACH_SHORT - BOLT_RAD;
-     -2 * REACH_SHORT,              - REACH_SHORT - BOLT_RAD;
-     -2 * REACH_SHORT, - REACH_LONG - REACH_SHORT;
-     flipud([M(:,1), -M(:,2)]);
-     M(1,:)];
-
-% stabilization lines
-H = [];
-% bar connectors going forward
-for ii = 1:BAR_COUNT
-    fact = ii * 2 - 1;
-    thisline = BAR_HL * [fact * sind(THETA_TO_PHI), cosd(THETA_TO_PHI)];
-    thiscontour = add_thickness(thisline, HEAD_RAD);
-    
-    H = [H;
-         thiscontour;
-         NaN, NaN;
-         ]; %#ok<AGROW>
-    
-    if max(thisline(:,1)) >= max(M(:,1))
-        break
-    end
-end
-% copy and reflect all stabilizers so far
-H = [H;
-     NaN, NaN;
-     flipud([H(:,1), -H(:,2)]);
-     ];
-H = [H;
-     NaN, NaN;
-     thiscontour;
+B = [
+     B;
+     B(1,:);
      ];
  
-STABLE_INNER = [
-                M;
-                NaN,NaN;
-                H;
-                NaN,NaN;
-                UNIT_CIRCLE * BOLT_RAD;
-                ];
+ SMPL_HNDL_POINTS = [
+                     H;
+                     NaN, NaN;
+                     B;
+                     ];
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % OUTER STABILIZER
 
-% outer frme
-M = [FRONT_EDGE, REACH_LONG + BAR_W;
+Y = [
+     FRONT_EDGE, REACH_LONG + BAR_W;
      BACK_EDGE,  REACH_LONG + BAR_W;
+     BACK_EDGE,  REACH_LONG + REACH_SHORT;
     ];
-M = [M; flipud([M(:,1), -M(:,2)]); M(1,:)];
-
-% handle hole
-H = [
-     BACK_EDGE   + REACH_SHORT, REACH_LONG;
-     -2 * BAR_HW - REACH_SHORT, REACH_LONG;
-    ];
-H = [H; flipud([H(:,1), -H(:,2)]); H(1,:)];
-
-% slots going back
-T = BAR_HL * [-cosd(THETA_TO_PHI), sind(THETA_TO_PHI)];
-T = add_thickness(T, HEAD_RAD);
-T = [
-     T; 
-     NaN, NaN;
-     flipud([T(:,1), -T(:,2)])
+TRENCH_RADIUS = BAR_CR + BAR_CS + ROTOR_E;
+a1 = asind(Y(end,2)/TRENCH_RADIUS);
+if (numel(a1) > 1) || imag(a1)
+    a1 = 90;
+end
+A_RANGE = linspace(a1, 0, CURVE_SIZE)';
+Y = [
+     Y; 
+     TRENCH_RADIUS * [cosd(A_RANGE), sind(A_RANGE)];
      ];
-
-STABLE_OUTER = [
-                M;
-                NaN,NaN;
-                H;
-                NaN,NaN;
-                T;
-                NaN,NaN;
-                UNIT_CIRCLE * BOLT_RAD;
-                ];
+Y = [
+     Y; 
+     flipud([Y(:,1), -Y(:,2)]);
+     Y(1,:)
+     ];
+STABLE_OUTER = Y;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % TOP PIECE
@@ -482,114 +401,129 @@ fprintf('ratio = %5.2f\n', REACH_LONG / REACH_SHORT)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % PLOT AND SAVE
-%{
-figure(1);
-clf;
-hold on;
-angles = linspace(THETA, PHI, 3);
-for jj = 1:length(angles)
-    ZETA = angles(jj);
-    R = [+cosd(ZETA) -sind(ZETA); 
-         +sind(ZETA) +cosd(ZETA)];
-    NL = (R * (LINE)')';
-    NP = (R * (BAR_POINTS)')';
-    NE = (R * (END_BAR_POINTS)')';
-    delta_y = (jj-1) * BAR_L * 2;
-    delta_x = NL(end, 1);
-    
-    for ii = 1:BAR_COUNT
-        BAR_REACH = 2 * (ii-1) * abs(delta_x);
+
+if 0 == 1
+    figure(1);
+    clf;
+    hold on;
+    angles = linspace(THETA, PHI, 5);
+    for jj = 1:length(angles)
+        % get angle and separation distances
+        ZETA = angles(jj);
+        % draw above previous
+        dy = (jj-1) * BAR_L * 2;
+        % bar separation at this angle
+        dx = BAR_HL * sind(ZETA);
+
+        % rotate bars
+        R = rotccwd(-ZETA);
+        NR = (R * (ROTOR_POINTS)')';
+        NS = (R * (START_BAR_POINTS)')';
+        NB = (R * (BAR_POINTS)')';
+        NE = (R * (END_BAR_POINTS)')';
+
+        % rotor
+        plot(NR(:,1), dy + +NR(:,2), 'k');
+        plot(NR(:,1), dy + -NR(:,2), 'g');
+        % start bars
+        plot(NS(:,1), dy + +NS(:,2), 'r');
+        plot(NS(:,1), dy + -NS(:,2), 'b');
         % bars
-        plot(BAR_REACH + NP(:,1), delta_y + +NP(:,2), 'r');
-        plot(BAR_REACH + NP(:,1), delta_y + -NP(:,2), 'c');
+        for ii = 2:BAR_COUNT
+            BAR_REACH = 2 * (ii-1) * abs(dx);
+            plot(BAR_REACH + NB(:,1), dy + +NB(:,2), 'r');
+            plot(BAR_REACH + NB(:,1), dy + -NB(:,2), 'b');
+        end
+        % end bars
+        BAR_REACH = 2 * (BAR_COUNT) * abs(dx);
+        plot(BAR_REACH + NE(:,1), dy +  NE(:,2), 'r');
+        plot(BAR_REACH + NE(:,1), dy + -NE(:,2), 'b');
+
+        % stablizer
+        %plot(STABLE_OUTER(:,1), dy + STABLE_OUTER(:,2), 'b');
+
+        % handle
+        %plot(dx + ADV_HNDL_POINTS(:,1), dy + ADV_HNDL_POINTS(:,2), 'g');
+
+        % fixed origin point
+        plot(0,dy,'r+');
     end
-    % end bars
-    BAR_FAR_REACH = 2 * (BAR_COUNT) * abs(delta_x);
-    plot(BAR_FAR_REACH + NE(:,1), delta_y +  NE(:,2), 'r');
-    plot(BAR_FAR_REACH + NE(:,1), delta_y + -NE(:,2), 'c');
-    
-    % stablizer
-    plot(STABLE_INNER(:,1), delta_y + STABLE_INNER(:,2), 'g');
-    plot(STABLE_OUTER(:,1), delta_y + STABLE_OUTER(:,2), 'b');
-    
-    % handle
-    plot(delta_x + ADV_HNDL_POINTS(:,1), delta_y + ADV_HNDL_POINTS(:,2), 'g');
-    
-    % fixed origin point
-    plot(0,delta_y,'g * ');
+    axis('equal');
+    axis('off');
+    hold off;
+    saveas(1, 'lasercut_hookshot.svg')
 end
-axis('equal');
-axis('off');
-hold off;
-saveas(1, 'lasercut_hookshot.svg')
-%}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % LAYERS
-%{
-figure(2);
-clf;
-hold on;
-Y_SEP = BAR_L * 1.5;
 
-R = [+cosd(THETA) -sind(THETA); 
-     +sind(THETA) +cosd(THETA)];
-NL = (R * (LINE)')';
-NP = (R * (BAR_POINTS)')';
-NE = (R * (END_BAR_POINTS)')';
-delta_x = NL(end, 1);
-delta_y = 0;
-BAR_FAR_REACH = 2 * (BAR_COUNT) * abs(delta_x);
+if 1 == 1
+    figure(2);
+    clf;
+    hold on;
 
-% OUTER STABILIZER 1
-delta_y = delta_y + Y_SEP;
-plot(STABLE_OUTER(:,1), delta_y + STABLE_OUTER(:,2), 'b');
+    % bar separation at this angle
+    dx = BAR_HL * sind(THETA);
+    % draw above previous
+    Y_SEP = BAR_L * 1.5;
+    dy = 0;
 
-% INNER STABILIZER 1
-delta_y = delta_y + Y_SEP;
-plot(delta_x + ADV_HNDL_POINTS(:,1), delta_y - ADV_HNDL_POINTS(:,2), 'g');
-plot(STABLE_INNER(:,1), delta_y - STABLE_INNER(:,2), 'g');
+    R = rotccwd(-THETA);
+    NR = (R * (ROTOR_POINTS)')';
+    NS = (R * (START_BAR_POINTS)')';
+    NB = (R * (BAR_POINTS)')';
+    NE = (R * (END_BAR_POINTS)')';
 
-% BARS 1
-delta_y = delta_y + Y_SEP;
-for ii = 1:BAR_COUNT
-    BAR_REACH = 2 * (ii-1) * abs(delta_x);
-    plot(BAR_REACH + NP(:,1), delta_y + +NP(:,2), 'r');
+    % OUTER STABILIZER 1
+    dy = dy + Y_SEP;
+    plot(NR(:,1), dy + +NR(:,2), 'b');
+    plot(STABLE_OUTER(:,1), dy + STABLE_OUTER(:,2), 'b');
+    plot(SMPL_HNDL_POINTS(:,1), dy - SMPL_HNDL_POINTS(:,2), 'b');
+
+    % BARS 1
+    % start bars
+    dy = dy + Y_SEP;
+    plot(NS(:,1), dy + +NS(:,2), 'r');
+    for ii = 2:BAR_COUNT
+        BAR_REACH = 2 * (ii-1) * abs(dx);
+        plot(BAR_REACH + NB(:,1), dy + NB(:,2), 'r');
+    end
+    BAR_REACH = 2 * (BAR_COUNT) * abs(dx);
+    plot(BAR_REACH + NE(:,1), dy +  NE(:,2), 'r');
+    plot(SMPL_HNDL_POINTS(:,1), dy - SMPL_HNDL_POINTS(:,2), 'r');
+    plot(TOP_PIECE(:,1), dy + TOP_PIECE(:,2), 'r');
+
+    axis('equal');
+    axis('off');
+    hold off;
+    saveas(2, 'lasercut_pieces.svg')
 end
-plot(BAR_FAR_REACH + NE(:,1), delta_y +  NE(:,2), 'r');
-plot(delta_x + SMPL_HNDL_POINTS(:,1), delta_y - SMPL_HNDL_POINTS(:,2), 'r');
-plot(TOP_PIECE(:,1), delta_y + TOP_PIECE(:,2), 'r');
 
-axis('equal');
-axis('off');
-hold off;
-saveas(2, 'lasercut_pieces.svg')
-%}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % INDIVIDUAL PIECES
-
 % this section is to help design individual pieces without drawing thw whole thing
 
-figure(3);
-clf;
-hold on;
+if 0 == 1
+    figure(3);
+    clf;
+    hold on;
 
-% redicle on origin
-plot(0, 0, 'r+');
+    % redicle on origin
+    plot(0, 0, 'r+');
 
-R = [+cosd(-THETA) -sind(-THETA); 
-     +sind(-THETA) +cosd(-THETA)];
-START_BAR_POINTS = (R * (START_BAR_POINTS'))';
-plot(START_BAR_POINTS(:,1), START_BAR_POINTS(:,2), 'k');
-BAR_POINTS = (R * (BAR_POINTS'))';
-plot(BAR_L*sind(THETA) + BAR_POINTS(:,1), BAR_POINTS(:,2), 'k');
-%plot(END_BAR_POINTS(:,1), END_BAR_POINTS(:,2), 'k');
-%plot(TOP_PIECE(:,1), TOP_PIECE(:,2), 'k');
-%plot(STABLE_OUTER(:,1), STABLE_OUTER(:,2), 'k');
-%plot(STABLE_INNER(:,1), STABLE_INNER(:,2), 'k');
-%plot(ADV_HNDL_POINTS(:,1), ADV_HNDL_POINTS(:,2), 'k');
-%plot(SMPL_HNDL_POINTS(:,1), SMPL_HNDL_POINTS(:,2), 'k');
-plot(ROTOR_POINTS(:,1), ROTOR_POINTS(:,2), 'k');
+    %R = rotccwd(-THETA);
+    %START_BAR_POINTS = (R * (START_BAR_POINTS'))';
+    %plot(START_BAR_POINTS(:,1), START_BAR_POINTS(:,2), 'k');
+    %BAR_POINTS = (R * (BAR_POINTS'))';
+    %plot(BAR_L*sind(THETA) + BAR_POINTS(:,1), BAR_POINTS(:,2), 'k');
+    %plot(END_BAR_POINTS(:,1), END_BAR_POINTS(:,2), 'k');
+    %plot(TOP_PIECE(:,1), TOP_PIECE(:,2), 'k');
+    %plot(STABLE_OUTER(:,1), STABLE_OUTER(:,2), 'k');
+    %plot(ADV_HNDL_POINTS(:,1), ADV_HNDL_POINTS(:,2), 'k');
+    plot(SMPL_HNDL_POINTS(:,1), SMPL_HNDL_POINTS(:,2), 'k');
+    %plot(ROTOR_POINTS(:,1), ROTOR_POINTS(:,2), 'k');
 
-axis('equal');
-axis('off');
-hold off;
+    axis('equal');
+    axis('off');
+    hold off;
+end
