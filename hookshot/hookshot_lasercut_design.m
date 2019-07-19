@@ -3,19 +3,10 @@
 % Modelled on The Legend of Zelda: A Link Between Worlds
 
 % This hookshot has diamond-shaped sections.
-% The actual hook will be made of fabric and sewn to the hook piece provided here.
 % The bolts need to be sized and added to the design in advance.
-% The stabilizer requires that certain bolts be longer (reach through the
-% tracks).
-% There will be multiple layers of stabilizer, the first lets the heads of
-% untracked bolts flow freely.
-% The second layer has tracks for the tracked bolts (some my have spacers).
-% Then another layer to help protect the heads.
 % The laser-cut matieral needs to be sized to the bolt/head width.
-% Either get thicker material or double-up certain layers.
 %
-% There are some sight adjustments that were made in the SVG file.
-% I'm not going to fix those unless I see a point in it (e.g. future use). 
+% Final SVG requires some adjustements for laser cutting.
 
 clear;
 clc;
@@ -38,8 +29,8 @@ BAR_COUNT = 5;  % number of bar pairs
 
 % comment out one, it will be calculated instead of defined
 BAR_W = 1.4 * max(HEAD_DIA, SPACER_DIA); % width of each individual bar
-%BAR_L = 10; % length of each individual bar
-THETA = 15.0; % final angle of the bar with the horizon, deg
+BAR_L = 10; % length of each individual bar
+%THETA = 15.0; % final angle of the bar with the horizon, deg
 
 if exist('BAR_W', 'var') && exist('BAR_L', 'var') && ~exist('THETA', 'var')
     THETA = asind(2 * BAR_W / BAR_L) / 2;
@@ -51,6 +42,9 @@ else
     disp('ERROR: Bars are overdefined.')
     disp('PICK 2: BAR_L, BAR_W, THETA')
 end
+
+% rope radius, inner radius of the rotor along which the rope is slotted
+ROPE_R = 0.7 * (BAR_L / 2);
 
 % THETA is the final angle of the bar with the horizon.
 % 0deg would create perfectly flat lines, ideal, but impossible
@@ -77,6 +71,9 @@ OMEGA = PHI - THETA;
 
 THETA_TO_PHI = linspace(THETA, PHI, CURVE_SIZE)';
 
+% length of rope
+ROPE_L = ROPE_R * (90 - (2 * THETA));
+
 % separation between points when fully extended (long) and retracted (short)
 REACH_LONG  = BAR_HL * cosd(THETA);
 REACH_SHORT = BAR_HL * sind(THETA);
@@ -85,8 +82,8 @@ FRONT_EDGE = (2 * BAR_COUNT + 1) * REACH_SHORT;
 BACK_EDGE  = -(6 * REACH_SHORT + REACH_LONG);
 TOP_HEIGHT = REACH_LONG + BAR_W;
 
-BOX_LENGTH = FRONT_EDGE - BACK_EDGE
-BOX_HEIGHT = TOP_HEIGHT * 2
+BOX_LENGTH = FRONT_EDGE - BACK_EDGE;
+BOX_HEIGHT = TOP_HEIGHT * 2;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % GENERIC CIRCLE (FOR EASY PLOTTING)
@@ -96,7 +93,7 @@ BOX_HEIGHT = TOP_HEIGHT * 2
 %     /    |    \
 %    V   2 | 1   |
 %   -------+-------
-%    |   3 | 4   ^
+%    |   3 | 4   A
 %     \_   |   _/
 %       -->|---
 %
@@ -104,6 +101,20 @@ BOX_HEIGHT = TOP_HEIGHT * 2
 % CCW 2: [-s,  c]
 % CCW 3: [-c, -s]
 % CCW 4: [ s, -c]
+%
+% CCW
+%      _-->|---_
+%     /    |    \
+%    |   2 | 1   V
+%   -------+-------
+%    A   3 | 4   |
+%     \_   |   _/
+%       ---|<--
+%
+% CCW 1: [ s,  c]
+% CCW 2: [-c,  s]
+% CCW 3: [-s, -c]
+% CCW 4: [ c, -s]
 %
 UNIT_CIRCLE = linspace(0, 90, CURVE_SIZE)';
 COS_ARC = cosd(UNIT_CIRCLE);
@@ -160,6 +171,7 @@ LINE = [0, -BAR_HL;
 % BAR_CR : Radius of the cruve at the end of the bar. 
 %          The start fo the curve is matched to that angle at which the bars meet to hide it.
 % BAR_SR : Sub-radial distance, subtract this before adding the curve to account for its long radius.
+% BAR_CS : Length from middle of bar to curve center
 %
 % BAR_HL only reaches from the center to the hole.
 % Need to provide more area for the screw and make the edges form a continuous line.
@@ -171,9 +183,10 @@ LINE = [0, -BAR_HL;
 BAR_LE = BAR_HW * tand(THETA); % difference from where the front/back hole to where the curve starts
 BAR_SR = BAR_HW * tand(2 * THETA);
 BAR_CR = BAR_HW * secd(2 * THETA);
+BAR_CS = BAR_HL + BAR_LE - BAR_SR;
 OMEGA_RANGE = linspace(-OMEGA, +OMEGA, CURVE_SIZE)';
 % create curves at end
-BAR_POINTS = [0, BAR_HL + BAR_LE - BAR_SR] + BAR_CR * [sind(OMEGA_RANGE), cosd(OMEGA_RANGE)];
+BAR_POINTS = [0, BAR_CS] + BAR_CR * [sind(OMEGA_RANGE), cosd(OMEGA_RANGE)];
 % duplicate and rotate 180deg
 BAR_POINTS = [BAR_POINTS; -1*BAR_POINTS];
 % return to start
@@ -190,29 +203,95 @@ BAR_POINTS = [BAR_POINTS;
              ];
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% BAR ENDS
+% START BARS
+
+% final bar (half-length)
+START_BAR_POINTS = [
+                    BAR_CR * (-sind(OMEGA_RANGE)), +(BAR_CS + BAR_CR * cosd(OMEGA_RANGE)); % back
+                    BAR_HW * -COS_ARC, BAR_HW * -SIN_ARC;
+                    BAR_HW *  SIN_ARC, BAR_HW * -COS_ARC;
+                   ];
+% conect end to start
+START_BAR_POINTS = [
+                    START_BAR_POINTS;
+                    START_BAR_POINTS(1,:);
+                   ];
+% add holes to bars
+START_BAR_POINTS = [
+                    START_BAR_POINTS;
+                    NaN, NaN;
+                    (UNIT_CIRCLE * BOLT_RAD + [0, 0]); % hole at back
+                    NaN, NaN;
+                    (UNIT_CIRCLE * BOLT_RAD + [0,+BAR_HL]); % hole in middle
+                   ];
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% END BARS
 
 PSI = 45;
 CORNER_OFFSET = BAR_HW * cot(PSI);
 
 % final bar (half-length)
-P_end = [
-         BAR_CR * (-sind(OMEGA_RANGE)), +(BAR_HL+BAR_LE-BAR_SR+BAR_CR * cosd(OMEGA_RANGE)); % back
-         -BAR_HW, -CORNER_OFFSET;
-         BAR_HL * cosd(PSI) - BAR_HW * cosd(PSI - 90), - BAR_HL * sind(PSI) + BAR_HW * sind(PSI - 90);
-         BAR_HL * cosd(PSI) + BAR_HW * cosd(PSI - 90), - BAR_HL * sind(PSI) - BAR_HW * sind(PSI - 90);
-         +BAR_HW, +CORNER_OFFSET;
-        ];
-P_end = [P_end;
-         P_end(1,:);
-        ];
+END_BAR_POINTS = [
+                  BAR_CR * (-sind(OMEGA_RANGE)), +(BAR_CS + BAR_CR * cosd(OMEGA_RANGE)); % back
+                  -BAR_HW, -CORNER_OFFSET;
+                  BAR_HL * cosd(PSI) - BAR_HW * cosd(PSI - 90), - BAR_HL * sind(PSI) + BAR_HW * sind(PSI - 90);
+                  BAR_HL * cosd(PSI) + BAR_HW * cosd(PSI - 90), - BAR_HL * sind(PSI) - BAR_HW * sind(PSI - 90);
+                  +BAR_HW, +CORNER_OFFSET;
+                 ];
+% conect end to start
+END_BAR_POINTS = [
+                  END_BAR_POINTS;
+                  END_BAR_POINTS(1,:);
+                 ];
 % add holes to bars
-P_end = [P_end;
-         NaN, NaN;
-         (UNIT_CIRCLE * BOLT_RAD + [0, 0]); % hole at back
-         NaN, NaN;
-         (UNIT_CIRCLE * BOLT_RAD + [0,+BAR_HL]); % hole in middle
-        ];
+END_BAR_POINTS = [
+                  END_BAR_POINTS;
+                  NaN, NaN;
+                  (UNIT_CIRCLE * BOLT_RAD + [0, 0]); % hole at back
+                  NaN, NaN;
+                  (UNIT_CIRCLE * BOLT_RAD + [0,+BAR_HL]); % hole in middle
+                 ];
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ROTOR
+
+ROPE_RANGE = linspace(-2 * THETA, -90, CURVE_SIZE)';
+BAR_RANGE = linspace(PHI, -2 * THETA, CURVE_SIZE)';
+END_RANGE = 90 + linspace(OMEGA, 0, CURVE_SIZE)';
+
+% get corner of start bar and rotate
+ROTOR_POINTS = [
+                -BAR_HW, 0;
+                BAR_CR * cosd(END_RANGE), BAR_CS + BAR_CR * sind(END_RANGE); % back
+               ];
+R = [+cosd(-THETA) -sind(-THETA); 
+     +sind(-THETA) +cosd(-THETA)];
+ROTOR_POINTS = (R * (ROTOR_POINTS'))';
+% add curves
+ROTOR_POINTS = [
+                ROTOR_POINTS;
+                (BAR_CS + BAR_CR) * [cosd(BAR_RANGE), sind(BAR_RANGE)];
+                ROPE_R * [cosd(ROPE_RANGE), sind(ROPE_RANGE)];
+               ];
+% attach tangentially to circle around center hole
+a1 = max(getTangentialLineToCircle(ROTOR_POINTS(1,:), [0 0], BAR_HW));
+a2 = min(getTangentialLineToCircle(ROTOR_POINTS(end,:), [0 0], BAR_HW));
+A_RANGE = linspace(a2, a1, CURVE_SIZE)';
+ROTOR_POINTS = [
+                ROTOR_POINTS;
+                (BAR_HW) * [cosd(A_RANGE), sind(A_RANGE)];
+               ];
+% conect end to start
+ROTOR_POINTS = [
+                ROTOR_POINTS;
+                ROTOR_POINTS(1,:);
+               ];
+% add holes to bars
+ROTOR_POINTS = [ROTOR_POINTS;
+                NaN, NaN;
+                (UNIT_CIRCLE * BOLT_RAD + [0, 0]); % hole at back
+               ];
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % HANDLE
@@ -249,13 +328,41 @@ T = [T;
      T(1,:)];
 
 % put it all together
-P_handle = [
+ADV_HNDL_POINTS = [
             H;
             NaN,NaN;
             M;
             NaN,NaN;
             T;
             ];
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% HANDLE PIECE
+
+% outside
+M = [
+     -6 * REACH_SHORT, + (REACH_LONG + REACH_SHORT);
+     -1 * REACH_SHORT, + (REACH_LONG + REACH_SHORT);
+     ];
+% back to start
+M = [M; flipud([M(:,1), -M(:,2)])];
+M = [M; M(1,:)];
+
+% handle hole
+T = [
+     ([-5 * BAR_HW,-(REACH_LONG)]);
+     ([-2 * BAR_HW,-(REACH_LONG)]);
+     ];
+T = [T;
+     flipud([T(:,1), -T(:,2)]);
+     T(1,:)];
+
+% put it all together
+SMPL_HNDL_POINTS = [
+                M;
+                NaN,NaN;
+                T;
+                ];
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % INNER STABILIZER
@@ -363,34 +470,6 @@ Y = [
 TOP_PIECE = Y;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% HANDLE PIECE
-
-% outside
-M = [
-     -6 * REACH_SHORT, + (REACH_LONG + REACH_SHORT);
-     -1 * REACH_SHORT, + (REACH_LONG + REACH_SHORT);
-     ];
-% back to start
-M = [M; flipud([M(:,1), -M(:,2)])];
-M = [M; M(1,:)];
-
-% handle hole
-T = [
-     ([-5 * BAR_HW,-(REACH_LONG)]);
-     ([-2 * BAR_HW,-(REACH_LONG)]);
-     ];
-T = [T;
-     flipud([T(:,1), -T(:,2)]);
-     T(1,:)];
-
-% put it all together
-HANDLE_PIECE = [
-                M;
-                NaN,NaN;
-                T;
-                ];
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % PRINT
 
 fprintf('bar (pair) count = %d\n', BAR_COUNT)
@@ -403,7 +482,7 @@ fprintf('ratio = %5.2f\n', REACH_LONG / REACH_SHORT)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % PLOT AND SAVE
-
+%{
 figure(1);
 clf;
 hold on;
@@ -414,7 +493,7 @@ for jj = 1:length(angles)
          +sind(ZETA) +cosd(ZETA)];
     NL = (R * (LINE)')';
     NP = (R * (BAR_POINTS)')';
-    NE = (R * (P_end)')';
+    NE = (R * (END_BAR_POINTS)')';
     delta_y = (jj-1) * BAR_L * 2;
     delta_x = NL(end, 1);
     
@@ -434,7 +513,7 @@ for jj = 1:length(angles)
     plot(STABLE_OUTER(:,1), delta_y + STABLE_OUTER(:,2), 'b');
     
     % handle
-    plot(delta_x + P_handle(:,1), delta_y + P_handle(:,2), 'g');
+    plot(delta_x + ADV_HNDL_POINTS(:,1), delta_y + ADV_HNDL_POINTS(:,2), 'g');
     
     % fixed origin point
     plot(0,delta_y,'g * ');
@@ -443,9 +522,9 @@ axis('equal');
 axis('off');
 hold off;
 saveas(1, 'lasercut_hookshot.svg')
-
+%}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% SHOW UNIQUE PIECES
+% LAYERS
 %{
 figure(2);
 clf;
@@ -456,7 +535,7 @@ R = [+cosd(THETA) -sind(THETA);
      +sind(THETA) +cosd(THETA)];
 NL = (R * (LINE)')';
 NP = (R * (BAR_POINTS)')';
-NE = (R * (P_end)')';
+NE = (R * (END_BAR_POINTS)')';
 delta_x = NL(end, 1);
 delta_y = 0;
 BAR_FAR_REACH = 2 * (BAR_COUNT) * abs(delta_x);
@@ -467,7 +546,7 @@ plot(STABLE_OUTER(:,1), delta_y + STABLE_OUTER(:,2), 'b');
 
 % INNER STABILIZER 1
 delta_y = delta_y + Y_SEP;
-plot(delta_x + P_handle(:,1), delta_y - P_handle(:,2), 'g');
+plot(delta_x + ADV_HNDL_POINTS(:,1), delta_y - ADV_HNDL_POINTS(:,2), 'g');
 plot(STABLE_INNER(:,1), delta_y - STABLE_INNER(:,2), 'g');
 
 % BARS 1
@@ -477,7 +556,7 @@ for ii = 1:BAR_COUNT
     plot(BAR_REACH + NP(:,1), delta_y + +NP(:,2), 'r');
 end
 plot(BAR_FAR_REACH + NE(:,1), delta_y +  NE(:,2), 'r');
-plot(delta_x + HANDLE_PIECE(:,1), delta_y - HANDLE_PIECE(:,2), 'r');
+plot(delta_x + SMPL_HNDL_POINTS(:,1), delta_y - SMPL_HNDL_POINTS(:,2), 'r');
 plot(TOP_PIECE(:,1), delta_y + TOP_PIECE(:,2), 'r');
 
 axis('equal');
@@ -485,3 +564,32 @@ axis('off');
 hold off;
 saveas(2, 'lasercut_pieces.svg')
 %}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% INDIVIDUAL PIECES
+
+% this section is to help design individual pieces without drawing thw whole thing
+
+figure(3);
+clf;
+hold on;
+
+% redicle on origin
+plot(0, 0, 'r+');
+
+R = [+cosd(-THETA) -sind(-THETA); 
+     +sind(-THETA) +cosd(-THETA)];
+START_BAR_POINTS = (R * (START_BAR_POINTS'))';
+plot(START_BAR_POINTS(:,1), START_BAR_POINTS(:,2), 'k');
+BAR_POINTS = (R * (BAR_POINTS'))';
+plot(BAR_L*sind(THETA) + BAR_POINTS(:,1), BAR_POINTS(:,2), 'k');
+%plot(END_BAR_POINTS(:,1), END_BAR_POINTS(:,2), 'k');
+%plot(TOP_PIECE(:,1), TOP_PIECE(:,2), 'k');
+%plot(STABLE_OUTER(:,1), STABLE_OUTER(:,2), 'k');
+%plot(STABLE_INNER(:,1), STABLE_INNER(:,2), 'k');
+%plot(ADV_HNDL_POINTS(:,1), ADV_HNDL_POINTS(:,2), 'k');
+%plot(SMPL_HNDL_POINTS(:,1), SMPL_HNDL_POINTS(:,2), 'k');
+plot(ROTOR_POINTS(:,1), ROTOR_POINTS(:,2), 'k');
+
+axis('equal');
+axis('off');
+hold off;
