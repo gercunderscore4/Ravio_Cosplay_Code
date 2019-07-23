@@ -18,6 +18,9 @@ more off;
 % circle count, number of points in a calculated arc
 CURVE_SIZE = 30;
 
+% material width
+MAT_W = 2.54 / 4;
+
 BOLT_DIA   = 0.6;  % body     width for bolt
 HEAD_DIA   = 1.2;  % head/nut width for bolt
 SPACER_DIA = 1.2;  % spacer   width for bolt
@@ -44,7 +47,7 @@ else
 end
 
 % rope radius, inner radius of the rotor along which the rope is slotted
-ROPE_R = 0.7 * (BAR_L / 2);
+ROPE_R = 0.5 * (BAR_L / 2);
 % space for rotor to rotate freely
 ROTOR_E = 0.5;
 
@@ -186,7 +189,11 @@ BAR_LE = BAR_HW * tand(THETA); % difference from where the front/back hole to wh
 BAR_SR = BAR_HW * tand(2 * THETA);
 BAR_CR = BAR_HW * secd(2 * THETA);
 BAR_CS = BAR_HL + BAR_LE - BAR_SR;
+BAR_R = BAR_CS + BAR_CR; % bar max radius
+INNER_HEIGHT = BAR_R * cosd(THETA); % height (from center) of bar while inside
+
 OMEGA_RANGE = linspace(-OMEGA, +OMEGA, CURVE_SIZE)';
+
 % create curves at end
 BAR_POINTS = [0, BAR_CS] + BAR_CR * [sind(OMEGA_RANGE), cosd(OMEGA_RANGE)];
 % duplicate and rotate 180deg
@@ -263,6 +270,8 @@ END_BAR_POINTS = [
 % flip vertically
 END_BAR_POINTS = [END_BAR_POINTS(:,1), -END_BAR_POINTS(:,2)];
 
+clear PSI CORNER_OFFSET a1 a2 A_RANGE;
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ROTOR
 
@@ -303,58 +312,57 @@ ROTOR_POINTS = [ROTOR_POINTS;
 % rotate to match start bar
 ROTOR_POINTS = (rotccwd(THETA) * (ROTOR_POINTS)')';
 
+clear a1 a2 ROPE_RANGE BAR_RANGE END_RANGE A_RANGE
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % HANDLE
 
-X = [
-     BAR_HW;
-     BAR_HW + BAR_W + ROPE_L + BAR_HW + BAR_W + BAR_W;
-     ];
-Y = [
-     ROPE_R + BAR_W;
-     ROPE_R + BAR_W;
-     ];
-H = [
-     -X, Y
-     flipud([-X -Y])
-     ];
-H = [
-     H;
-     H(1,:);
-     ];
+% get corner of start bar and rotate
+HANDLE_1 = [
+            -BAR_HW, BAR_CS + BAR_SR;
+            ];
+HANDLE_1 = (rotccwd(-THETA) * (HANDLE_1)')';
+% attach tangentially to circle around center hole
+[~, a1] = getTangentialLineToCircle(HANDLE_1(1,:),   [0 0], BAR_HW);
+[a2, ~] = getTangentialLineToCircle([0, -ROPE_R], [0 0], BAR_HW);
+A_RANGE = linspace(a1, a2, CURVE_SIZE)';
+HANDLE_1 = [
+            HANDLE_1;
+            BAR_HW * [cosd(A_RANGE), sind(A_RANGE)];
+            0, -ROPE_R;
+            0,             -INNER_HEIGHT;
+            -1.5 * BAR_W,  -INNER_HEIGHT;
+            -1.5 * BAR_W,  +INNER_HEIGHT;
+            HANDLE_1(1,1), +INNER_HEIGHT;
+            HANDLE_1(1,:);
+            ];
+SMPL_HNDL_POINTS = HANDLE_1;
 
-X = [
-     BAR_HW + BAR_W;
-     BAR_HW + BAR_W + ROPE_L + BAR_HW + BAR_W;
-     ];
-Y = [
-     ROPE_R;
-     ROPE_R;
-     ];
-B = [
-     -X, Y
-     flipud([-X -Y])
-     ];
-B = [
-     B;
-     B(1,:);
-     ];
- 
- SMPL_HNDL_POINTS = [
-                     H;
-                     NaN, NaN;
-                     B;
-                     ];
+% get corner of start bar and rotate
+HANDLE_2 = [
+            HANDLE_1(1,:);
+            -BAR_HW, 0;
+            HANDLE_1(1,1), -HANDLE_1(1,2);
+            HANDLE_1(1,1), -INNER_HEIGHT;
+            -1.5 * BAR_W,  -INNER_HEIGHT;
+            -1.5 * BAR_W,  +INNER_HEIGHT;
+            HANDLE_1(1,1), +INNER_HEIGHT;
+            HANDLE_1(1,:);
+            ];
+
+
+clear a1 a2 A_RANGE;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % OUTER STABILIZER
 
 Y = [
-     FRONT_EDGE, REACH_LONG + BAR_W;
-     BACK_EDGE,  REACH_LONG + BAR_W;
-     BACK_EDGE,  REACH_LONG + REACH_SHORT;
+     FRONT_EDGE, INNER_HEIGHT + BAR_HW;
+     BACK_EDGE,  INNER_HEIGHT + BAR_HW;
+     BACK_EDGE + BAR_HW * SIN_ARC,  INNER_HEIGHT - BAR_HW - BAR_HW * COS_ARC;
+     BACK_EDGE + 2 * BAR_HW - BAR_HW * COS_ARC,  INNER_HEIGHT - BAR_HW + BAR_HW * SIN_ARC;
     ];
-TRENCH_RADIUS = BAR_CR + BAR_CS + ROTOR_E;
+TRENCH_RADIUS = BAR_R + ROTOR_E;
 a1 = asind(Y(end,2)/TRENCH_RADIUS);
 if (numel(a1) > 1) || imag(a1)
     a1 = 90;
@@ -374,10 +382,11 @@ STABLE_OUTER = Y;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % TOP PIECE
 
-Y = [FRONT_EDGE, REACH_LONG + BAR_W;
-     BACK_EDGE,  REACH_LONG + BAR_W;
-     BACK_EDGE,  REACH_LONG + REACH_SHORT;
-     FRONT_EDGE, REACH_LONG + REACH_SHORT;
+Y = [
+     FRONT_EDGE, INNER_HEIGHT + BAR_HW;
+     BACK_EDGE,  INNER_HEIGHT + BAR_HW;
+     BACK_EDGE,  INNER_HEIGHT;
+     FRONT_EDGE, INNER_HEIGHT;
     ];
 Y = [Y; Y(1,:)];
 Y = [
@@ -387,6 +396,8 @@ Y = [
      ];
 
 TOP_PIECE = Y;
+
+clear Y;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % PRINT
@@ -478,7 +489,7 @@ if 1 == 1
     dy = dy + Y_SEP;
     plot(NR(:,1), dy + +NR(:,2), 'b');
     plot(STABLE_OUTER(:,1), dy + STABLE_OUTER(:,2), 'b');
-    plot(SMPL_HNDL_POINTS(:,1), dy - SMPL_HNDL_POINTS(:,2), 'b');
+    plot(HANDLE_1(:,1), dy + HANDLE_1(:,2), 'b');
 
     % BARS 1
     % start bars
@@ -490,7 +501,7 @@ if 1 == 1
     end
     BAR_REACH = 2 * (BAR_COUNT) * abs(dx);
     plot(BAR_REACH + NE(:,1), dy +  NE(:,2), 'r');
-    plot(SMPL_HNDL_POINTS(:,1), dy - SMPL_HNDL_POINTS(:,2), 'r');
+    plot(HANDLE_2(:,1), dy + HANDLE_2(:,2), 'r');
     plot(TOP_PIECE(:,1), dy + TOP_PIECE(:,2), 'r');
 
     axis('equal');
@@ -503,14 +514,14 @@ end
 % INDIVIDUAL PIECES
 % this section is to help design individual pieces without drawing thw whole thing
 
-if 0 == 1
+if 1 == 1
     figure(3);
     clf;
     hold on;
 
     % redicle on origin
     plot(0, 0, 'r+');
-
+    
     %R = rotccwd(-THETA);
     %START_BAR_POINTS = (R * (START_BAR_POINTS'))';
     %plot(START_BAR_POINTS(:,1), START_BAR_POINTS(:,2), 'k');
@@ -520,7 +531,7 @@ if 0 == 1
     %plot(TOP_PIECE(:,1), TOP_PIECE(:,2), 'k');
     %plot(STABLE_OUTER(:,1), STABLE_OUTER(:,2), 'k');
     %plot(ADV_HNDL_POINTS(:,1), ADV_HNDL_POINTS(:,2), 'k');
-    plot(SMPL_HNDL_POINTS(:,1), SMPL_HNDL_POINTS(:,2), 'k');
+    plot(HANDLE_2(:,1), HANDLE_2(:,2), 'k');
     %plot(ROTOR_POINTS(:,1), ROTOR_POINTS(:,2), 'k');
 
     axis('equal');
