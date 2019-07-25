@@ -37,7 +37,7 @@ BAR_COUNT = 4;  % number of bar pairs
 
 % comment out one, it will be calculated instead of defined
 BAR_W = 1.5 * max(HEAD_DIA, SPACER_DIA); % width of each individual bar
-BAR_L = 11; % length of each individual bar
+BAR_L = 10; % length of each individual bar
 %THETA = 15.0; % final angle of the bar with the horizon, deg
 
 if exist('BAR_W', 'var') && exist('BAR_L', 'var') && ~exist('THETA', 'var')
@@ -89,7 +89,7 @@ ROPE_L = ROPE_R * OMEGA * 2*pi/180;
 REACH_LONG  = BAR_HL * cosd(THETA);
 REACH_SHORT = BAR_HL * sind(THETA);
 
-FRONT_EDGE = (2 * BAR_COUNT + 1) * REACH_SHORT;
+FRONT_EDGE = (2 * BAR_COUNT + 0.5) * REACH_SHORT;
 BACK_EDGE  = -1 * (ROPE_L + 3*BAR_HW);
 
 HNDL_W = MAT_W * 2;
