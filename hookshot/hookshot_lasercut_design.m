@@ -33,11 +33,11 @@ BOLT_RAD   = BOLT_DIA / 2;
 HEAD_RAD   = HEAD_DIA / 2;
 SPACER_RAD = SPACER_DIA / 2;
 
-BAR_COUNT = 5;  % number of bar pairs
+BAR_COUNT = 4;  % number of bar pairs
 
 % comment out one, it will be calculated instead of defined
-BAR_W = 2.0 * max(HEAD_DIA, SPACER_DIA); % width of each individual bar
-BAR_L = 15; % length of each individual bar
+BAR_W = 1.5 * max(HEAD_DIA, SPACER_DIA); % width of each individual bar
+BAR_L = 11; % length of each individual bar
 %THETA = 15.0; % final angle of the bar with the horizon, deg
 
 if exist('BAR_W', 'var') && exist('BAR_L', 'var') && ~exist('THETA', 'var')
@@ -52,7 +52,8 @@ else
 end
 
 % rope radius, inner radius of the rotor along which the rope is slotted
-ROPE_R = 0.5 * (BAR_L / 2);
+ROPE_W = 2.54 * 1 / 4;
+ROPE_R = 0.4 * (BAR_L / 2);
 % space for rotor to rotate freely
 ROTOR_E = 0.5;
 
@@ -91,7 +92,7 @@ REACH_SHORT = BAR_HL * sind(THETA);
 FRONT_EDGE = (2 * BAR_COUNT + 1) * REACH_SHORT;
 BACK_EDGE  = -1 * (ROPE_L + 3*BAR_HW);
 
-HNDL_W = MAT_W * 4;
+HNDL_W = MAT_W * 2;
 HNDL_INNER_W = INDEX_FINDER_WIDTH + MAT_W + ROPE_L;
 HNDL_OUTER_W = HNDL_W + HNDL_INNER_W;
 HNDL_INNER_H = INDEX_FINDER_WIDTH * 4;
@@ -201,8 +202,13 @@ BAR_SR = BAR_HW * tand(2 * THETA);
 BAR_CR = BAR_HW * secd(2 * THETA);
 BAR_CS = BAR_HL + BAR_LE - BAR_SR;
 BAR_R = BAR_CS + BAR_CR; % bar max radius
+
 INNER_HEIGHT = BAR_R * cosd(THETA); % height (from center) of bar while inside
-OUTER_HEIGHT = INNER_HEIGHT + BAR_W;
+OUTER_HEIGHT = INNER_HEIGHT + BAR_HW;
+OUTER_RADIUS = sqrt(OUTER_HEIGHT^2 + (4*MAT_W)^2);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% REGULAR BARS
 
 OMEGA_RANGE = linspace(-OMEGA, +OMEGA, CURVE_SIZE)';
 
@@ -318,30 +324,32 @@ clear PSI CORNER_OFFSET a1 a2 A_RANGE POINTS;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ROTOR
 
-P1 = [-BAR_HW, 0];
-P2 = [-BAR_HW, BAR_CS + BAR_SR];
-R = norm(P2);
-A = atan2d(P2(2), P2(1));
+P1 = [-BAR_HW, BAR_CS + BAR_SR];
+R = norm(P1);
+A = atan2d(P1(2), P1(1));
 
-ROPE_RANGE = linspace(-2 * THETA, -90, CURVE_SIZE)';
-BAR_RANGE = linspace(A - THETA, -2*THETA, CURVE_SIZE)';
-END_RANGE = 90 + linspace(OMEGA, 0, CURVE_SIZE)';
+[~, a1] = getTangentialLineToCircle(P1, [0 0], BAR_HW);
+[a2, ~] = getTangentialLineToCircle([0, -ROPE_R], [0 0], BAR_HW);
+% add 2*theta to get the junction to be flat
+A_RANGE = linspace(a2, a1, CURVE_SIZE)'                + 2 * THETA;
+ROPE_RANGE = linspace(-2 * THETA, -90, CURVE_SIZE)'    + 2 * THETA;
+BAR_RANGE = linspace(A - THETA, -2*THETA, CURVE_SIZE)' + 2 * THETA;
+END_RANGE = 90 + linspace(OMEGA, 0, CURVE_SIZE)'       + 2 * THETA;
 
 % add curves
 ROTOR_POINTS = [
-                (rotccwd(-THETA) * ([P1;P2])')';
                 R * [cosd(BAR_RANGE), sind(BAR_RANGE)];
+                ROPE_R + ROPE_W*2/2, 0;
+                ROPE_R + ROPE_W*2/2, 1*ROPE_W;
+                ROPE_R + ROPE_W*3/2, 1*ROPE_W;
+                ROPE_R + ROPE_W*3/2, 2*ROPE_W;
+                ROPE_R - ROPE_W*1/2, 2*ROPE_W;
+                ROPE_R - ROPE_W*1/2, 1*ROPE_W;
+                ROPE_R, ROPE_W;
+                ROPE_R, 0;
                 ROPE_R * [cosd(ROPE_RANGE), sind(ROPE_RANGE)];
-                ];
-% attach tangentially to circle around center hole
-[~, a1] = getTangentialLineToCircle(ROTOR_POINTS(1,:), [0 0], BAR_HW);
-[a2, ~] = getTangentialLineToCircle(ROTOR_POINTS(end,:), [0 0], BAR_HW);
-A_RANGE = linspace(a2, a1, CURVE_SIZE)';
-ROTOR_POINTS = [
-                ROTOR_POINTS;
                 BAR_HW * [cosd(A_RANGE), sind(A_RANGE)];
                 ];
-% conect end to start
 ROTOR_POINTS = [
                 ROTOR_POINTS;
                 ROTOR_POINTS(1,:);
@@ -352,8 +360,8 @@ ROTOR_POINTS = [
                 NaN, NaN;
                 UNIT_CIRCLE * BOLT_RAD; % hole at back
                 ];
-% rotate to match start bar
-ROTOR_POINTS = (rotccwd(THETA) * (ROTOR_POINTS)')';
+
+ROTOR_POINTS = (rotccwd(-THETA)*ROTOR_POINTS')';
 
 clear a1 a2 ROPE_RANGE BAR_RANGE END_RANGE A_RANGE
 
@@ -380,11 +388,18 @@ HANDLE_1 = [
             S_CURVE;
             flipud(S_CURVE * [1,0;0,-1]);
             0, -INNER_HEIGHT;
+            -0*ROPE_W, -ROPE_R - ROPE_W*2/2;
+            -1*ROPE_W, -ROPE_R - ROPE_W*2/2;
+            -1*ROPE_W, -ROPE_R - ROPE_W*3/2;
+            -2*ROPE_W, -ROPE_R - ROPE_W*3/2;
+            -2*ROPE_W, -ROPE_R + ROPE_W*1/2;
+            -1*ROPE_W, -ROPE_R + ROPE_W*1/2;
+            -1*ROPE_W, -ROPE_R;
+            -0*ROPE_W, -ROPE_R;
             P2;
             BAR_HW * [cosd(A_RANGE), sind(A_RANGE)];
             P1
             ];
-SMPL_HNDL_POINTS = HANDLE_1;
 
 % middle handle
 HANDLE_2 = [
@@ -473,11 +488,11 @@ Y = [
      NaN, NaN;
      UNIT_CIRCLE * BOLT_RAD;
      NaN, NaN;
-     BACK_EDGE,         +OUTER_HEIGHT;
-     BACK_EDGE - MAT_W, +OUTER_HEIGHT;
-     BACK_EDGE - MAT_W, -OUTER_HEIGHT;
-     BACK_EDGE,         -OUTER_HEIGHT;
-     BACK_EDGE,         +OUTER_HEIGHT;
+     BACK_EDGE,         +OUTER_RADIUS;
+     BACK_EDGE - MAT_W, +OUTER_RADIUS;
+     BACK_EDGE - MAT_W, -OUTER_RADIUS;
+     BACK_EDGE,         -OUTER_RADIUS;
+     BACK_EDGE,         +OUTER_RADIUS;
      ];
 Y = [
      Y;
@@ -487,17 +502,6 @@ Y = [
 FULL_SIDE = Y;
 
 clear Y;
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% PRINT
-
-fprintf('bar (pair) count = %d\n', BAR_COUNT)
-fprintf('bar dimensions = %5.2f x %5.2f\n', 2 * BAR_HL, 2 * BAR_HW)
-fprintf('angle (theta) = %5.1f\n', THETA)
-fprintf('angle (phi)   = %5.1f\n', PHI)
-fprintf('retracted_length = %5.2f\n', 2 * REACH_SHORT * BAR_COUNT)
-fprintf('extended_length  = %5.2f\n', 2 * REACH_LONG * BAR_COUNT)
-fprintf('ratio = %5.2f\n', REACH_LONG / REACH_SHORT)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SIMPLIFY PLOTTING
@@ -525,7 +529,7 @@ if 1 == 1
     figure(1);
     clf;
     hold on;
-    jjmax = 5;
+    jjmax = 2;
     
     for jj = 1:jjmax
         % get angle and separation distances
@@ -579,7 +583,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % LAYERS
 
-if 0 == 1
+if 1 == 1
     figure(2);
     clf;
     hold on;
@@ -642,20 +646,35 @@ if 0 == 1
     plot(0, 0, 'r+');
     
     %R = rotccwd(-THETA);
-    %START_BAR_POINTS = (R * (START_BAR_POINTS'))';
+
+    plot(HANDLE_1(:,1),         HANDLE_1(:,2),         'k');
+    %plot(HANDLE_2(:,1),         HANDLE_2(:,2),         'k');
+    %plot(HANDLE_3(:,1),         HANDLE_3(:,2),         'k');
+    %plot(FULL_SIDE(:,1),        FULL_SIDE(:,2),        'k');
+    %plot(STABLE_OUTER(:,1),     STABLE_OUTER(:,2),     'k');
+    %plot(TOP_PIECE(:,1),        TOP_PIECE(:,2),        'k');
+    %plot(ROTOR_POINTS(:,1),     ROTOR_POINTS(:,2),     'k');
     %plot(START_BAR_POINTS(:,1), START_BAR_POINTS(:,2), 'k');
-    %BAR_POINTS = (R * (BAR_POINTS'))';
-    %plot(BAR_L*sind(THETA) + BAR_POINTS(:,1), BAR_POINTS(:,2), 'k');
-    %plot(END_BAR_POINTS(:,1), END_BAR_POINTS(:,2), 'k');
-    %plot(TOP_PIECE(:,1), TOP_PIECE(:,2), 'k');
-    %plot(STABLE_OUTER(:,1), STABLE_OUTER(:,2), 'k');
-    %plot(ADV_HNDL_POINTS(:,1), ADV_HNDL_POINTS(:,2), 'k');
-    plot(HANDLE_1(:,1), HANDLE_1(:,2), 'k');
-    %plot(HANDLE_2(:,1), HANDLE_2(:,2), 'k');
-    %plot(HANDLE_3(:,1), HANDLE_3(:,2), 'k');
-    %plot(ROTOR_POINTS(:,1), ROTOR_POINTS(:,2), 'k');
+    %plot(BAR_POINTS(:,1),       BAR_POINTS(:,2),       'k');
+    %plot(END_BAR_POINTS(:,1),   END_BAR_POINTS(:,2),   'k');
 
     axis('equal');
     axis('off');
     hold off;
 end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PRINT
+
+fprintf('bar (pair) count = %d\n', BAR_COUNT)
+fprintf('bar dimensions = %5.2f x %5.2f\n', 2 * BAR_HL, 2 * BAR_HW)
+fprintf('angle (theta) = %5.1f\n', THETA)
+fprintf('angle (phi)   = %5.1f\n', PHI)
+fprintf('retracted_length = %5.2f\n', 2 * REACH_SHORT * BAR_COUNT)
+fprintf('extended_length  = %5.2f\n', 2 * REACH_LONG * BAR_COUNT)
+fprintf('ratio = %5.2f\n', REACH_LONG / REACH_SHORT)
+fprintf('box height = %5.2f\n', 2 * OUTER_HEIGHT)
+fprintf('box length = %5.2f\n', FRONT_EDGE - BACK_EDGE)
+fprintf('box width = %5.2f\n', 8 * MAT_W)
+fprintf('box radius = %5.2f\n', 2 * OUTER_RADIUS)
+
