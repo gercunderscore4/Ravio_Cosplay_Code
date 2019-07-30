@@ -67,7 +67,7 @@ POLE_H = 2 * 2.54;
 POLE_R = 2.54 / 2;
 
 ROD_L = 15;
-BUTTON_L = 2;
+BUTTON_L = 6 * MAT_W;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % USEFUL CALCULATIONS
@@ -78,7 +78,6 @@ ROD_W = 2 * ROD_HW;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % BUTTON
 
-BUTTON_L = 8 * MAT_W;
 THIN_ROW_W = 2 * MAT_W;
 CROSSBAR_H =  2 * MAT_W;
 
@@ -116,7 +115,7 @@ ROD_POINTS = [
 ROD_POINTS = ROD_POINTS';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% OUTER
+% CASE
 
 CASE_POINTS = [
                ROD_HW - 1.5*MAT_W, 0;
@@ -137,9 +136,9 @@ CASE_POINTS = [
                THIN_ROW_W,         -ROD_L + MAT_W;
                THIN_ROW_W,         -ROD_L;
                THIN_ROW_W + MAT_W, -ROD_L;
-               THIN_ROW_W + MAT_W, -ROD_L + -MAT_W*2 + -MAT_W*2;
-               THIN_ROW_W,         -ROD_L + -MAT_W*2 + -MAT_W*2;
+               THIN_ROW_W + MAT_W, -ROD_L + -MAT_W*2 + -MAT_W*3;
                THIN_ROW_W,         -ROD_L + -MAT_W*2 + -MAT_W*3;
+               THIN_ROW_W,         -ROD_L + -MAT_W*2 + -MAT_W*2;
                ];
 CASE_POINTS = [
                CASE_POINTS;
@@ -149,7 +148,7 @@ CASE_POINTS = [
 CASE_POINTS = CASE_POINTS';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% SIDES
+% CASE SIDES
 
 SIDE_1_POINT = [
                 ROD_HW, 0;
@@ -218,9 +217,9 @@ SIDE_4_POINT = SIDE_4_POINT';
 
 
 SIDE_5_POINT = [
-                THIN_ROW_W + MAT_W, -ROD_L + -MAT_W*2 + -MAT_W*2;
-                THIN_ROW_W,         -ROD_L + -MAT_W*2 + -MAT_W*2;
+                THIN_ROW_W + MAT_W, -ROD_L + -MAT_W*2 + -MAT_W*3;
                 THIN_ROW_W,         -ROD_L + -MAT_W*2 + -MAT_W*3;
+                THIN_ROW_W,         -ROD_L + -MAT_W*2 + -MAT_W*2;
                 ];
 SIDE_5_POINT = [
                 SIDE_5_POINT;
@@ -235,13 +234,10 @@ SIDE_5_POINT = [
 SIDE_5_POINT = SIDE_5_POINT + [0, -ROD_L + -MAT_W*2 + -MAT_W*3.5];
 SIDE_5_POINT = SIDE_5_POINT';
 
-SIDE_6_POINT = [
-                (SIDE_1_POINT'*[-1,0;0,1])';
-                ];
+% relections
+SIDE_6_POINT = (SIDE_1_POINT'*[-1,0;0,1])';
 
-SIDE_7_POINT = [
-                (SIDE_2_POINT'*[-1,0;0,1])';
-                ];
+SIDE_7_POINT = (SIDE_2_POINT'*[-1,0;0,1])';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % BASE
@@ -278,15 +274,117 @@ BASE_POINTS = BASE_POINTS';
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % WINGS
 
+hole = [
+        ROD_HW,         +MAT_HW;
+        ROD_HW,         -MAT_HW;
+        ROD_HW - MAT_W, -MAT_HW;
+        ROD_HW - MAT_W, +MAT_HW;
+        ROD_HW,         +MAT_HW;
+        ];
+
+OCT_H = ROD_HW + MAT_W;
+OCT_W = OCT_H * tand(360/(8*2));
 WING_POINTS = [
+               % octagon around holes
+               OCT_W, OCT_H;
+               OCT_H, OCT_W;
+               % connect octagon and wings without adding weakness
+               OCT_H, max([POLE_R, OCT_W, 2*MAT_W]);
+               % wing, with jigsaw for pieces to attach to top
+               WING_L - 5*MAT_W, 1.5*MAT_W;
+               WING_L - 5*MAT_W, 2*MAT_W;
+               WING_L - 4*MAT_W, 2*MAT_W;
+               WING_L - 4*MAT_W, 1*MAT_W;
+               WING_L - 2*MAT_W, 1*MAT_W;
+               WING_L - 2*MAT_W, 2*MAT_W;
+               WING_L - 0*MAT_W, 2*MAT_W;
+               WING_L - 0*MAT_W, 1*MAT_W;
+               WING_L - 1*MAT_W, 1*MAT_W;
                ];
 WING_POINTS = [
-               WING_POINTS
+               WING_POINTS        *[ 1,0;0, 1];
+               flipud(WING_POINTS)*[ 1,0;0,-1];
+               WING_POINTS        *[-1,0;0,-1];
+               flipud(WING_POINTS)*[-1,0;0, 1];
+               WING_POINTS(1,:);
+               ];
+WING_POINTS = [
+               WING_POINTS;
+               % hole for pole
                NaN, NaN;
                POLE_R * UNIT_CIRCLE;
+               % holes for breaks
+               NaN, NaN;
+               (rotccwd( 45)*(hole'))';
+               NaN, NaN;
+               (rotccwd(135)*(hole'))';
+               NaN, NaN;
+               (rotccwd(225)*(hole'))';
+               NaN, NaN;
+               (rotccwd(315)*(hole'))';
+               % holes for attatching top
+               NaN, NaN;
+               (rotccwd( 90)*(hole'))';
+               NaN, NaN;
+               (rotccwd(270)*(hole'))';
                ];
 WING_POINTS = WING_POINTS';
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% WING SIDES
+
+WSIDE_1_POINTS = [
+                  WING_L - 5*MAT_W, 2*MAT_W;
+                  WING_L - 4*MAT_W, 2*MAT_W;
+                  WING_L - 4*MAT_W, 1*MAT_W;
+                  WING_L - 2*MAT_W, 1*MAT_W;
+                  WING_L - 2*MAT_W, 2*MAT_W;
+                  WING_L - 1*MAT_W, 2*MAT_W;
+                  ];
+DELTA = [0, 2.5*MAT_W];
+WSIDE_1_POINTS = WSIDE_1_POINTS - DELTA;
+WSIDE_1_POINTS = [
+                  WSIDE_1_POINTS;
+                  flipud(WSIDE_1_POINTS)*[1,0;0,-1];
+                  WSIDE_1_POINTS(1,:);
+                  ];
+WSIDE_1_POINTS = WSIDE_1_POINTS + DELTA;
+WSIDE_1_POINTS = WSIDE_1_POINTS';
+
+WSIDE_2_POINTS = ((WSIDE_1_POINTS')*[1,0;0,-1])';
+
+WSIDE_3_POINTS = ((WSIDE_1_POINTS')*[-1,0;0,1])';
+
+WSIDE_4_POINTS = ((WSIDE_1_POINTS')*[-1,0;0,-1])';
+
+WSIDE_5_POINTS = [
+                  WING_L - 0*MAT_W, +2*MAT_W;
+                  WING_L - 0*MAT_W, +1*MAT_W;
+                  WING_L - 1*MAT_W, +1*MAT_W;
+                  WING_L - 1*MAT_W, -1*MAT_W;
+                  WING_L - 0*MAT_W, -1*MAT_W;
+                  WING_L - 0*MAT_W, -2*MAT_W;
+                  WING_L + 1*MAT_W, -2*MAT_W;
+                  WING_L + 1*MAT_W, -1*MAT_W;
+                  WING_L + 2*MAT_W, -1*MAT_W;
+                  WING_L + 2*MAT_W, +1*MAT_W;
+                  WING_L + 1*MAT_W, +1*MAT_W;
+                  WING_L + 1*MAT_W, +2*MAT_W;
+                  WING_L - 0*MAT_W, +2*MAT_W;
+                  ];
+WSIDE_5_POINTS = WSIDE_5_POINTS';
+
+WSIDE_6_POINTS = ((WSIDE_5_POINTS')*[-1,0;0,1])';
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% WING HOLDER
+
+HOLDER_POINTS = [
+                 POLE_R * UNIT_CIRCLE;
+                 NaN, NaN;
+                 (POLE_R + MAT_W) * UNIT_CIRCLE;
+                 ];
+HOLDER_POINTS = HOLDER_POINTS';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % PLOT AND SAVE
@@ -297,7 +395,7 @@ hold on;
 
 plot(0,0,'r+');
 
-plot(ROD_POINTS(1,:), ROD_POINTS(2,:), 'k');
+plot(ROD_POINTS(1,:) - 2*ROD_W , ROD_POINTS(2,:), 'k');
 
 plot(CASE_POINTS(1,:), CASE_POINTS(2,:), 'k');
 plot(SIDE_1_POINT(1,:), SIDE_1_POINT(2,:), 'b');
@@ -308,11 +406,25 @@ plot(SIDE_5_POINT(1,:), SIDE_5_POINT(2,:), 'b');
 plot(SIDE_6_POINT(1,:), SIDE_6_POINT(2,:), 'b');
 plot(SIDE_7_POINT(1,:), SIDE_7_POINT(2,:), 'b');
 
+plot(CASE_POINTS(1,:) + 2 * ROD_W, CASE_POINTS(2,:), 'k');
+
 plot(BASE_POINTS(1,:), BASE_POINTS(2,:) + 8*MAT_W, 'k');
 
-plot(WING_POINTS(1,:), WING_POINTS(2,:) + 20*MAT_W, 'k');
+plot(BASE_POINTS(1,:), BASE_POINTS(2,:) + 15*MAT_W, 'k');
+
+plot(WING_POINTS(1,:), WING_POINTS(2,:) + 25*MAT_W, 'k');
+plot(WSIDE_1_POINTS(1,:), WSIDE_1_POINTS(2,:) + 25*MAT_W, 'b');
+plot(WSIDE_2_POINTS(1,:), WSIDE_2_POINTS(2,:) + 25*MAT_W, 'b');
+plot(WSIDE_3_POINTS(1,:), WSIDE_3_POINTS(2,:) + 25*MAT_W, 'b');
+plot(WSIDE_4_POINTS(1,:), WSIDE_4_POINTS(2,:) + 25*MAT_W, 'b');
+plot(WSIDE_5_POINTS(1,:), WSIDE_5_POINTS(2,:) + 25*MAT_W, 'b');
+plot(WSIDE_6_POINTS(1,:), WSIDE_6_POINTS(2,:) + 25*MAT_W, 'b');
+
+plot(WING_POINTS(1,:), WING_POINTS(2,:) + 40*MAT_W, 'k');
+
+plot(HOLDER_POINTS(1,:), HOLDER_POINTS(2,:) + 50*MAT_W, 'k');
 
 axis('equal');
 axis('off');
 hold off;
-%saveas(1, 'torando_rod.svg')
+saveas(1, 'torando_design.svg')
