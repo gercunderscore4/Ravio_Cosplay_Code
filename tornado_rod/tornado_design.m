@@ -69,6 +69,8 @@ POLE_R = 2.54 / 2;
 ROD_L = 15;
 BUTTON_L = 6 * MAT_W;
 
+ELASTIC_W = 0.1;
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % USEFUL CALCULATIONS
 
@@ -371,6 +373,12 @@ WSIDE_5_POINTS = [
                   WING_L + 1*MAT_W, +1*MAT_W;
                   WING_L + 1*MAT_W, +2*MAT_W;
                   WING_L - 0*MAT_W, +2*MAT_W;
+                  NaN, NaN;
+                  WING_L + 0*MAT_W, +ELASTIC_W/2;
+                  WING_L + 1*MAT_W, +ELASTIC_W/2;
+                  WING_L + 1*MAT_W, -ELASTIC_W/2;
+                  WING_L + 0*MAT_W, -ELASTIC_W/2;
+                  WING_L + 0*MAT_W, +ELASTIC_W/2;
                   ];
 WSIDE_5_POINTS = WSIDE_5_POINTS';
 
