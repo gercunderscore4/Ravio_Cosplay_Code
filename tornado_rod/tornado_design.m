@@ -376,6 +376,23 @@ WSIDE_5_POINTS = WSIDE_5_POINTS';
 
 WSIDE_6_POINTS = ((WSIDE_5_POINTS')*[-1,0;0,1])';
 
+WSIDE_7_POINTS = [
+                  1*MAT_HW, OCT_H + 0*MAT_W;
+                  1*MAT_HW, OCT_H + 1*MAT_W;
+                  3*MAT_HW, OCT_H + 1*MAT_W;
+                  3*MAT_HW, OCT_H + 2*MAT_W;
+                  1*MAT_HW, OCT_H + 2*MAT_W;
+                  1*MAT_HW, OCT_H + 3*MAT_W;
+                  ];
+WSIDE_7_POINTS = [
+                  WSIDE_7_POINTS;
+                  flipud(WSIDE_7_POINTS)*[-1,0;0,1];
+                  WSIDE_7_POINTS(1,:);
+                  ];
+WSIDE_7_POINTS = WSIDE_7_POINTS';
+
+WSIDE_8_POINTS = ((WSIDE_7_POINTS')*[1,0;0,-1])';
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % WING HOLDER
 
@@ -412,17 +429,19 @@ plot(BASE_POINTS(1,:), BASE_POINTS(2,:) + 8*MAT_W, 'k');
 
 plot(BASE_POINTS(1,:), BASE_POINTS(2,:) + 15*MAT_W, 'k');
 
-plot(WING_POINTS(1,:), WING_POINTS(2,:) + 25*MAT_W, 'k');
-plot(WSIDE_1_POINTS(1,:), WSIDE_1_POINTS(2,:) + 25*MAT_W, 'b');
-plot(WSIDE_2_POINTS(1,:), WSIDE_2_POINTS(2,:) + 25*MAT_W, 'b');
-plot(WSIDE_3_POINTS(1,:), WSIDE_3_POINTS(2,:) + 25*MAT_W, 'b');
-plot(WSIDE_4_POINTS(1,:), WSIDE_4_POINTS(2,:) + 25*MAT_W, 'b');
-plot(WSIDE_5_POINTS(1,:), WSIDE_5_POINTS(2,:) + 25*MAT_W, 'b');
-plot(WSIDE_6_POINTS(1,:), WSIDE_6_POINTS(2,:) + 25*MAT_W, 'b');
+plot(WING_POINTS(1,:), WING_POINTS(2,:) + 30*MAT_W, 'k');
+plot(WSIDE_1_POINTS(1,:), WSIDE_1_POINTS(2,:) + 30*MAT_W, 'b');
+plot(WSIDE_2_POINTS(1,:), WSIDE_2_POINTS(2,:) + 30*MAT_W, 'b');
+plot(WSIDE_3_POINTS(1,:), WSIDE_3_POINTS(2,:) + 30*MAT_W, 'b');
+plot(WSIDE_4_POINTS(1,:), WSIDE_4_POINTS(2,:) + 30*MAT_W, 'b');
+plot(WSIDE_5_POINTS(1,:), WSIDE_5_POINTS(2,:) + 30*MAT_W, 'b');
+plot(WSIDE_6_POINTS(1,:), WSIDE_6_POINTS(2,:) + 30*MAT_W, 'b');
+plot(WSIDE_7_POINTS(1,:), WSIDE_7_POINTS(2,:) + 30*MAT_W, 'b');
+plot(WSIDE_8_POINTS(1,:), WSIDE_8_POINTS(2,:) + 30*MAT_W, 'b');
 
-plot(WING_POINTS(1,:), WING_POINTS(2,:) + 40*MAT_W, 'k');
+plot(WING_POINTS(1,:), WING_POINTS(2,:) + 45*MAT_W, 'k');
 
-plot(HOLDER_POINTS(1,:), HOLDER_POINTS(2,:) + 50*MAT_W, 'k');
+plot(HOLDER_POINTS(1,:), HOLDER_POINTS(2,:) + 55*MAT_W, 'k');
 
 axis('equal');
 axis('off');
