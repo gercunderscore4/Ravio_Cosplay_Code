@@ -1,38 +1,37 @@
-+------------------+
-|Ravio Cosplay Code|
-+------------------+
++--------------------+
+| Ravio Cosplay Code |
++--------------------+
 
 
 Overview
 --------
 I'm working on a cosplay of Ravio, the shopkeeper from The Legend of Zelda: A Link Between Worlds, and I'm storing the code for it here.
 I'm working on electronics for various items, and the code for those will be stored here.
-I'll admit it, I'd keep this code private, except that I really like the convenience of storing it here.
-
 There is also a physical log book for this project. Not all notes will be stored here.
+Bomb is called "orb of power" to avoid scaring people.
+Percentages mark expected progress for next event (nothing is ever completely done).
 
 
 TASKS FOR TODAY
 ---------------
+    - Finalize hookshot design
+    - Finalize tornado rod design
+    - Order lasercutting
 
 
 SHOPPING LIST
 -------------
-    - Boots
-    - More rug fabrics
 
 
 TODO
 ----
-Fire/Ice Rod (and electronics for Sand):
-    - Cut, paint, and glue ice gem
+All Rods:
     - Solder circuit
-    - Seal circuits in anti-static bags (grey)
+    - Seal circuits
     - Insert electronics
-Not-Bomb:
-    - Cut rubber foam into shape (include cylinder on top and fuse)
-    - Cut small longitudinal slit near cylinder to access hollowed center
-    - Sew bomb exterior (except seam for electronics, do later with ladder)
+Orb of Power:
+    - Cut cylinder out of orb
+    - Sew exterior (with zipper)
     - Design pressure button (use ATtiny sleep function?)
     - Design rest of circuit
         - Vibration motors with solenoid
@@ -41,11 +40,11 @@ Not-Bomb:
         - Speaker
     - Program sequence (requires PWM sound)
     - Solder circuit
-    - Seal circuits in anti-static bags (grey)
+    - Seal circuits
     - Place circuit in foam (insert lights into shallow cuts)
-Boots:
-    - Buy
 Hookshot:
+    - Finalize design with screw sizes
+>   - Order lasercut
     - Bolt and glue
     - Cut EVA to shape
     - Heat EVA
@@ -58,6 +57,9 @@ Hookshot:
     - Sew fabric over foam
     - Tie hook to hookshot
 Tornado Rod:
+    - Finalize design
+    - Order lasercut
+>   - Wait for lasercutting
     - Shape layers of EVA foam (cut slot for switch)
     - Glue layers
     - Spray plastic on EVA foam
@@ -71,40 +73,40 @@ Tornado Rod:
     - Cut rubber foam into fan section
     - Build elastic car contraption into fan arms
     - Sew fabric over rubber foam
-Rug:
-    - Buy more fabric, 4 times width
-    - Buy orange fabric (what?)
-    - Sew two long sections together into a square (French seam)
-    - Hem edges
+Robes:
+    - Let shirt down all the way down
+    - Take skirt up if necessary
+    - Fix how starps work if desired
+Chest:
+    - Design circuit with sound amp
+    - Solder second circuit for cardboard chest
+Sign:
+    - Draw rupee explanation sign
+    - Order corrogated platic main sign
 
 
 TO-NOT-DO
 ---------
-Swimsuit version:
-    - Make mask pattern
-    - Cut craft foam
-    - Glue craft foam 
-    - Glue foam to sunglasses
-    - Find 
-    - Find black pool noodle material
-    - Cut black pool-noodle material to fin inside blue noodle
-    - Cut blue noodle into measured sections (match scarf)
-    - Place blue sections on black core and glue end pieces
-    - Sew purple hawaian shirt
+Ice Rod:
+    - Cut, paint, and glue ice gem
 Hat:
     - Re-sew right eye
     - Add telestereoscope to hat
     - Add comb to hat to hold hat in place
 Wig:
     - Style wig
-Chest:
-    - Touch up chest paint
 Rug:
-    - Cut detail patterns
-    - Sew on details
+    - Buy orange fabric (what?)
+    - Make patterns for orange
+    - Cut orange patterns
+    - Sew orange patterns
+    - Hem edges
 Pet:
+    - Make based on online design
 Book:
     - Design cover for log book
+Boots:
+    - Buy
 
 
 #==============#============#============#========#
@@ -124,7 +126,7 @@ Book:
 +--------------+------------+------------+--------+
 | Ears         |     L      |     L      |  100%  |
 +--------------+------------+------------+--------+
-| Shoes        |     L      |     XL     |    5%  |
+| Shoes        |     L      |     XL     |   N/A  |
 #==============#============#============#========#
 | WEAPONS                                         |
 #==============#============#============#========#
@@ -132,15 +134,15 @@ Book:
 +--------------+------------+------------+--------+
 | Ice Rod      |     H      |     H      |   70%  |
 +--------------+------------+------------+--------+
-| Not-Bomb     |     H      |     H      |   10%  |
+| Orb of Power |     H      |     H      |   20%  |
 +--------------+------------+------------+--------+
-| Tornado Rod  |     M      |     H      |   10%  |
+| Tornado Rod  |     M      |     H      |   20%  |
 +--------------+------------+------------+--------+
-| Hammer       |     L      |     H      |  100%  |
+| Hammer       |     L      |     H      |   80%  |
 +--------------+------------+------------+--------+
-| Sand Rod     |     H      |     M      |   60%  |
+| Sand Rod     |     H      |     M      |   70%  |
 +--------------+------------+------------+--------+
-| Hookshot     |     H      |     M      |   55%  |
+| Hookshot     |     H      |     M      |   20%  |
 +--------------+------------+------------+--------+
 | Boomerang    |     L      |     M      |  100%  |
 +--------------+------------+------------+--------+
@@ -148,19 +150,19 @@ Book:
 #==============#============#============#========#
 | SHOP                                            |
 #==============#============#============#========#
-| Chest        |     H      |     H      |  100%  |
+| Chest        |     H      |     H      |   50%  |
 +--------------+------------+------------+--------+
 | Rupees       |     L      |     M      |  100%  |
 +--------------+------------+------------+--------+
 | Item Ears    |     M      |     L      |   N/A  |
 +--------------+------------+------------+--------+
-| Rug          |     M      |     L      |   10%  |
+| Rug          |     M      |     L      |   N/A  |
 +--------------+------------+------------+--------+
 | Pot          |     M      |     L      |   N/A  |
 +--------------+------------+------------+--------+
-| Bush         |     L      |     L      |   90%  |
+| Bush         |     L      |     L      |   50%  |
 +--------------+------------+------------+--------+
-| Maps         |     L      |     L      |  100%  |
+| Maps         |     L      |     L      |   N/A  |
 +--------------+------------+------------+--------+
 | Pet          |     H      |     XL     |   N/A  |
 +--------------+------------+------------+--------+
