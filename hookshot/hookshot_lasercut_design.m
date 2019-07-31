@@ -26,14 +26,14 @@ MAT_W = 2.54 / 4;
 % used for handle
 INDEX_FINDER_WIDTH = 2;
 
-BOLT_DIA   = 0.6;  % body     width for bolt
-HEAD_DIA   = 1.2;  % head/nut width for bolt
-SPACER_DIA = 1.2;  % spacer   width for bolt
+BOLT_DIA   = 0.35;  % body     width for bolt % #6 0.1380" / 3.5052 mm
+HEAD_DIA   = 0.8;  % head/nut width for bolt
+SPACER_DIA = 1.0;  % spacer   width for bolt
 BOLT_RAD   = BOLT_DIA / 2;
 HEAD_RAD   = HEAD_DIA / 2;
 SPACER_RAD = SPACER_DIA / 2;
 
-BAR_COUNT = 4;  % number of bar pairs
+BAR_COUNT = 5;  % number of bar pairs
 
 % comment out one, it will be calculated instead of defined
 BAR_W = 1.5 * max(HEAD_DIA, SPACER_DIA); % width of each individual bar
@@ -52,7 +52,7 @@ else
 end
 
 % rope radius, inner radius of the rotor along which the rope is slotted
-ROPE_W = 2.54 * 1 / 4;
+ROPE_W = 2.54 * 1 / 8;
 ROPE_R = 0.4 * (BAR_L / 2);
 % space for rotor to rotate freely
 ROTOR_E = 0.5;
@@ -487,12 +487,12 @@ Y = [
      BACK_EDGE,  +OUTER_HEIGHT;
      NaN, NaN;
      UNIT_CIRCLE * BOLT_RAD;
-     NaN, NaN;
-     BACK_EDGE,         +OUTER_RADIUS;
-     BACK_EDGE - MAT_W, +OUTER_RADIUS;
-     BACK_EDGE - MAT_W, -OUTER_RADIUS;
-     BACK_EDGE,         -OUTER_RADIUS;
-     BACK_EDGE,         +OUTER_RADIUS;
+     %NaN, NaN;
+     %BACK_EDGE,         +OUTER_RADIUS;
+     %BACK_EDGE - MAT_W, +OUTER_RADIUS;
+     %BACK_EDGE - MAT_W, -OUTER_RADIUS;
+     %BACK_EDGE,         -OUTER_RADIUS;
+     %BACK_EDGE,         +OUTER_RADIUS;
      ];
 Y = [
      Y;
