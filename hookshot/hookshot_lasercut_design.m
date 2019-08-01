@@ -26,9 +26,9 @@ MAT_W = 2.54 / 4;
 % used for handle
 INDEX_FINDER_WIDTH = 2;
 
-BOLT_DIA   = 0.35;  % body     width for bolt % #6 0.1380" / 3.5052 mm
-HEAD_DIA   = 0.8;  % head/nut width for bolt
-SPACER_DIA = 1.0;  % spacer   width for bolt
+BOLT_DIA   = 0.41656 - 0.02; % body     width for bolt % #8 0.1640" / 4.1656 mm minus some kerfing
+HEAD_DIA   = 1.0;            % head/nut width for bolt
+SPACER_DIA = 1.0;            % spacer   width for bolt
 BOLT_RAD   = BOLT_DIA / 2;
 HEAD_RAD   = HEAD_DIA / 2;
 SPACER_RAD = SPACER_DIA / 2;
@@ -620,7 +620,7 @@ if 1 == 1
     plot(TOP_PIECE(:,1),       dy + TOP_PIECE(:,2),    'r');
     plot(PULL + HANDLE_2(:,1), dy + HANDLE_2(:,2),     'r');
     plot(NC(:,1),              dy + NC(:,2),           'r');
-
+    
     jj = jj + 1;
     dy = (jj-1) * BAR_L * 2;
     plot(TOP_PIECE(:,1),       dy + TOP_PIECE(:,2),    'b');
