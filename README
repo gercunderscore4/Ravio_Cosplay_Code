@@ -8,16 +8,17 @@ Overview
 I'm working on a cosplay of Ravio, the shopkeeper from The Legend of Zelda: A Link Between Worlds, and I'm storing the code for it here.
 I'm working on electronics for various items, and the code for those will be stored here.
 There is also a physical log book for this project. Not all notes will be stored here.
-Bomb is called "orb of power" to avoid scaring people.
+Use "orb of power" instead of "bomb" to avoid scaring people.
 Percentages mark expected progress for next event (nothing is ever completely done).
 
 
 TASKS FOR TODAY
 ---------------
-    - Finalize hookshot design
-    - Finalize tornado rod design
-    - Order lasercutting
-
+    - Buy 30 cm separating zipper
+    - Cut and sew fabric for the orb of power
+    - Order foam
+    - Order wig styling
+    - Order sign
 
 SHOPPING LIST
 -------------
@@ -30,7 +31,7 @@ All Rods:
     - Seal circuits
     - Insert electronics
 Orb of Power:
-    - Cut cylinder out of orb
+    - Buy 30 cm separating zipper
     - Sew exterior (with zipper)
     - Design pressure button (use ATtiny sleep function?)
     - Design rest of circuit
@@ -134,15 +135,15 @@ Boots:
 +--------------+------------+------------+--------+
 | Ice Rod      |     H      |     H      |   70%  |
 +--------------+------------+------------+--------+
-| Orb of Power |     H      |     H      |   20%  |
+| Orb of Power |     H      |     H      |   25%  |
 +--------------+------------+------------+--------+
-| Tornado Rod  |     M      |     H      |   20%  |
+| Tornado Rod  |     M      |     H      |   25%  |
 +--------------+------------+------------+--------+
 | Hammer       |     L      |     H      |   80%  |
 +--------------+------------+------------+--------+
 | Sand Rod     |     H      |     M      |   70%  |
 +--------------+------------+------------+--------+
-| Hookshot     |     H      |     M      |   20%  |
+| Hookshot     |     H      |     M      |   25%  |
 +--------------+------------+------------+--------+
 | Boomerang    |     L      |     M      |  100%  |
 +--------------+------------+------------+--------+
