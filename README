@@ -14,10 +14,13 @@ Percentages mark expected progress for next event (nothing is ever completely do
 
 TASKS FOR TODAY
 ---------------
-    - Cut and sew fabric for the orb of power
-    - Order foam
-    - Order wig styling
-    - Order sign
+    - Buy dark green fabric
+    - Insert foam piece into switch gap
+    - Smooth switch
+    - Tape switch
+    - Spray plastic onto Tornado Rod
+    - Build rod circuits
+
 
 SHOPPING LIST
 -------------
@@ -30,38 +33,24 @@ All Rods:
     - Seal circuits
     - Insert electronics
 Orb of Power:
-    - Buy 30 cm separating zipper
-    - Sew exterior (with zipper)
-    - Design pressure button (use ATtiny sleep function?)
+    - Build
     - Design rest of circuit
         - Vibration motors with solenoid
         - Fuse LEDs
         - Red LEDs
-        - Speaker
     - Program sequence (requires PWM sound)
     - Solder circuit
     - Seal circuits
     - Place circuit in foam (insert lights into shallow cuts)
 Hookshot:
-    - Finalize design with screw sizes
->   - Order lasercut
     - Bolt and glue
     - Cut EVA to shape
     - Heat EVA
->   - Spray EVA with plastic
-    - Paint EVA
->   - Wait for paint to dry
-    - Glue EVA
     - Cut hook foam
     - Cut fabric to cover foam
     - Sew fabric over foam
     - Tie hook to hookshot
 Tornado Rod:
-    - Finalize design
-    - Order lasercut
->   - Wait for lasercutting
-    - Shape layers of EVA foam (cut slot for switch)
-    - Glue layers
     - Spray plastic on EVA foam
 >   - Wait for plastic to dry
     - Paint brown
@@ -71,18 +60,11 @@ Tornado Rod:
     - Paint light green
 >   - Wait for paint to dry
     - Cut rubber foam into fan section
-    - Build elastic car contraption into fan arms
     - Sew fabric over rubber foam
-Robes:
-    - Let shirt down all the way down
-    - Take skirt up if necessary
-    - Fix how starps work if desired
 Chest:
-    - Design circuit with sound amp
     - Solder second circuit for cardboard chest
 Sign:
     - Draw rupee explanation sign
-    - Order corrogated platic main sign
 
 
 TO-NOT-DO
@@ -107,6 +89,10 @@ Book:
     - Design cover for log book
 Boots:
     - Buy
+Robes:
+    - Let shirt down all the way down
+    - Take skirt up if necessary
+    - Fix how starps work if desired
 
 
 #==============#============#============#========#
@@ -134,7 +120,7 @@ Boots:
 +--------------+------------+------------+--------+
 | Ice Rod      |     H      |     H      |   70%  |
 +--------------+------------+------------+--------+
-| Orb of Power |     H      |     H      |   25%  |
+| Orb of Power |     H      |     H      |   40%  |
 +--------------+------------+------------+--------+
 | Tornado Rod  |     M      |     H      |   25%  |
 +--------------+------------+------------+--------+
@@ -150,7 +136,7 @@ Boots:
 #==============#============#============#========#
 | SHOP                                            |
 #==============#============#============#========#
-| Chest        |     H      |     H      |   50%  |
+| Chest        |     H      |     H      |   60%  |
 +--------------+------------+------------+--------+
 | Rupees       |     L      |     M      |  100%  |
 +--------------+------------+------------+--------+
