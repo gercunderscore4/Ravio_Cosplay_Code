@@ -1,0 +1,41 @@
+Hookshot Prototype One: Scotch Yoke
+-----------------------------------
+
+Hookshot Prototype Two: Winch
+-----------------------------
+
+
+Hookshot Prototype Three: Rack And Pinion
+-----------------------------------------
+
+Designing rack and pinion for hookshot prototype 3.
+
+Trying to calculate using equations from
+http://www.otvinta.com/rack.html
+    clear;
+    clc;
+    u = linspace(0, 1, 10);
+    x = 5.638 .* (cosd(u .* 0.822) .+ u .* 0.822 .* sind(u .* 0.822));
+    y = 5.638 .* (sind(u .* 0.822) .- u .* 0.822 .* cosd(u .* 0.822));
+    plot(x,y);
+    axis('equal')
+Not enough equations for the drawing.
+
+Found software to help.
+https://www.thingiverse.com/thing:3190666
+http://www.forestmoon.com/software/GearDXF/
+Found a better solution already.
+
+https://geargenerator.com/
+Doesn't do racks.
+
+Cool, this works:
+http://hessmer.org/gears/InvoluteSpurGearBuilder.html?circularPitch=8&pressureAngle=20&clearance=0.05&backlash=0.05&profileShift=0&gear1ToothCount=0&gear1CenterHoleDiamater=0&gear2ToothCount=12&gear2CenterHoleDiamater=1&showOption=3
+With SVGs.
+
+So does this:
+https://woodgears.ca/gear_cutting/template.html
+But no SVGs.
+
+20 teeth with angle of 20 is said to be optimal.
+But I think that 12 teeth is easier to cut and better for strength.
