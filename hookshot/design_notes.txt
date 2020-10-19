@@ -1,14 +1,51 @@
-Hookshot Prototype One: Scotch Yoke
------------------------------------
++-------------------------------------+
+| Hookshot Prototype One: Scotch Yoke |
++-------------------------------------+
 
-Hookshot Prototype Two: Winch
------------------------------
+Result:
+Due to the mechanics of the stoch yoke, it is effectively impossible to fully extend it via the handle.
+Though it is easy to move when it's mostly retracted.
+
+The wide holes with bolts are too loose.
+That looseness causes what I'll call "droop".
+When the handle is in the retracted position, the scissors can still fall about 1/4 of the way out due to looseness.
+
+When it's fully extended, it droops downward due to gravity.
+This strongly locks the scissors in the extended position.
 
 
-Hookshot Prototype Three: Rack And Pinion
------------------------------------------
++-------------------------------+
+| Hookshot Prototype Two: Winch |
++-------------------------------+
 
-Designing rack and pinion for hookshot prototype 3.
+This was designed to make it easier to pull it fully closed.
+However, you can't push a rope, so it's only one way.
+
+Result:
+This one is alsomost impossible to get started from the handle.
+However, once it starts extending, it is easy to extend it fully.
+I might be able to fix the starter issue by using a wider radius winch.
+
+It also has to be pulled tightly to stay up.
+
+The holes are smaller, and the scissor arms are thicker, but it's still drooping a bit.
+Not bad.
+
+Also, I appear to have gotten the pull distance long, looks off by a factor of 2.
+Probably used diameter instead of radius somewhere.
+
+
++-------------------------------------------+
+| Hookshot Prototype Three: Rack And Pinion |
++-------------------------------------------+
+
+Realized that I can build a similar setup to the winch using a rack and pinion.
+This is also reversable (unlike the winch).
+Hopefully, by using a large radius for the pinion, it'll also be mechanically easy.
+
+20 teeth is said to be optimal.
+But I think that 12 teeth is easier to cut and better for strength.
+An angle of attack of 20deg is common, so I'll just trust that.
 
 Trying to calculate using equations from
 http://www.otvinta.com/rack.html
@@ -37,5 +74,3 @@ So does this:
 https://woodgears.ca/gear_cutting/template.html
 But no SVGs.
 
-20 teeth with angle of 20 is said to be optimal.
-But I think that 12 teeth is easier to cut and better for strength.
