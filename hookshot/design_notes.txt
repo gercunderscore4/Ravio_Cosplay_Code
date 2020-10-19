@@ -44,8 +44,8 @@ This is also reversable (unlike the winch).
 Hopefully, by using a large radius for the pinion, it'll also be mechanically easy.
 
 20 teeth is said to be optimal.
-But I think that 12 teeth is easier to cut and better for strength.
-An angle of attack of 20deg is common, so I'll just trust that.
+But I think that 12 teeth is easier to cut and better for strength, at least for the foam bard version.
+An angle of pressure of 20deg is common, so I'll just trust that.
 
 Trying to calculate using equations from
 http://www.otvinta.com/rack.html
