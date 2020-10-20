@@ -65,6 +65,19 @@ PINION_R = cosd(THETA) * BAR_L / 2;
 BAR_HL = BAR_L / 2;
 BAR_HW = BAR_W / 2;
 
+% angles
+%
+% Retracted:        % Extended:          % difference:
+% +-------------    % +--------------    % +-------------
+% |\ PHI            % |\ THETA           % |\ THETA
+% | \               % |   \              % | \ \
+% |  \              % | PHI  \           % |  \   \
+% |   \             % |         \        % |   \     \
+% |    \            % |            \     % |    \ OMEGA \
+% |THETA\           % |                  % |THETA\
+%
+% OMEGA is the radius travel between retracted and extended.
+
 PHI = 90 - THETA;
 OMEGA = PHI - THETA;
 
@@ -169,7 +182,7 @@ LINE = [0, -BAR_HL;
 % BAR_HL : half-length
 % BAR_HW : half-width
 %
-% BAR_LE : Length exstension necessary for the outside edges to reathe the next bar's outside edge when extended
+% BAR_LE : Length exstension necessary for the outside edges to reach the next bar's outside edge when extended
 % BAR_CR : Radius of the cruve at the end of the bar. 
 %          The start fo the curve is matched to that angle at which the bars meet to hide it.
 % BAR_SR : Sub-radial distance, subtract this before adding the curve to account for its long radius.
@@ -297,109 +310,124 @@ END_BAR_POINTS = [
                   ];
 
 END_COVER_POINTS = [
-                    POINTS;
-                    NaN, NaN;
-                    UNIT_CIRCLE * HEAD_RAD; % hole at back
-                    NaN, NaN;
-                    UNIT_CIRCLE * HEAD_RAD + [0,-BAR_HL]; % hole in middle
-                    ];
+    POINTS;
+    NaN, NaN;
+    UNIT_CIRCLE * HEAD_RAD; % hole at back
+    NaN, NaN;
+    UNIT_CIRCLE * HEAD_RAD + [0,-BAR_HL]; % hole in middle
+    ];
 
 clear PSI CORNER_OFFSET a1 a2 A_RANGE POINTS;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % RACK & PINION
 
+% PINION
+% Want just enough teeth to open and close the hookshot.
+% Also need a circular sector to wrap around to the end bar.
+% Stop the circular sector at the end bar so that the handle has more area to expand into.
 
 % pinion (half-tooth)
 % 12 teeth (each rotated 360/12 = 30deg = pi/6)
-% rotate around 0
-% reflect across start
-P_pt = [
-        -0.18363, -0.68532;
-        -0.16024, -0.69117;
-        -0.13265, -0.69699;
-        -0.13320, -0.69690;
-        -0.13192, -0.69715;
-        -0.13117, -0.69733;
-        -0.13190, -0.69718;
-        -0.13044, -0.69754;
-        -0.12481, -0.70019;
-        -0.11970, -0.70452;
-        -0.11522, -0.71048;
-        -0.11151, -0.71804;
-        -0.10869, -0.72714;
-        -0.10689, -0.73770;
-        -0.10623, -0.74965;
-        -0.10681, -0.76294;
-        -0.10873, -0.77745;
-        -0.11212, -0.79311;
-        -0.11515, -0.80435;
-        -0.11514, -0.81393;
-        -0.11388, -0.82890;
-        -0.11043, -0.84950;
-        -0.10760, -0.86170;
-        -0.10389, -0.87509;
-        -0.09918, -0.88974;
-        -0.09336, -0.90548;
-        -0.08633, -0.92235;
-        -0.07804, -0.94008;
-        -0.06834, -0.95876;
-        -0.05713, -0.97828;
-        -0.04590, -0.99616;
-        -0.00000, -1.00000;
-        ];
-P_pt = P_pt * PINION_R;
 n = 12;
 psi = 360 / n;
-P_t = [P_pt; flipud(reflectAcrossLine(P_pt, Inf, 0))];
+% tooth shape needs to be updated when n is updated
+% recommend: http://hessmer.org/gears/InvoluteSpurGearBuilder.html?circularPitch=8&pressureAngle=20&clearance=0.05&backlash=0.05&profileShift=0&gear1ToothCount=0&gear1CenterHoleDiamater=0&gear2ToothCount=12&gear2CenterHoleDiamater=1&showOption=3
+% rotate around [0,0]
+% reflect across start
+PINION_HALF_TOOTH = [
+    -0.18363, -0.68532;
+    -0.16024, -0.69117;
+    -0.13265, -0.69699;
+    -0.13320, -0.69690;
+    -0.13192, -0.69715;
+    -0.13117, -0.69733;
+    -0.13190, -0.69718;
+    -0.13044, -0.69754;
+    -0.12481, -0.70019;
+    -0.11970, -0.70452;
+    -0.11522, -0.71048;
+    -0.11151, -0.71804;
+    -0.10869, -0.72714;
+    -0.10689, -0.73770;
+    -0.10623, -0.74965;
+    -0.10681, -0.76294;
+    -0.10873, -0.77745;
+    -0.11212, -0.79311;
+    -0.11515, -0.80435;
+    -0.11514, -0.81393;
+    -0.11388, -0.82890;
+    -0.11043, -0.84950;
+    -0.10760, -0.86170;
+    -0.10389, -0.87509;
+    -0.09918, -0.88974;
+    -0.09336, -0.90548;
+    -0.08633, -0.92235;
+    -0.07804, -0.94008;
+    -0.06834, -0.95876;
+    -0.05713, -0.97828;
+    -0.04590, -0.99616;
+    -0.00000, -1.00000;
+    ];
+PINION_HALF_TOOTH = PINION_HALF_TOOTH * PINION_R;
+PINION_TOOTH = [PINION_HALF_TOOTH; flipud(reflectAcrossLine(PINION_HALF_TOOTH, Inf, 0))];
 
-P_pinion = [];
-for ii = -1:ceil(OMEGA/psi)
-    P_pinion = [P_pinion; P_t * rotccwd(-ii*360/n)];
+PINION = [];
+for ii = 0:ceil(OMEGA/psi)
+    PINION = [PINION; (rotccwd(ii*360/n) * PINION_TOOTH')']; %#ok<AGROW>
 end
-ROUND_RADIUS = norm(P_pinion(1,:), 2);
-t1 = atan2d(P_pinion(end,2), P_pinion(end,1));
-t2 = atan2d(P_pinion(1,2), P_pinion(1,1)) + 360;
-ROUND_RANGE = linspace(t1, t2, CURVE_SIZE)';
 
-[~, a1] = getTangentialLineToCircle(P_pinion(end,:), [0 0], BAR_HW);
-[a2, ~] = getTangentialLineToCircle(P_pinion(1,:),   [0 0], BAR_HW);
-% add 2*theta to get the junction to be flat
-A_RANGE = linspace(a1, a2, CURVE_SIZE)'                + 2 * THETA;
+TOP_RANGE = linspace(90-OMEGA, 90+OMEGA, CURVE_SIZE)';
+TOP_OF_BAR = [0, BAR_CS] + BAR_CR*[cosd(TOP_RANGE), sind(TOP_RANGE)];
+TOP_OF_BAR = (rotccwd(-THETA) * (TOP_OF_BAR'))';
+% start smaller where larger stops, end where pinion starts
 
-P_pinion = [
-            P_pinion;
-            BAR_HW * [cosd(A_RANGE), sind(A_RANGE)];
-            P_pinion(1,:);
-            ];
+PINION = [
+    PINION;
+    TOP_OF_BAR;
+    PINION(1,:);
+    ];
 
-P_pinion = [
-            P_pinion
-            NaN, NaN;
-            UNIT_CIRCLE * BOLT_RAD;
-            ];
+PINION = [
+    PINION;
+    NaN, NaN;
+    UNIT_CIRCLE * BOLT_RAD;
+    ];
+
+% RACK
+% Simple rack attached to the handle.
+% 
 
 % rack teeth
-P_rt = [
-        -0.22378, -0.71230;
-        -0.16136, -0.71230;
-        -0.06295, -1.00000;
-        -0.00000, -1.00000;
-        ];
-P_rt = P_rt * PINION_R;
-w = (P_rt(end,1) - P_rt(1,1)) * 2;
-P_r = [P_rt; flipud(reflectAcrossLine(P_rt, Inf, 0))];
+RACK_HALF_TOOTH = [
+    -0.22378, -0.71230;
+    -0.16136, -0.71230;
+    -0.06295, -1.00000;
+    -0.00000, -1.00000;
+    ];
+RACK_HALF_TOOTH = RACK_HALF_TOOTH * PINION_R;
+w = (RACK_HALF_TOOTH(end,1) - RACK_HALF_TOOTH(1,1)) * 2;
+RACK_TOOTH = [
+    flipud(reflectAcrossLine(RACK_HALF_TOOTH, Inf, 0)) + [-w, 0]; 
+    RACK_HALF_TOOTH;
+    ];
 
-P_rack = [];
-for ii = -1:ceil(OMEGA/psi)
-    P_rack = [P_rack; (P_r + [ii*w, 0])];
+RACK = [];
+for ii = 0:3
+    RACK = [RACK; (RACK_TOOTH + [ii*w, 0])]; %#ok<AGROW>
 end
+RACK = [
+    RACK;
+    RACK(end,:) - [0, BAR_HW];
+    RACK(1,:) - [0, BAR_HW];
+    RACK(1,:);
+    ];
 
 RACK_UNIT_PER_DEG = w / psi;
 
-clear n w P_pt P_p P_rt P_r;
-% P_pinion
-% P_rack
+clear n w psi PINION_HALF_TOOTH PINION_TOOTH RACK_HALF_TOOTH RACK_TOOTH;
+% PINION
+% RACK
 % RACK_UNIT_PER_DEG
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -444,20 +472,20 @@ if true
         
         % rotate bars
         R = rotccwd(-ZETA);
-        NP = (rotccwd(-OMEGA * completion) * (P_pinion)')';
+        NP = (rotccwd(-OMEGA * completion) * (PINION)')';
         NB = (R * (L1(:,1:2))')' + L1(:,3)*DX;
         NC = (R * (L2(:,1:2))')' + L2(:,3)*DX;
-        NR = P_rack + [-PULL, 0];
+        NR = RACK + [-PULL, 0];
         
         plot(NR(:,1),              dy + NR(:,2),           'k');
         plot(NP(:,1),              dy + NP(:,2),           'k');
         plot(NC(:,1),              dy + NC(:,2),           'r');
         plot(NB(:,1),              dy + NB(:,2),           'b');
 
-        %plot(NB(:,1),              dy - NB(:,2),           'b');
-        %plot(NC(:,1),              dy - NC(:,2),           'r');
-        %plot(NP(:,1),              dy - NP(:,2),           'k');
-        %plot(NR(:,1),              dy - NR(:,2),           'k');
+        plot(NB(:,1),              dy - NB(:,2),           'b');
+        plot(NC(:,1),              dy - NC(:,2),           'r');
+        plot(NP(:,1),              dy - NP(:,2),           'k');
+        plot(NR(:,1),              dy - NR(:,2),           'k');
 
         % fixed origin point
         plot(0,dy,'r+');

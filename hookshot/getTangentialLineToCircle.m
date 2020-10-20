@@ -1,4 +1,4 @@
-function [angle1 angle2] = getTangentialLineToCircle(point, center, radius)
+function [angle1, angle2] = getTangentialLineToCircle(point, center, radius)
     vec = point - center;
     angle = atan2d(vec(2), vec(1));
     d = norm(vec);
