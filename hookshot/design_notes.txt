@@ -47,6 +47,24 @@ Hopefully, by using a large radius for the pinion, it'll also be mechanically ea
 But I think that 12 teeth is easier to cut and better for strength, at least for the foam bard version.
 An angle of pressure of 20deg is common, so I'll just trust that.
 
+Angle of pressure determines the angle of the rack teeth because they need to be normal to each other.
+In order for two surfaces to touch at a point, they need to be parallel (or discontinuous).
+And the pressure is a normal force, QED.
+
+The rack and pinion can both be represented by half a tooth, which is reflected and then transformed.
+Rotated n times around for the pinion.
+Translated up to times for the rack.
+
+To determine how far each should move, each rotation of one pinion tooth is a translation of one rack tooth.
+With width calculated as peak to peak for both
+360/n deg -> (width of rack tooth, pk2pk)
+
+If I understand it correctly, there is a sin(angle of pressure) transverse force.
+
+I should add tracks for the handle piece moving backwards, it often gets stuck from slight rotations.
+I can make this with lines cut out of the outer layer.
+There needs to be a name for this kind of mechanism.
+
 Trying to calculate using equations from
 http://www.otvinta.com/rack.html
     clear;
@@ -73,4 +91,3 @@ With SVGs.
 So does this:
 https://woodgears.ca/gear_cutting/template.html
 But no SVGs.
-
