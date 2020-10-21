@@ -43,7 +43,7 @@ else
 end
 
 % rope radius, inner radius of the rotor along which the rope is slotted
-PINION_R = cosd(THETA) * BAR_L / 2;
+PINION_R = cosd(THETA) * BAR_L / 2.2;
 
 % THETA is the final angle of the bar with the horizon.
 % 0deg would create perfectly flat lines, ideal, but impossible
@@ -132,11 +132,12 @@ HNDL_OUTER_HH = HNDL_OUTER_H / 2;
 UNIT_CIRCLE = linspace(0, 90, CURVE_SIZE)';
 COS_ARC = cosd(UNIT_CIRCLE);
 SIN_ARC = flipud(COS_ARC);
-UNIT_CIRCLE = [ COS_ARC,  SIN_ARC;
-               -SIN_ARC,  COS_ARC;
-               -COS_ARC, -SIN_ARC;
-                SIN_ARC, -COS_ARC;
-              ];
+UNIT_CIRCLE = [
+    +COS_ARC, +SIN_ARC;
+    -SIN_ARC, +COS_ARC;
+    -COS_ARC, -SIN_ARC;
+    +SIN_ARC, -COS_ARC;
+    ];
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % BARS
@@ -211,103 +212,108 @@ OUTER_RADIUS = sqrt(OUTER_HEIGHT^2 + (4*MAT_W)^2);
 OMEGA_RANGE = linspace(-OMEGA, +OMEGA, CURVE_SIZE)';
 
 % create curves at end
-POINTS = [0, BAR_CS] + BAR_CR * [sind(OMEGA_RANGE), cosd(OMEGA_RANGE)];
+OUTLINE_POINTS = [0, BAR_CS] + BAR_CR * [sind(OMEGA_RANGE), cosd(OMEGA_RANGE)];
 % duplicate and rotate 180deg
-POINTS = [POINTS; -1*POINTS];
+OUTLINE_POINTS = [
+    OUTLINE_POINTS; 
+    -1*OUTLINE_POINTS
+    ];
 % return to start
-POINTS = [POINTS;POINTS(1,:)];
+OUTLINE_POINTS = [
+    OUTLINE_POINTS;
+    OUTLINE_POINTS(1,:)
+    ];
 
 % add holes to bars
 BAR_POINTS = [
-              POINTS;
-              NaN, NaN;
-              UNIT_CIRCLE * BOLT_RAD + [0,-BAR_HL]; % hole at back
-              NaN, NaN;
-              UNIT_CIRCLE * BOLT_RAD + [0,0]; % hole in middle
-              NaN, NaN;
-              UNIT_CIRCLE * BOLT_RAD + [0,BAR_HL]; % hole at front
-              ];
+    OUTLINE_POINTS;
+    NaN, NaN;
+    UNIT_CIRCLE * BOLT_RAD + [0,-BAR_HL]; % hole at back
+    NaN, NaN;
+    UNIT_CIRCLE * BOLT_RAD + [0,0]; % hole in middle
+    NaN, NaN;
+    UNIT_CIRCLE * BOLT_RAD + [0,BAR_HL]; % hole at front
+    ];
 
 COVER_POINTS = [
-                POINTS;
-                NaN, NaN;
-                UNIT_CIRCLE * HEAD_RAD + [0,-BAR_HL]; % hole at back
-                NaN, NaN;
-                UNIT_CIRCLE * HEAD_RAD + [0,0]; % hole in middle
-                NaN, NaN;
-                UNIT_CIRCLE * HEAD_RAD + [0,BAR_HL]; % hole at front
-                ];
+    OUTLINE_POINTS;
+    NaN, NaN;
+    UNIT_CIRCLE * HEAD_RAD + [0,-BAR_HL]; % hole at back
+    NaN, NaN;
+    UNIT_CIRCLE * HEAD_RAD + [0,0]; % hole in middle
+    NaN, NaN;
+    UNIT_CIRCLE * HEAD_RAD + [0,BAR_HL]; % hole at front
+    ];
 
-clear POINTS;
+HIGHEST_VALUE = (rotccwd(THETA) * OUTLINE_POINTS')';
+HIGHEST_VALUE = max(HIGHEST_VALUE(:,2));
+
+clear OUTLINE_POINTS;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % START BARS
 
 % final bar (half-length)
 POINTS = [
-          BAR_CR * -sind(OMEGA_RANGE), BAR_CS + BAR_CR * cosd(OMEGA_RANGE); % back
-          BAR_HW * -COS_ARC, BAR_HW * -SIN_ARC;
-          BAR_HW *  SIN_ARC, BAR_HW * -COS_ARC;
-          ];
+    BAR_CR * -sind(OMEGA_RANGE), BAR_CS + BAR_CR * cosd(OMEGA_RANGE); % back
+    BAR_HW * -COS_ARC, BAR_HW * -SIN_ARC;
+    BAR_HW *  SIN_ARC, BAR_HW * -COS_ARC;
+    ];
 % conect end to start
 POINTS = [
-          POINTS;
-          POINTS(1,:);
-          ];
+    POINTS;
+    POINTS(1,:);
+    ];
 % add holes to bars
 START_BAR_POINTS = [
-                    POINTS;
-                    NaN, NaN;
-                    (UNIT_CIRCLE * BOLT_RAD + [0, 0]); % hole at back
-                    NaN, NaN;
-                    (UNIT_CIRCLE * BOLT_RAD + [0,+BAR_HL]); % hole in middle
-                    ];
+    POINTS;
+    NaN, NaN;
+    (UNIT_CIRCLE * BOLT_RAD + [0, 0]); % hole at back
+    NaN, NaN;
+    (UNIT_CIRCLE * BOLT_RAD + [0,+BAR_HL]); % hole in middle
+    ];
 
 START_COVER_POINTS = [
-                      POINTS;
-                      NaN, NaN;
-                      UNIT_CIRCLE * HEAD_RAD + [0, 0]; % hole at back
-                      NaN, NaN;
-                      UNIT_CIRCLE * HEAD_RAD + [0,+BAR_HL]; % hole in middle
-                      ];
+    POINTS;
+    NaN, NaN;
+    UNIT_CIRCLE * HEAD_RAD + [0, 0]; % hole at back
+    NaN, NaN;
+    UNIT_CIRCLE * HEAD_RAD + [0,+BAR_HL]; % hole in middle
+    ];
 
 clear POINTS;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % END BARS
 
-PSI = 45;
-CORNER_OFFSET = BAR_HW * cot(PSI);
+a = atan2d(BAR_HW, BAR_HL);
+d = norm([BAR_HW, BAR_HL]);
+a_range = 45 + linspace(-a, +a, CURVE_SIZE)';
+
+% front, no hole, slightly curved
+front_points = BAR_CR * [sind(OMEGA_RANGE), -cosd(OMEGA_RANGE)] + [0, -BAR_CS]; % front
+% back, standard bar end
+back_points = d * [cosd(a_range), sind(a_range)];
+% create bend
+[cwElbowl1, ccwElbowl1] = getElbowBend(front_points(end,:), back_points(1,:), [0,0], BAR_HW);
+[cwElbowl2, ccwElbowl2] = getElbowBend(back_points(end,:), front_points(1,:), [0,0], BAR_HW);
 
 % final bar (half-length)
 POINTS = [
-          BAR_HL * cosd(PSI) - BAR_HW * cosd(PSI - 90), - BAR_HL * sind(PSI) + BAR_HW * sind(PSI - 90);
-          BAR_HL * cosd(PSI) + BAR_HW * cosd(PSI - 90), - BAR_HL * sind(PSI) - BAR_HW * sind(PSI - 90);
-          BAR_HW, CORNER_OFFSET;
-          BAR_CR * -sind(OMEGA_RANGE), BAR_CS + BAR_CR * cosd(OMEGA_RANGE) % back
-          ];
-[a1, ~] = getTangentialLineToCircle(POINTS(1,:), [0 0], BAR_HW);
-[~, a2] = getTangentialLineToCircle(POINTS(end,:), [0 0], BAR_HW);
-A_RANGE = linspace(a2, a1, CURVE_SIZE)';
-POINTS = [
-          POINTS;
-          BAR_HW * [cosd(A_RANGE), sind(A_RANGE)];
-          ];
-% conect end to start
-POINTS = [
-          POINTS;
-          POINTS(1,:);
-          ];
-% flip vertically
-POINTS = POINTS * [1,0;0,-1];
+    front_points;
+    ccwElbowl1;
+    back_points;
+    ccwElbowl2;
+    ];
+
 % add holes to bars
 END_BAR_POINTS = [
-                  POINTS;
-                  NaN, NaN;
-                  UNIT_CIRCLE * BOLT_RAD; % hole at back
-                  NaN, NaN;
-                  UNIT_CIRCLE * BOLT_RAD + [0,-BAR_HL]; % hole in middle
-                  ];
+    POINTS;
+    NaN, NaN;
+    UNIT_CIRCLE * BOLT_RAD; % hole at back
+    NaN, NaN;
+    UNIT_CIRCLE * BOLT_RAD + [0,-BAR_HL]; % hole in middle
+    ];
 
 END_COVER_POINTS = [
     POINTS;
@@ -317,7 +323,7 @@ END_COVER_POINTS = [
     UNIT_CIRCLE * HEAD_RAD + [0,-BAR_HL]; % hole in middle
     ];
 
-clear PSI CORNER_OFFSET a1 a2 A_RANGE POINTS;
+clear a d a_range front_points back_points cwElbowl1 ccwElbowl1 cwElbowl2 ccwElbowl2;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % RACK & PINION
@@ -377,15 +383,20 @@ for ii = 0:ceil(OMEGA/psi)
     PINION = [PINION; (rotccwd(ii*360/n) * PINION_TOOTH')']; %#ok<AGROW>
 end
 
-TOP_RANGE = linspace(90-OMEGA, 90+OMEGA, CURVE_SIZE)';
-TOP_OF_BAR = [0, BAR_CS] + BAR_CR*[cosd(TOP_RANGE), sind(TOP_RANGE)];
-TOP_OF_BAR = (rotccwd(-THETA) * (TOP_OF_BAR'))';
-% start smaller where larger stops, end where pinion starts
+pinion_end_angle = atan2d(PINION(end,2), PINION(end,1));
+[a1, a2] = getTangentialLineToCircle(PINION(end,:), BAR_HL * [cosd(PHI), sind(PHI)], BAR_HW);
+a_range = linspace(a2, 180 - THETA, CURVE_SIZE)';
+
 
 PINION = [
     PINION;
-    TOP_OF_BAR;
-    PINION(1,:);
+    BAR_HW * [cosd(a_range), sind(a_range)] + BAR_HL* [cosd(PHI), sind(PHI)];
+    ];
+[cwElbowl1, ccwElbowl1] = getElbowBend(PINION(end,:), PINION(1,:), [0,0], BAR_HW);
+
+PINION = [
+    PINION;
+    ccwElbowl1
     ];
 
 PINION = [
@@ -412,18 +423,47 @@ RACK_TOOTH = [
     RACK_HALF_TOOTH;
     ];
 
-RACK = [];
-for ii = 0:3
+RACK = [RACK_HALF_TOOTH];
+for ii = 1:ceil(OMEGA/psi)
     RACK = [RACK; (RACK_TOOTH + [ii*w, 0])]; %#ok<AGROW>
 end
 RACK = [
-    RACK;
-    RACK(end,:) - [0, BAR_HW];
-    RACK(1,:) - [0, BAR_HW];
-    RACK(1,:);
+    RACK(2:end,:);
+    RACK(end,1),         -HIGHEST_VALUE;
+    RACK(1,1) - 2*BAR_W, -HIGHEST_VALUE;
+    RACK(1,1) - 2*BAR_W, +HIGHEST_VALUE;
+    ccwElbowl1(1,1),     +HIGHEST_VALUE;
+    ccwElbowl1;
+    RACK(2,:);
     ];
 
 RACK_UNIT_PER_DEG = w / psi;
+
+FRONT_VALUE = (BAR_COUNT + 0.25) * BAR_W * cosd(THETA);
+BACK_VALUE  = min(RACK(:,1)) - RACK_UNIT_PER_DEG * OMEGA;
+OUTER_BOX = [
+    FRONT_VALUE,          -HIGHEST_VALUE;
+    BACK_VALUE,           -HIGHEST_VALUE;
+    BACK_VALUE,           +HIGHEST_VALUE;
+    FRONT_VALUE,          +HIGHEST_VALUE;
+    FRONT_VALUE,          +HIGHEST_VALUE + BAR_HW;
+    BACK_VALUE  - BAR_HW, +HIGHEST_VALUE + BAR_HW;
+    BACK_VALUE  - BAR_HW, -HIGHEST_VALUE - BAR_HW;
+    FRONT_VALUE,          -HIGHEST_VALUE - BAR_HW;
+    FRONT_VALUE, -HIGHEST_VALUE;
+    ];
+
+TOP_EDGE = (rotccwd(-THETA) * [-BAR_HW, BAR_HL]')';
+HANDLE = [
+    -w/2 - 2*BAR_W,       +HIGHEST_VALUE;
+    TOP_EDGE(1,1),        +HIGHEST_VALUE;
+    TOP_EDGE(1,1),        +TOP_EDGE(1,2);
+    BAR_HW * -cosd(THETA), 0;
+    TOP_EDGE(1,1),        -TOP_EDGE(1,2);
+    TOP_EDGE(1,1),        -HIGHEST_VALUE;
+    -w/2 - 2*BAR_W,       -HIGHEST_VALUE;
+    -w/2 - 2*BAR_W,       +HIGHEST_VALUE;
+    ];
 
 clear n w psi PINION_HALF_TOOTH PINION_TOOTH RACK_HALF_TOOTH RACK_TOOTH;
 % PINION
@@ -433,20 +473,20 @@ clear n w psi PINION_HALF_TOOTH PINION_TOOTH RACK_HALF_TOOTH RACK_TOOTH;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SIMPLIFY PLOTTING
 
-c1 = size(START_BAR_POINTS,1);
-c2 = size(BAR_POINTS,1);
-c3 = size(END_BAR_POINTS,1);
+c1 = size(START_BAR_POINTS, 1);
+c2 = size(BAR_POINTS,       1);
+c3 = size(END_BAR_POINTS,   1);
 L1 = NaN*ones(c1 + c2*(BAR_COUNT-1) + c3 + BAR_COUNT,3);
 L2 = NaN*ones(c1 + c2*(BAR_COUNT-1) + c3 + BAR_COUNT,3);
-L1(1:c1,:) = [START_BAR_POINTS 0*ones(c1,1)];
+L1(1:c1,:) = [START_BAR_POINTS   0*ones(c1,1)];
 L2(1:c1,:) = [START_COVER_POINTS 0*ones(c1,1)];
 for ii = 1:BAR_COUNT-1
     indx = (c1 + 1) + (ii-1) * (c2 + 1);
-    L1(indx+1:(indx+c2),:) = [BAR_POINTS ii*ones(c2,1)];
+    L1(indx+1:(indx+c2),:) = [BAR_POINTS   ii*ones(c2,1)];
     L2(indx+1:(indx+c2),:) = [COVER_POINTS ii*ones(c2,1)];
 end
 indx = (c1 + 1) + (BAR_COUNT-1) * (c2 + 1);
-L1((indx+1):(indx+c3),:) = [END_BAR_POINTS BAR_COUNT*ones(c3,1)];
+L1((indx+1):(indx+c3),:) = [END_BAR_POINTS   BAR_COUNT*ones(c3,1)];
 L2((indx+1):(indx+c3),:) = [END_COVER_POINTS BAR_COUNT*ones(c3,1)];
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -456,11 +496,11 @@ if true
     figure(1);
     clf;
     hold on;
-    jjmax = 2;
+    jjmax = 3;
     
-    for jj = 0:jjmax
+    for jj = 1:jjmax
         % get angle and separation distances
-        completion = jj / jjmax;
+        completion = (jj-1) / (jjmax-1);
         ZETA = THETA + OMEGA * completion;
         PULL = OMEGA * completion * RACK_UNIT_PER_DEG;
         
@@ -476,20 +516,79 @@ if true
         NB = (R * (L1(:,1:2))')' + L1(:,3)*DX;
         NC = (R * (L2(:,1:2))')' + L2(:,3)*DX;
         NR = RACK + [-PULL, 0];
+        NH = HANDLE + [-PULL, 0];
         
-        plot(NR(:,1),              dy + NR(:,2),           'k');
-        plot(NP(:,1),              dy + NP(:,2),           'k');
-        plot(NC(:,1),              dy + NC(:,2),           'r');
-        plot(NB(:,1),              dy + NB(:,2),           'b');
+        plot(NR(:,1),        dy + NR(:,2),        'k');
+        plot(NP(:,1),        dy + NP(:,2),        'k');
+        plot(NB(:,1),        dy + NB(:,2),        'b');
+        plot(NH(:,1),        dy + NH(:,2),        'b');
+        plot(NC(:,1),        dy + NC(:,2),        'r');
+        plot(NH(:,1),        dy + NH(:,2),        'r');
 
-        plot(NB(:,1),              dy - NB(:,2),           'b');
-        plot(NC(:,1),              dy - NC(:,2),           'r');
-        plot(NP(:,1),              dy - NP(:,2),           'k');
-        plot(NR(:,1),              dy - NR(:,2),           'k');
+        %plot(NH(:,1),        dy - NH(:,2),        'r');
+        %plot(NC(:,1),        dy - NC(:,2),        'r');
+        %plot(NH(:,1),        dy - NH(:,2),        'b');
+        %plot(NB(:,1),        dy - NB(:,2),        'b');
+        %plot(NP(:,1),        dy - NP(:,2),        'k');
+        %plot(NR(:,1),        dy - NR(:,2),        'k');
+
+        plot(OUTER_BOX(:,1), dy + OUTER_BOX(:,2), 'k');
+        
 
         % fixed origin point
         plot(0,dy,'r+');
     end
+    axis('equal');
+    axis('off');
+    hold off;
+end
+
+if true
+    figure(2);
+    clf;
+    hold on;
+    
+    % get angle and separation distances
+    completion = 0;
+    ZETA = THETA + OMEGA * completion;
+    PULL = OMEGA * completion * RACK_UNIT_PER_DEG;
+    
+    % draw above previous
+    dy = BAR_L * 2;
+    % bar separation at this angle
+    dx = BAR_L * sind(ZETA);
+    DX = [dx 0];
+    
+    % rotate bars
+    R = rotccwd(-ZETA);
+    NP = (rotccwd(-OMEGA * completion) * (PINION)')';
+    NB = (R * (L1(:,1:2))')' + L1(:,3)*DX;
+    NC = (R * (L2(:,1:2))')' + L2(:,3)*DX;
+    NR = RACK + [-PULL, 0];
+    
+    plot(NR(:,1),        1*dy + NR(:,2),        'k');
+    plot(NP(:,1),        1*dy + NP(:,2),        'k');
+    plot(OUTER_BOX(:,1), 1*dy + OUTER_BOX(:,2), 'k');
+
+    plot(NB(:,1),        2*dy + NB(:,2),        'b');
+    plot(HANDLE(:,1),    2*dy + HANDLE(:,2),    'b');
+    plot(OUTER_BOX(:,1), 2*dy + OUTER_BOX(:,2), 'b');
+
+    plot(NC(:,1),        3*dy + NC(:,2),        'r');
+    plot(HANDLE(:,1),    3*dy + HANDLE(:,2),    'r');
+    plot(OUTER_BOX(:,1), 3*dy + OUTER_BOX(:,2), 'r');
+
+    axis('equal');
+    axis('off');
+    hold off;
+end
+
+if false
+    figure(3)
+    clf;
+    hold on;
+    plot(RACK(:,1), RACK(:,2), 'b')
+    plot(HANDLE(:,1), HANDLE(:,2), 'r')
     axis('equal');
     axis('off');
     hold off;
