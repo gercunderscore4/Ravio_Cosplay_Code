@@ -17,7 +17,7 @@ MAT_W = 2.54 / 4;
 % used for handle
 INDEX_FINDER_WIDTH = 2;
 
-BOLT_DIA   = 0.41656 - 0.02; % body     width for bolt % #8 0.1640" / 4.1656 mm minus some kerfing
+BOLT_DIA   = 0.2; %0.41656 - 0.02; % body     width for bolt % #8 0.1640" / 4.1656 mm minus some kerfing
 HEAD_DIA   = 1.0;            % head/nut width for bolt
 SPACER_DIA = 1.0;            % spacer   width for bolt
 BOLT_RAD   = BOLT_DIA / 2;
@@ -256,12 +256,11 @@ clear OUTLINE_POINTS;
 % final bar (half-length)
 POINTS = [
     BAR_CR * -sind(OMEGA_RANGE), BAR_CS + BAR_CR * cosd(OMEGA_RANGE); % back
-    BAR_HW * -COS_ARC, BAR_HW * -SIN_ARC;
-    BAR_HW *  SIN_ARC, BAR_HW * -COS_ARC;
     ];
 % conect end to start
 POINTS = [
     POINTS;
+    (rotccwd(180) * POINTS')' + [0, BAR_HL];
     POINTS(1,:);
     ];
 % add holes to bars
@@ -383,14 +382,13 @@ for ii = 0:ceil(OMEGA/psi)
     PINION = [PINION; (rotccwd(ii*360/n) * PINION_TOOTH')']; %#ok<AGROW>
 end
 
-pinion_end_angle = atan2d(PINION(end,2), PINION(end,1));
-[a1, a2] = getTangentialLineToCircle(PINION(end,:), BAR_HL * [cosd(PHI), sind(PHI)], BAR_HW);
-a_range = linspace(a2, 180 - THETA, CURVE_SIZE)';
 
+top_points = [BAR_CR * -sind(OMEGA_RANGE), BAR_CS + BAR_CR * cosd(OMEGA_RANGE)]; % back
+top_points = (rotccwd(-THETA) * top_points')';
 
 PINION = [
     PINION;
-    BAR_HW * [cosd(a_range), sind(a_range)] + BAR_HL* [cosd(PHI), sind(PHI)];
+    top_points;
     ];
 [cwElbowl1, ccwElbowl1] = getElbowBend(PINION(end,:), PINION(1,:), [0,0], BAR_HW);
 
@@ -418,6 +416,8 @@ RACK_HALF_TOOTH = [
     ];
 RACK_HALF_TOOTH = RACK_HALF_TOOTH * PINION_R;
 w = (RACK_HALF_TOOTH(end,1) - RACK_HALF_TOOTH(1,1)) * 2;
+RACK_UNIT_PER_DEG = w / psi;
+RACK_DISTANCE = RACK_UNIT_PER_DEG * OMEGA;
 RACK_TOOTH = [
     flipud(reflectAcrossLine(RACK_HALF_TOOTH, Inf, 0)) + [-w, 0]; 
     RACK_HALF_TOOTH;
@@ -427,6 +427,23 @@ RACK = [RACK_HALF_TOOTH];
 for ii = 1:ceil(OMEGA/psi)
     RACK = [RACK; (RACK_TOOTH + [ii*w, 0])]; %#ok<AGROW>
 end
+
+HANDLE_HOLE = [
+    -w/2 - 0.3*BAR_W,       +0.5*BAR_W;
+    -w/2 - 1.3*BAR_W,       +0.5*BAR_W;
+    -w/2 - 1.3*BAR_W,       -0.5*BAR_W;
+    -w/2 - 0.3*BAR_W,       -0.5*BAR_W;
+    -w/2 - 0.3*BAR_W,       +0.5*BAR_W;
+    ];
+
+HANDLE_SLOT = [
+    -w/2 - 0.3*BAR_W,                 +0.5*BAR_W;
+    -w/2 - 1.3*BAR_W - RACK_DISTANCE, +0.5*BAR_W;
+    -w/2 - 1.3*BAR_W - RACK_DISTANCE, -0.5*BAR_W;
+    -w/2 - 0.3*BAR_W,                 -0.5*BAR_W;
+    -w/2 - 0.3*BAR_W,                 +0.5*BAR_W;
+    ];
+
 RACK = [
     RACK(2:end,:);
     RACK(end,1),         -HIGHEST_VALUE;
@@ -435,12 +452,28 @@ RACK = [
     ccwElbowl1(1,1),     +HIGHEST_VALUE;
     ccwElbowl1;
     RACK(2,:);
+    NaN, NaN;
+    HANDLE_HOLE;
     ];
-
-RACK_UNIT_PER_DEG = w / psi;
 
 FRONT_VALUE = (BAR_COUNT + 0.25) * BAR_W * cosd(THETA);
 BACK_VALUE  = min(RACK(:,1)) - RACK_UNIT_PER_DEG * OMEGA;
+a_range = linspace(PHI, THETA, CURVE_SIZE)';
+RACK_BORDER = [
+    FRONT_VALUE,          +HIGHEST_VALUE + BAR_HW;
+    BACK_VALUE  - BAR_HW, +HIGHEST_VALUE + BAR_HW;
+    BACK_VALUE  - BAR_HW, -HIGHEST_VALUE - BAR_HW;
+    FRONT_VALUE,          -HIGHEST_VALUE - BAR_HW;
+    FRONT_VALUE,          +HIGHEST_VALUE + BAR_HW;
+    NaN, NaN;
+    BACK_VALUE,           -HIGHEST_VALUE;
+    BACK_VALUE,           +HIGHEST_VALUE;
+    (BAR_CS + BAR_CR) * [cosd(a_range), sind(a_range)];
+    w*3,                  -PINION_R;
+    w*3,                  -HIGHEST_VALUE;
+    BACK_VALUE,           -HIGHEST_VALUE;
+    ];
+
 OUTER_BOX = [
     FRONT_VALUE,          -HIGHEST_VALUE;
     BACK_VALUE,           -HIGHEST_VALUE;
@@ -453,16 +486,28 @@ OUTER_BOX = [
     FRONT_VALUE, -HIGHEST_VALUE;
     ];
 
+SIDE_PANEL = [
+    FRONT_VALUE,          +HIGHEST_VALUE + BAR_HW;
+    BACK_VALUE  - BAR_HW, +HIGHEST_VALUE + BAR_HW;
+    BACK_VALUE  - BAR_HW, -HIGHEST_VALUE - BAR_HW;
+    FRONT_VALUE,          -HIGHEST_VALUE - BAR_HW;
+    FRONT_VALUE,          +HIGHEST_VALUE + BAR_HW;
+    NaN, NaN;
+    HANDLE_SLOT
+    ];
+
 TOP_EDGE = (rotccwd(-THETA) * [-BAR_HW, BAR_HL]')';
 HANDLE = [
     -w/2 - 2*BAR_W,       +HIGHEST_VALUE;
     TOP_EDGE(1,1),        +HIGHEST_VALUE;
     TOP_EDGE(1,1),        +TOP_EDGE(1,2);
-    BAR_HW * -cosd(THETA), 0;
+    BAR_HW / -cosd(THETA), 0;
     TOP_EDGE(1,1),        -TOP_EDGE(1,2);
     TOP_EDGE(1,1),        -HIGHEST_VALUE;
     -w/2 - 2*BAR_W,       -HIGHEST_VALUE;
     -w/2 - 2*BAR_W,       +HIGHEST_VALUE;
+    NaN, NaN;
+    HANDLE_HOLE;
     ];
 
 clear n w psi PINION_HALF_TOOTH PINION_TOOTH RACK_HALF_TOOTH RACK_TOOTH;
@@ -518,21 +563,23 @@ if true
         NR = RACK + [-PULL, 0];
         NH = HANDLE + [-PULL, 0];
         
-        plot(NR(:,1),        dy + NR(:,2),        'k');
-        plot(NP(:,1),        dy + NP(:,2),        'k');
-        plot(NB(:,1),        dy + NB(:,2),        'b');
-        plot(NH(:,1),        dy + NH(:,2),        'b');
-        plot(NC(:,1),        dy + NC(:,2),        'r');
-        plot(NH(:,1),        dy + NH(:,2),        'r');
+        plot(RACK_BORDER(:,1), dy + RACK_BORDER(:,2), 'k');
+        plot(NR(:,1),          dy + NR(:,2),          'k');
+        plot(NP(:,1),          dy + NP(:,2),          'k');
+        plot(NB(:,1),          dy + NB(:,2),          'b');
+        plot(NH(:,1),          dy + NH(:,2),          'b');
+        plot(NC(:,1),          dy + NC(:,2),          'r');
+        plot(NH(:,1),          dy + NH(:,2),          'r');
 
-        %plot(NH(:,1),        dy - NH(:,2),        'r');
-        %plot(NC(:,1),        dy - NC(:,2),        'r');
-        %plot(NH(:,1),        dy - NH(:,2),        'b');
-        %plot(NB(:,1),        dy - NB(:,2),        'b');
-        %plot(NP(:,1),        dy - NP(:,2),        'k');
-        %plot(NR(:,1),        dy - NR(:,2),        'k');
+        %plot(NH(:,1),          dy - NH(:,2),          'r');
+        %plot(NC(:,1),          dy - NC(:,2),          'r');
+        %plot(NH(:,1),          dy - NH(:,2),          'b');
+        %plot(NB(:,1),          dy - NB(:,2),          'b');
+        %plot(NP(:,1),          dy - NP(:,2),          'k');
+        %plot(NR(:,1),          dy - NR(:,2),          'k');
 
-        plot(OUTER_BOX(:,1), dy + OUTER_BOX(:,2), 'k');
+        plot(OUTER_BOX(:,1),   dy + OUTER_BOX(:,2),   'k');
+        plot(SIDE_PANEL(:,1),  dy + SIDE_PANEL(:,2),  'k');
         
 
         % fixed origin point
@@ -566,29 +613,39 @@ if true
     NC = (R * (L2(:,1:2))')' + L2(:,3)*DX;
     NR = RACK + [-PULL, 0];
     
-    plot(NR(:,1),        1*dy + NR(:,2),        'k');
-    plot(NP(:,1),        1*dy + NP(:,2),        'k');
-    plot(OUTER_BOX(:,1), 1*dy + OUTER_BOX(:,2), 'k');
-
-    plot(NB(:,1),        2*dy + NB(:,2),        'b');
-    plot(HANDLE(:,1),    2*dy + HANDLE(:,2),    'b');
-    plot(OUTER_BOX(:,1), 2*dy + OUTER_BOX(:,2), 'b');
-
-    plot(NC(:,1),        3*dy + NC(:,2),        'r');
-    plot(HANDLE(:,1),    3*dy + HANDLE(:,2),    'r');
-    plot(OUTER_BOX(:,1), 3*dy + OUTER_BOX(:,2), 'r');
+    plot(SIDE_PANEL(:,1),  0*dy + SIDE_PANEL(:,2),  'k');
+    plot(NR(:,1),          1*dy + NR(:,2),          'r');
+    plot(NP(:,1),          1*dy + NP(:,2),          'r');
+    plot(RACK_BORDER(:,1), 1*dy + RACK_BORDER(:,2), 'r');
+    plot(NB(:,1),          2*dy + NB(:,2),          'g');
+    plot(HANDLE(:,1),      2*dy + HANDLE(:,2),      'g');
+    plot(OUTER_BOX(:,1),   2*dy + OUTER_BOX(:,2),   'g');
+    plot(NC(:,1),          3*dy + NC(:,2),          'b');
+    plot(HANDLE(:,1),      3*dy + HANDLE(:,2),      'b');
+    plot(OUTER_BOX(:,1),   3*dy + OUTER_BOX(:,2),   'b');
 
     axis('equal');
     axis('off');
     hold off;
 end
 
-if false
+if true
     figure(3)
     clf;
     hold on;
-    plot(RACK(:,1), RACK(:,2), 'b')
-    plot(HANDLE(:,1), HANDLE(:,2), 'r')
+    
+    dy = BAR_L * 2;
+    
+    plot(PINION(:,1),           0*dy + PINION(:,2),           'k');
+    plot(RACK(:,1),             1*dy + RACK(:,2),             'k');
+    plot(HANDLE(:,1),           2*dy + HANDLE(:,2),           'k');
+    plot(START_BAR_POINTS(:,1), 3*dy + START_BAR_POINTS(:,2), 'k');
+    plot(BAR_POINTS(:,1),       4*dy + BAR_POINTS(:,2),       'k');
+    plot(END_BAR_POINTS(:,1),   5*dy + END_BAR_POINTS(:,2),   'k');
+    plot(OUTER_BOX(:,1),        6*dy + OUTER_BOX(:,2),        'k');
+    plot(SIDE_PANEL(:,1),       7*dy + SIDE_PANEL(:,2),       'k');
+    plot(RACK_BORDER(:,1),      8*dy + RACK_BORDER(:,2),      'k');
+    
     axis('equal');
     axis('off');
     hold off;
