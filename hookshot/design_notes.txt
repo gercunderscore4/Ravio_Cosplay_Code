@@ -91,3 +91,33 @@ With SVGs.
 So does this:
 https://woodgears.ca/gear_cutting/template.html
 But no SVGs.
+
+Result:
+hookshot_v3.m
+12 is not enough, the foam version broke too easily.
+Use 20 teeth.
+
+Also, the scissor arms kept running into the track and the pinion teeth.
+Need to put the rack onto a track.
+I should also make the pinion radius enough that the track teeth are out of the way.
+And if I make the pinion teeth on the small-arm side, then the track and pinion should move WITH the scissor arms.
+And with the rack retracted out of the way, I can make the small-arms and pinion on the same plane.
+With the pinion rotating forward, I can probably shape it to not need space behind it, which means that I can shorten the overall size.
+
+Starting hookshot_v4.m to try out these improvements.
+
+Result:
+Started drawing it, and noticed issues already.
+
+Moving forward does look like it would avoid collisions between the rack, teeth, and scissor arms.
+However, it requires the rack to move forward, which extends the length of the case forward from where the pinion and scissors are fixed.
+This shortens how long the arms extend out the front.
+
+And the back is still very long.
+However, I got an idea from this.
+Since I want the scissor/pinion axel to be as close to the front as I can get it, why not have it move.
+
+This would require the pinions to rotate against the motion of the arms, again, but I'll add a barrier with a gentle bevel.
+This also means that instead of having a handle moving against the arms, I can skip that, the pinion/arms move, the rack/case stay still.
+
+This is drawn up in hookshot_v5.m.
