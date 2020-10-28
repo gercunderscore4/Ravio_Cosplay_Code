@@ -285,24 +285,28 @@ clear POINTS;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % END BARS
 
-a = atan2d(BAR_HW, BAR_HL);
-d = norm([BAR_HW, BAR_HL]);
-a_range = 45 + linspace(-a, +a, CURVE_SIZE)';
+%a = atan2d(BAR_HW, BAR_HL);
+%d = norm([BAR_HW, BAR_HL]);
+%a_range = 45 + linspace(-a, +a, CURVE_SIZE)';
+%% front, no hole, slightly curved
+%front_points = BAR_CR * [sind(OMEGA_RANGE), -cosd(OMEGA_RANGE)] + [0, -BAR_CS]; % front
+%% back, standard bar end
+%back_points = d * [cosd(a_range), sind(a_range)];
+%% create bend
+%[cwElbowl1, ccwElbowl1] = getElbowBend(front_points(end,:), back_points(1,:), [0,0], BAR_HW);
+%[cwElbowl2, ccwElbowl2] = getElbowBend(back_points(end,:), front_points(1,:), [0,0], BAR_HW);
+%POINTS = [
+%    front_points;
+%    ccwElbowl1;
+%    back_points;
+%    ccwElbowl2;
+%    ];
 
-% front, no hole, slightly curved
 front_points = BAR_CR * [sind(OMEGA_RANGE), -cosd(OMEGA_RANGE)] + [0, -BAR_CS]; % front
-% back, standard bar end
-back_points = d * [cosd(a_range), sind(a_range)];
-% create bend
-[cwElbowl1, ccwElbowl1] = getElbowBend(front_points(end,:), back_points(1,:), [0,0], BAR_HW);
-[cwElbowl2, ccwElbowl2] = getElbowBend(back_points(end,:), front_points(1,:), [0,0], BAR_HW);
-
-% final bar (half-length)
+[cwElbowl, ccwElbowl] = getElbowBend(front_points(end,:), front_points(1,:), [0,0], BAR_HW);
 POINTS = [
     front_points;
-    ccwElbowl1;
-    back_points;
-    ccwElbowl2;
+    ccwElbowl;
     ];
 
 % add holes to bars
@@ -333,46 +337,39 @@ clear a d a_range front_points back_points cwElbowl1 ccwElbowl1 cwElbowl2 ccwElb
 % Stop the circular sector at the end bar so that the handle has more area to expand into.
 
 % pinion (half-tooth)
-% 12 teeth (each rotated 360/12 = 30deg = pi/6)
-n = 12;
+% 20 teeth (each rotated 360/20 = 18deg = pi/10)
+n = 20;
 psi = 360 / n;
 % tooth shape needs to be updated when n is updated
 % recommend: http://hessmer.org/gears/InvoluteSpurGearBuilder.html?circularPitch=8&pressureAngle=20&clearance=0.05&backlash=0.05&profileShift=0&gear1ToothCount=0&gear1CenterHoleDiamater=0&gear2ToothCount=12&gear2CenterHoleDiamater=1&showOption=3
-% rotate around [0,0]
-% reflect across start
+% requires some working
 PINION_HALF_TOOTH = [
-    -0.18363, -0.68532;
-    -0.16024, -0.69117;
-    -0.13265, -0.69699;
-    -0.13320, -0.69690;
-    -0.13192, -0.69715;
-    -0.13117, -0.69733;
-    -0.13190, -0.69718;
-    -0.13044, -0.69754;
-    -0.12481, -0.70019;
-    -0.11970, -0.70452;
-    -0.11522, -0.71048;
-    -0.11151, -0.71804;
-    -0.10869, -0.72714;
-    -0.10689, -0.73770;
-    -0.10623, -0.74965;
-    -0.10681, -0.76294;
-    -0.10873, -0.77745;
-    -0.11212, -0.79311;
-    -0.11515, -0.80435;
-    -0.11514, -0.81393;
-    -0.11388, -0.82890;
-    -0.11043, -0.84950;
-    -0.10760, -0.86170;
-    -0.10389, -0.87509;
-    -0.09918, -0.88974;
-    -0.09336, -0.90548;
-    -0.08633, -0.92235;
-    -0.07804, -0.94008;
-    -0.06834, -0.95876;
-    -0.05713, -0.97828;
-    -0.04590, -0.99616;
-    -0.00000, -1.00000;
+    -0.12748, -0.80490;
+    -0.11272, -0.80710;
+    -0.09578, -0.80929;
+    -0.09017, -0.81009;
+    -0.08833, -0.81090;
+    -0.08657, -0.81214;
+    -0.08491, -0.81381;
+    -0.08336, -0.81590;
+    -0.08195, -0.81841;
+    -0.08069, -0.82134;
+    -0.07959, -0.82468;
+    -0.07797, -0.83256;
+    -0.07720, -0.84199;
+    -0.07766, -0.85624;
+    -0.07760, -0.86290;
+    -0.07647, -0.87556;
+    -0.07518, -0.88407;
+    -0.07326, -0.89398;
+    -0.07057, -0.90529;
+    -0.06700, -0.91796;
+    -0.06245, -0.93185;
+    -0.05680, -0.94693;
+    -0.04990, -0.96321;
+    -0.04171, -0.98049;
+    -0.03269, -0.99767;
+    -0.00000, -0.99767;
     ];
 PINION_HALF_TOOTH = PINION_HALF_TOOTH * PINION_R;
 PINION_TOOTH = [PINION_HALF_TOOTH; flipud(reflectAcrossLine(PINION_HALF_TOOTH, Inf, 0))];
@@ -401,12 +398,6 @@ PINION = [
     PINION(1,:);
     ];
 
-PINION_BARRIER = [
-    PINION(convhull(PINION), :);
-    NaN, NaN;
-    UNIT_CIRCLE * BOLT_RAD;
-    ];
-
 PINION = [
     PINION;
     NaN, NaN;
@@ -420,9 +411,9 @@ pinion_back = min(PINION(:,1));
 
 % rack teeth
 RACK_HALF_TOOTH = [
-    -0.22378, -0.71230;
-    -0.16136, -0.71230;
-    -0.06295, -1.00000;
+    -0.14254, -0.81672;
+    -0.10278, -0.81672;
+    -0.04010, -1.00000;
     -0.00000, -1.00000;
     ];
 RACK_HALF_TOOTH = RACK_HALF_TOOTH * PINION_R;
@@ -514,7 +505,7 @@ L2((indx+1):(indx+c3),:) = [END_COVER_POINTS BAR_COUNT*ones(c3,1)];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % PLOT ANIMATION
 
-if true
+if false
     figure(1);
     clf;
     hold on;
@@ -535,14 +526,12 @@ if true
         % rotate bars
         R = rotccwd(-ZETA);
         NR = RACK;
-        NP = (rotccwd(-OMEGA * completion) * (PINION)')'         + [PUSH, 0];
-        NS = (rotccwd(-OMEGA * completion) * (PINION_BARRIER)')' + [PUSH, 0];
+        NP = (rotccwd(-OMEGA * completion) * (PINION)')' + [PUSH, 0];
         NB = (R * (L1(:,1:2))')' + L1(:,3)*DX + [PUSH, 0];
         NC = (R * (L2(:,1:2))')' + L2(:,3)*DX + [PUSH, 0];
         
         plot(NR(:,1),          dy + NR(:,2),          'k');
         plot(NP(:,1),          dy + NP(:,2),          'k');
-        plot(NS(:,1),          dy + NS(:,2),          'm');
         plot(NB(:,1),          dy + NB(:,2),          'b');
         plot(NC(:,1),          dy + NC(:,2),          'r');
 
@@ -581,8 +570,7 @@ if false
     
     % rotate bars
     R = rotccwd(-ZETA);
-    NP = (rotccwd(-OMEGA * completion) * (PINION)')'         + [PUSH, 0];
-    NS = (rotccwd(-OMEGA * completion) * (PINION_BARRIER)')' + [PUSH, 0];
+    NP = (rotccwd(-OMEGA * completion) * (PINION)')' + [PUSH, 0];
     NB = (R * (L1(:,1:2))')' + L1(:,3)*DX + [PUSH, 0];
     NC = (R * (L2(:,1:2))')' + L2(:,3)*DX + [PUSH, 0];
     NR = RACK;
@@ -602,15 +590,15 @@ if false
     hold off;
 end
 
-if false
+if true
     figure(3)
     clf;
     hold on;
     
     dy = BAR_L * 2;
     
-    plot(PINION(:,1),           0*dy + PINION(:,2),           'k');
-    plot(RACK(:,1),             1*dy + RACK(:,2),             'k');
+    plot(PINION(:,1),           1*dy + PINION(:,2),           'k');
+    plot(RACK(:,1),             2*dy + RACK(:,2),             'k');
     plot(START_BAR_POINTS(:,1), 3*dy + START_BAR_POINTS(:,2), 'k');
     plot(BAR_POINTS(:,1),       4*dy + BAR_POINTS(:,2),       'k');
     plot(END_BAR_POINTS(:,1),   5*dy + END_BAR_POINTS(:,2),   'k');
