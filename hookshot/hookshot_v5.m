@@ -17,7 +17,7 @@ MAT_W = 2.54 / 4;
 % used for handle
 INDEX_FINDER_WIDTH = 2;
 
-BOLT_DIA   = 0.2; %0.41656 - 0.02; % body     width for bolt % #8 0.1640" / 4.1656 mm minus some kerfing
+BOLT_DIA   = 0.41656; %0.41656 - 0.02; % body     width for bolt % #8 0.1640" / 4.1656 mm minus some kerfing
 HEAD_DIA   = 1.0;            % head/nut width for bolt
 SPACER_DIA = 1.0;            % spacer   width for bolt
 BOLT_RAD   = BOLT_DIA / 2;
@@ -471,11 +471,11 @@ SIDE_PANEL = [
     FRONT_VALUE, -HIGHEST_VALUE;
     FRONT_VALUE, +HIGHEST_VALUE;
     NaN, NaN;
-    -SIN_ARC*BOLT_DIA,                 +COS_ARC*BOLT_DIA;
-    -COS_ARC*BOLT_DIA,                 -SIN_ARC*BOLT_DIA;
-    +SIN_ARC*BOLT_DIA + RACK_DISTANCE, -COS_ARC*BOLT_DIA;
-    +COS_ARC*BOLT_DIA + RACK_DISTANCE, +SIN_ARC*BOLT_DIA;
-    0, BOLT_DIA;
+    -SIN_ARC*BOLT_RAD,                 +COS_ARC*BOLT_RAD;
+    -COS_ARC*BOLT_RAD,                 -SIN_ARC*BOLT_RAD;
+    +SIN_ARC*BOLT_RAD + RACK_DISTANCE, -COS_ARC*BOLT_RAD;
+    +COS_ARC*BOLT_RAD + RACK_DISTANCE, +SIN_ARC*BOLT_RAD;
+    0, BOLT_RAD;
     ];
 
 clear n w psi PINION_HALF_TOOTH PINION_TOOTH RACK_HALF_TOOTH RACK_TOOTH;
@@ -506,6 +506,7 @@ L2((indx+1):(indx+c3),:) = [END_COVER_POINTS BAR_COUNT*ones(c3,1)];
 % PLOT ANIMATION
 
 if false
+    % mechanism in different states of operation
     figure(1);
     clf;
     hold on;
@@ -552,11 +553,11 @@ if false
     hold off;
 end
 
-if false
+if true
+    % layers separated vertically
     figure(2);
     clf;
     hold on;
-    
     % get angle and separation distances
     completion = 0;
     ZETA = THETA + OMEGA * completion;
@@ -567,7 +568,7 @@ if false
     % bar separation at this angle
     dx = BAR_L * sind(ZETA);
     DX = [dx 0];
-    
+
     % rotate bars
     R = rotccwd(-ZETA);
     NP = (rotccwd(-OMEGA * completion) * (PINION)')' + [PUSH, 0];
@@ -576,14 +577,13 @@ if false
     NR = RACK;
     
     plot(SIDE_PANEL(:,1),  0*dy + SIDE_PANEL(:,2),  'k');
-    plot(NR(:,1),          1*dy + NR(:,2),          'r');
-    plot(NP(:,1),          1*dy + NP(:,2),          'r');
-    plot(NS(:,1),          2*dy + NS(:,2),          'm');
-    plot(OUTER_BOX(:,1),   2*dy + OUTER_BOX(:,2),   'm');
-    plot(NB(:,1),          3*dy + NB(:,2),          'g');
-    plot(OUTER_BOX(:,1),   3*dy + OUTER_BOX(:,2),   'g');
-    plot(NC(:,1),          4*dy + NC(:,2),          'b');
-    plot(OUTER_BOX(:,1),   4*dy + OUTER_BOX(:,2),   'b');
+    plot(NR(:,1),          0*dy + NR(:,2),          'r');
+    plot(NP(:,1),          0*dy + NP(:,2),          'r');
+    plot(OUTER_BOX(:,1),   0*dy + OUTER_BOX(:,2),   'm');
+    plot(NB(:,1),          0*dy + NB(:,2),          'g');
+    plot(OUTER_BOX(:,1),   0*dy + OUTER_BOX(:,2),   'g');
+    plot(NC(:,1),          0*dy + NC(:,2),          'b');
+    plot(OUTER_BOX(:,1),   0*dy + OUTER_BOX(:,2),   'b');
 
     axis('equal');
     axis('off');
@@ -591,6 +591,7 @@ if false
 end
 
 if true
+    % each part separated vertically
     figure(3)
     clf;
     hold on;
@@ -609,3 +610,49 @@ if true
     axis('off');
     hold off;
 end
+
+if true
+	% save to svgs
+    figure(4)
+    clf;
+    hold on;
+	
+    ZETA = THETA + OMEGA * completion;
+    PUSH = OMEGA * completion * RACK_UNIT_PER_DEG;
+    
+    % draw above previous
+    dy = BAR_L * 2;
+    % bar separation at this angle
+    dx = BAR_L * sind(ZETA);
+    DX = [dx 0];
+
+    % rotate bars
+    R = rotccwd(-ZETA);
+    NP = (rotccwd(-OMEGA * completion) * (PINION)')' + [PUSH, 0];
+    NB1 = (R * (START_BAR_POINTS)')' + 0*DX + [PUSH, 0];
+    NB2 = (R * (BAR_POINTS)')'       + 1*DX + [PUSH, 0];
+    NB3 = (R * (END_BAR_POINTS)')'   + 2*DX + [PUSH, 0];
+    NR = RACK;
+    
+    plot(SIDE_PANEL(:,1),  0*dy + SIDE_PANEL(:,2),  'k');
+    plot(OUTER_BOX(:,1),   0*dy + OUTER_BOX(:,2),   'm');
+    plot(NR(:,1),          0*dy + NR(:,2),          'r');
+    plot(NP(:,1),          0*dy + NP(:,2),          'r');
+    plot(NB1(:,1),         0*dy + NB1(:,2),         'g');
+    plot(NB2(:,1),         0*dy + NB2(:,2),         'g');
+    plot(NB3(:,1),         0*dy + NB3(:,2),         'g');
+
+    axis('equal');
+    axis('off');
+    hold off;
+
+    writePointsToSvg(SIDE_PANEL, "svg/SIDE_PANEL.svg");
+    writePointsToSvg(OUTER_BOX,  "svg/OUTER_BOX.svg");
+    writePointsToSvg(NR,         "svg/RACK.svg");
+    writePointsToSvg(NP,         "svg/PINION.svg");
+    writePointsToSvg(NB1,        "svg/START_BAR_POINTS.svg");
+    writePointsToSvg(NB2,        "svg/BAR_POINTS.svg");
+    writePointsToSvg(NB3,        "svg/END_BAR_POINTS.svg");
+
+end
+
