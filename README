@@ -14,12 +14,6 @@ Percentages mark expected progress for next event (nothing is ever completely do
 
 TASKS FOR TODAY
 ---------------
-    - Buy dark green fabric
-    - Insert foam piece into switch gap
-    - Smooth switch
-    - Tape switch
-    - Spray plastic onto Tornado Rod
-    - Build rod circuits
 
 
 SHOPPING LIST
@@ -29,70 +23,40 @@ SHOPPING LIST
 TODO
 ----
 All Rods:
-    - Solder circuit
-    - Seal circuits
-    - Insert electronics
-Orb of Power:
-    - Build
-    - Design rest of circuit
-        - Vibration motors with solenoid
-        - Fuse LEDs
-        - Red LEDs
-    - Program sequence (requires PWM sound)
-    - Solder circuit
-    - Seal circuits
-    - Place circuit in foam (insert lights into shallow cuts)
+    - Test gyroscope as new input
+Ice Rod:
+    - Buy blue construction paper
+    - Cut and tape new gem
+Bomb:
+    - Solder 47uF filter cap across speaker inputs
+    - Solder red LEDs
+    - Pick and buy wire connectors for speaker/motor/flash/batteries
+    - Redesign circuit enclosure
 Hookshot:
-    - Bolt and glue
-    - Cut EVA to shape
-    - Heat EVA
-    - Cut hook foam
-    - Cut fabric to cover foam
-    - Sew fabric over foam
-    - Tie hook to hookshot
-Tornado Rod:
-    - Spray plastic on EVA foam
->   - Wait for plastic to dry
-    - Paint brown
->   - Wait for paint to dry
-    - Paint dark green
->   - Wait for paint to dry
-    - Paint light green
->   - Wait for paint to dry
-    - Cut rubber foam into fan section
-    - Sew fabric over rubber foam
+    - Create STLs
+    - Get it printed
+    - Design handle
+    - Design cover
+    - Design hook
 Chest:
     - Solder second circuit for cardboard chest
-Sign:
-    - Draw rupee explanation sign
+Korok Blocks:
+    - Buy t-track (or equivalent)
+    - Buy high density foam samples
 
 
 TO-NOT-DO
 ---------
-Ice Rod:
-    - Cut, paint, and glue ice gem
-Hat:
-    - Re-sew right eye
-    - Add telestereoscope to hat
-    - Add comb to hat to hold hat in place
-Wig:
-    - Style wig
 Rug:
     - Buy orange fabric (what?)
     - Make patterns for orange
     - Cut orange patterns
     - Sew orange patterns
     - Hem edges
-Pet:
-    - Make based on online design
 Book:
     - Design cover for log book
 Boots:
     - Buy
-Robes:
-    - Let shirt down all the way down
-    - Take skirt up if necessary
-    - Fix how starps work if desired
 
 
 #==============#============#============#========#
@@ -102,7 +66,7 @@ Robes:
 #==============#============#============#========#
 | Hat          |     H      |     XH     |  100%  |
 +--------------+------------+------------+--------+
-| Robes        |     M      |     XH     |   90%  |
+| Robes        |     M      |     XH     |  100%  |
 +--------------+------------+------------+--------+
 | Belt         |     L      |     XH     |  100%  |
 +--------------+------------+------------+--------+
@@ -118,15 +82,15 @@ Robes:
 #==============#============#============#========#
 | Fire Rod     |     H      |     XH     |   90%  |
 +--------------+------------+------------+--------+
-| Ice Rod      |     H      |     H      |   70%  |
+| Ice Rod      |     H      |     H      |   80%  |
 +--------------+------------+------------+--------+
-| Orb of Power |     H      |     H      |   40%  |
+| Bomb         |     H      |     H      |   80%  |
 +--------------+------------+------------+--------+
-| Tornado Rod  |     M      |     H      |   25%  |
+| Tornado Rod  |     M      |     H      |  100%  |
 +--------------+------------+------------+--------+
-| Hammer       |     L      |     H      |   80%  |
+| Hammer       |     L      |     H      |  100%  |
 +--------------+------------+------------+--------+
-| Sand Rod     |     H      |     M      |   70%  |
+| Sand Rod     |     H      |     M      |    0%  |
 +--------------+------------+------------+--------+
 | Hookshot     |     H      |     M      |   25%  |
 +--------------+------------+------------+--------+
@@ -136,7 +100,7 @@ Robes:
 #==============#============#============#========#
 | SHOP                                            |
 #==============#============#============#========#
-| Chest        |     H      |     H      |   60%  |
+| Chest        |     H      |     H      |  100%  |
 +--------------+------------+------------+--------+
 | Rupees       |     L      |     M      |  100%  |
 +--------------+------------+------------+--------+
@@ -150,11 +114,13 @@ Robes:
 +--------------+------------+------------+--------+
 | Maps         |     L      |     L      |   N/A  |
 +--------------+------------+------------+--------+
-| Pet          |     H      |     XL     |   N/A  |
+| Pet          |     H      |     XL     |  100%  |
 +--------------+------------+------------+--------+
-| Sign         |     L      |     XL     |   50%  |
+| Sign         |     L      |     XL     |  100%  |
 +--------------+------------+------------+--------+
 | Book         |     M      |     XL     |   N/A  |
++--------------+------------+------------+--------+
+| Korok Blocks |     H      |     L      |   N/A  |
 +--------------+------------+------------+--------+
 
 
