@@ -1,8 +1,10 @@
-# Untracked Files
-#----------------
-
 # Ignore all Windows scripts
 *.bat
 *.ps1
 *.psm1
 *.psd1
+
+# Ignore output files
+*.o
+*.hex
+*.svg
