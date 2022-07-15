@@ -65,8 +65,14 @@ int main (void)
     while (1) {
         // activate if over 4 gravities
         gyroRead(&x,&y,&z);
-        a = abs(x) + abs(y) + abs(z);
-        if (a > 0x180) {
+        x = abs(x);
+        y = abs(y);
+        z = abs(z);
+        x >>= 4;
+        y >>= 4;
+        z >>= 4;
+        a = x + z;
+        if ((a > 0x180) || (z > 0x400)) {
             // magic sound
             // C4 -> E4
             // F4 -> G#4, loop 4 times
