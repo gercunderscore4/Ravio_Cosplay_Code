@@ -54,9 +54,9 @@ int main (void)
     APA102WriteColors(leds, LED_COUNT);
 
     int16_t x, y, z;
-    uint8_t r, g, b;
-    uint8_t d, divindex, octave;
-    uint16_t f;
+    //uint8_t r, g, b;
+    //uint8_t d, divindex, octave;
+    //uint16_t f;
     gyroInit();
 
     init_audio();
@@ -64,20 +64,20 @@ int main (void)
     while (1) {
         //gyroUpdate(&x, &y, &z, &r, &g, &b, &d, &f);
 		gyroRead(&x,&y,&z);
-        leds[0].red   = abs(x / 0x100);
-        leds[1].red   = abs(x % 0x100);
-        leds[2].green = abs(y / 0x100);
-        leds[3].green = abs(y % 0x100);
-        leds[4].blue  = abs(z / 0x100);
-        leds[5].blue  = abs(z % 0x100);
+        leds[0].red   = (uint8_t) abs(x / 0x100);
+        leds[1].red   = (uint8_t) abs(x % 0x100);
+        leds[2].green = (uint8_t) abs(y / 0x100);
+        leds[3].green = (uint8_t) abs(y % 0x100);
+        leds[4].blue  = (uint8_t) abs(z / 0x100);
+        leds[5].blue  = (uint8_t) abs(z % 0x100);
         APA102WriteColors(leds, LED_COUNT);
 
-        divindex = d<<3;
-        octave = 0;
-        while (divindex >= DIVISORS_SIZE) {
-            divindex -= DIVISORS_SIZE;
-            octave += 1;
-        }
+        //divindex = d<<3;
+        //octave = 0;
+        //while (divindex >= DIVISORS_SIZE) {
+        //    divindex -= DIVISORS_SIZE;
+        //    octave += 1;
+        //}
         //begin_tone(divindex, octave);
     }
     return 1;

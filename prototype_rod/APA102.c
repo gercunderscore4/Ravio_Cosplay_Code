@@ -13,9 +13,9 @@ void APA102Init (rgb_color* colors, uint8_t count)
 
     for (int i = 0; i < count; i++)
     {
-        colors[i].blue  = 0x01;
-        colors[i].green = 0x01;
-        colors[i].red   = 0x01;
+        colors[i].blue  = 0x00;
+        colors[i].green = 0x00;
+        colors[i].red   = 0x00;
     }
 }
 
