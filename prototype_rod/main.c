@@ -48,14 +48,26 @@ int main (void)
 {
     rgb_color leds[LED_COUNT];
     APA102Init(leds, LED_COUNT);
+    leds[1].red   = 0xFF;
+    leds[1].green = 0x00;
+    leds[1].blue  = 0x00;
+   APA102WriteColors(leds, LED_COUNT);
 
     int16_t x, y, z;
     uint8_t r, g, b;
     uint8_t d, divindex, octave;
     uint16_t f;
     gyroInit();
+    leds[2].red   = 0x00;
+    leds[2].green = 0xFF;
+    leds[2].blue  = 0x00;
+   APA102WriteColors(leds, LED_COUNT);
 
     init_audio();
+    leds[3].red   = 0x00;
+    leds[3].green = 0x00;
+    leds[3].blue  = 0xFF;
+   APA102WriteColors(leds, LED_COUNT);
 
     while (1) {
         gyroUpdate(&x, &y, &z, &r, &g, &b, &d, &f);
