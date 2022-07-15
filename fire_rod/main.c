@@ -72,7 +72,7 @@ int main (void)
         y >>= 4;
         z >>= 4;
         a = x + z;
-        if ((a > 0x180) || (z > 0x400)) {
+        if ((a > 0x200) || (z > 0x600)) {
             // magic sound
             // C4 -> E4
             // F4 -> G#4, loop 4 times
