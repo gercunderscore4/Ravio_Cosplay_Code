@@ -117,3 +117,17 @@ void gyroUpdate (int16_t* x, int16_t* y, int16_t* z, uint8_t* r, uint8_t* g, uin
     gyroRead(x,y,z);
     gyroProcessData(*x,*y,*z,r,g,b,d,f);
 }
+
+bool gyroValid () {
+    uint8_t data1[] = {0xD4, 0x0F};
+    uint8_t data2[] = {0xD5, 0x00};
+    // 0xD4 write to gyrometer (SA0 = 0)
+    // 0x0F read register 0x0F
+    // 0xD5 read from gyrometer (SA0 = 0)
+    // read WHO_AM_I
+
+    USI_TWI_Start_Transceiver_With_Data_Stop(data1, sizeof(data1), false);
+    USI_TWI_Start_Transceiver_With_Data_Stop(data2, sizeof(data2), false);
+
+    return data2[1] == b11010100
+}

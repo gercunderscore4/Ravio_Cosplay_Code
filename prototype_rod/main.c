@@ -59,6 +59,18 @@ int main (void)
     //uint16_t f;
     gyroInit();
 
+    if (gyroValid()) {
+        leds[6].red   = 0x00;
+        leds[6].green = 0x10;
+        leds[6].blue  = 0x00;
+    } else {
+        leds[6].red   = 0x10;
+        leds[6].green = 0x00;
+        leds[6].blue  = 0x00;
+    }
+    APA102WriteColors(leds, LED_COUNT);
+
+
     init_audio();
 
     while (1) {
