@@ -5,6 +5,7 @@
  *     - uc: ATtiny85
  *     - LEDs: APA102
  *     - accelerometer: LIS2DH
+ *     - gyro: L3GD20
  *     - audio amplifier: TPA2005D1
  *     - Code is incomplete
  * Todo:
@@ -35,6 +36,7 @@
 #include "APA102.h"
 #include "InterruptAudio.h"
 #include "Accel.h"
+#include "Gyro.h"
 
 
 #define LED_COUNT 1
@@ -52,12 +54,12 @@ int main (void)
     uint8_t r, g, b;
     uint8_t d, divindex, octave;
     uint16_t f;
-    accelInit();
+    gyroInit();
 
     init_audio();
 
     while (1) {
-        accelUpdate(&x, &y, &z, &r, &g, &b, &d, &f);
+        gyroUpdate(&x, &y, &z, &r, &g, &b, &d, &f);
 
         leds[0].red   = r >> 0;
         leds[0].green = g >> 0;
