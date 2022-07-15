@@ -20,13 +20,13 @@
  * PB0 : SDA (I2C)
  * PB1 : PWM (audio)
  * PB2 : SCL (I2C)
- * PB3 : DO (LEDs)
- * PB4 : CO (LEDs)
+ * PB3 : CO (LEDs)
+ * PB4 : DO (LEDs)
  * PB5 : NC
  *
  * NC  -+----+- VCC
- * DO  -+O   +- SCL
- * CO  -+    +- PWM
+ * CO  -+O   +- SCL
+ * DO  -+    +- PWM
  * GND -+----+- SDA
  */
 
@@ -77,7 +77,7 @@ int main (void)
             // yellow travels along LEDs, fast pace
             // F4 -> G#4, F4 -> G#4
             // darkness travels along LEDs, fast pace
-            
+
             // NNN  0  1  2  3  4  5  6  7  8  9 10 11 12
             // C4   .  .  .  .  .  .  .  .  .  .  .  .  .
             // C#4  R  .  .  .  .  .  .  .  .  .  .  .  .
