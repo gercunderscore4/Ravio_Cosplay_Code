@@ -35,7 +35,6 @@
 #include <util/delay.h>
 #include "APA102.h"
 #include "InterruptAudio.h"
-#include "Accel.h"
 #include "Gyro.h"
 
 
