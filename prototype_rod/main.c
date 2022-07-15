@@ -38,7 +38,7 @@
 #include "Gyro.h"
 
 
-#define LED_COUNT 4
+#define LED_COUNT 7
 
 /****************************************************************
  * MAIN
@@ -48,9 +48,9 @@ int main (void)
 {
     rgb_color leds[LED_COUNT];
     APA102Init(leds, LED_COUNT);
-    leds[1].red   = 0xFF;
-    leds[1].green = 0x00;
-    leds[1].blue  = 0x00;
+    leds[6].red   = 0x10;
+    leds[6].green = 0x10;
+    leds[6].blue  = 0x10;
     APA102WriteColors(leds, LED_COUNT);
 
     int16_t x, y, z;
@@ -58,23 +58,18 @@ int main (void)
     uint8_t d, divindex, octave;
     uint16_t f;
     gyroInit();
-    leds[2].red   = 0x00;
-    leds[2].green = 0xFF;
-    leds[2].blue  = 0x00;
-    APA102WriteColors(leds, LED_COUNT);
 
-    //init_audio();
-    leds[3].red   = 0x00;
-    leds[3].green = 0x00;
-    leds[3].blue  = 0xFF;
-    APA102WriteColors(leds, LED_COUNT);
+    init_audio();
 
     while (1) {
-        gyroUpdate(&x, &y, &z, &r, &g, &b, &d, &f);
-
-        leds[0].red   = r >> 0;
-        leds[0].green = g >> 0;
-        leds[0].blue  = b >> 0;
+        //gyroUpdate(&x, &y, &z, &r, &g, &b, &d, &f);
+		gyroRead(&x,&y,&z);
+        leds[0].red   = abs(x / 0x100);
+        leds[1].red   = abs(x % 0x100);
+        leds[2].green = abs(y / 0x100);
+        leds[3].green = abs(y % 0x100);
+        leds[4].blue  = abs(z / 0x100);
+        leds[5].blue  = abs(z % 0x100);
         APA102WriteColors(leds, LED_COUNT);
 
         divindex = d<<3;
