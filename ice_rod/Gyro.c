@@ -78,10 +78,10 @@ void gyroProcessData (int16_t x, int16_t y, int16_t z, uint8_t* r, uint8_t* g, u
 }
 
 void gyroInit (void) {
-    uint8_t data1[] = {0xD6, 0xA3, 0x00};
+    uint8_t data1[] = {0xD6, 0xA3, 0x30};
     // 0xD4 write to gyrometer (SDO = 0)
     // 0x23 write register 0x23
-    // 0x30 write CTRL_REG4, continuous update, LSb, Scale: b00: 250dps
+    // 0x30 write CTRL_REG4, continuous update, LSb, Scale: b11: 2000dps
     uint8_t data2[] = {0xD6, 0xA0, 0x6F};
     // 0xD4 write to gyrometer (SDO = 0)
     // 0x24 write register 0x20
