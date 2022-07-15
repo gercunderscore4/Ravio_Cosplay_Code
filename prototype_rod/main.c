@@ -38,7 +38,7 @@
 #include "Gyro.h"
 
 
-#define LED_COUNT 1
+#define LED_COUNT 4
 
 /****************************************************************
  * MAIN
