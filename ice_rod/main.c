@@ -5,6 +5,7 @@
  *     - uc: ATtiny85
  *     - LEDs: APA102
  *     - accelerometer: LIS2DH
+ *     - gyro: L3GD20
  *     - audio amplifier: TPA2005D1
  *     - Code is incomplete
  * Todo:
@@ -34,7 +35,7 @@
 #include <util/delay.h>
 #include "APA102.h"
 #include "InterruptAudio.h"
-#include "Accel.h"
+#include "Gyro.h"
 #include "stdlib.h"
 
 
@@ -49,10 +50,10 @@ int main (void)
     rgb_color leds[LED_COUNT];
     APA102Init(leds, LED_COUNT);
 
-    int16_t x, y, z;
+    int16_t x, y, z, a;
     //uint8_t r, g, b;
     //uint16_t f;
-    accelInit();
+    gyroInit();
 
     //uint8_t d;
     uint8_t divindex = NOTE_C;
@@ -61,11 +62,17 @@ int main (void)
 
     int i;
 
-
     while (1) {
         // activate if over 4 gravities
-        accelRead(&x,&y,&z);
-        if (abs(y / 0x1000)) {
+        gyroRead(&x,&y,&z);
+        x = abs(x);
+        y = abs(y);
+        z = abs(z);
+        x >>= 4;
+        y >>= 4;
+        z >>= 4;
+        a = x + z;
+        if ((a > 0x200) || (z > 0x600)) {
             // magic sound
             // C4 -> E4
             // F4 -> G#4, loop 4 times
