@@ -78,11 +78,11 @@ void gyroProcessData (int16_t x, int16_t y, int16_t z, uint8_t* r, uint8_t* g, u
 }
 
 void gyroInit (void) {
-    uint8_t data1[] = {0xD4, 0xA3, 0x00};
+    uint8_t data1[] = {0xD6, 0xA3, 0x00};
     // 0xD4 write to gyrometer (SDO = 0)
     // 0x23 write register 0x23
     // 0x30 write CTRL_REG4, continuous update, LSb, Scale: b00: 250dps
-    uint8_t data2[] = {0xD4, 0xA0, 0x6F};
+    uint8_t data2[] = {0xD6, 0xA0, 0x6F};
     // 0xD4 write to gyrometer (SDO = 0)
     // 0x24 write register 0x20
     // 0x30 write CTRL_REG1, Normal Mode PD=1, Xen=Yen=Zen=1
@@ -93,11 +93,11 @@ void gyroInit (void) {
 }
 
 void gyroRead (int16_t* x, int16_t* y, int16_t* z) {
-    uint8_t data1[] = {0xD4, 0xA8};
-    uint8_t data2[] = {0xD5, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-    // 0xD4 write to gyrometer (SA0 = 0)
+    uint8_t data1[] = {0xD6, 0xA8};
+    uint8_t data2[] = {0xD7, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+    // 0xD6 write to gyrometer (SA0 = 0)
     // 0xA8 read register 0x28
-    // 0xD5 read from gyrometer (SA0 = 0)
+    // 0xD7 read from gyrometer (SA0 = 0)
     // read OUT_X_L
     // read OUT_X_H
     // read OUT_Y_L
@@ -119,11 +119,11 @@ void gyroUpdate (int16_t* x, int16_t* y, int16_t* z, uint8_t* r, uint8_t* g, uin
 }
 
 bool gyroValid () {
-    uint8_t data1[] = {0xD4, 0x8F};
-    uint8_t data2[] = {0xD5, 0x00};
-    // 0xD4 write to gyrometer (SA0 = 0)
+    uint8_t data1[] = {0xD6, 0x8F};
+    uint8_t data2[] = {0xD7, 0x00};
+    // 0xD6 write to gyrometer (SA0 = 0)
     // 0x0F read register 0x0F
-    // 0xD5 read from gyrometer (SA0 = 0)
+    // 0xD7 read from gyrometer (SA0 = 0)
     // read WHO_AM_I
 
     USI_TWI_Start_Transceiver_With_Data_Stop(data1, sizeof(data1), false);
