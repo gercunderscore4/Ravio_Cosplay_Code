@@ -78,13 +78,18 @@ void gyroProcessData (int16_t x, int16_t y, int16_t z, uint8_t* r, uint8_t* g, u
 }
 
 void gyroInit (void) {
-    uint8_t data[] = {0xD4, 0x23, 0x30};
+    uint8_t data1[] = {0xD4, 0x23, 0x00};
     // 0xD4 write to gyrometer (SDO = 0)
-    // 0x23 write register 0x20 (just one write)
-    // 0x30 write CTRL_REG4 continuous update, LSb, Scale: b11: 2000dps
+    // 0x23 write register 0x23
+    // 0x30 write CTRL_REG4, continuous update, LSb, Scale: b00: 250dps
+    uint8_t data2[] = {0xD4, 0x20, 0x6F};
+    // 0xD4 write to gyrometer (SDO = 0)
+    // 0x24 write register 0x20
+    // 0x30 write CTRL_REG1, Normal Mode PD=1, Xen=Yen=Zen=1
 
     USI_TWI_Master_Initialise();
-    USI_TWI_Start_Transceiver_With_Data_Stop(data, sizeof(data), false);
+    USI_TWI_Start_Transceiver_With_Data_Stop(data1, sizeof(data1), false);
+    USI_TWI_Start_Transceiver_With_Data_Stop(data2, sizeof(data2), false);
 }
 
 void gyroRead (int16_t* x, int16_t* y, int16_t* z) {
