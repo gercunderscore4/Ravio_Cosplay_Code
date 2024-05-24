@@ -505,7 +505,7 @@ L2((indx+1):(indx+c3),:) = [END_COVER_POINTS BAR_COUNT*ones(c3,1)];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % PLOT ANIMATION
 
-if false
+if true
     % mechanism in different states of operation
     figure(1);
     clf;
@@ -553,7 +553,7 @@ if false
     hold off;
 end
 
-if true
+if false
     % layers separated vertically
     figure(2);
     clf;
@@ -590,7 +590,7 @@ if true
     hold off;
 end
 
-if true
+if false
     % each part separated vertically
     figure(3)
     clf;
@@ -611,7 +611,7 @@ if true
     hold off;
 end
 
-if true
+if false
 	% save to svgs
     figure(4)
     clf;

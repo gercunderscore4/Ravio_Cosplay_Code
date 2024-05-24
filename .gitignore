@@ -9,3 +9,7 @@
 *.hex
 *.svg
 *.elf
+
+# virtual environments
+venv/
+*/venv/

@@ -11,7 +11,7 @@ clc;
 d = 10; % diameter
 
 n = 6;  % points in curves
-m = 5;   % number of lunes % number based on Skyward Sword
+m = 4;   % number of lunes % number based on Skyward Sword
 q = m;   % number of lunes to display
 z = 90;  % accurate curves
 
@@ -98,7 +98,7 @@ plot([0 0 1 1 0]*total_visible_width, [-1 1 1 -1 -1]*c/4, 'k');
 fprintf('Border height: %f\n', c/2)
 
 % cut line
-plot([0 1]*total_visible_width, [1 1]*(c/4 - 2), 'r');
+plot([0 1]*total_visible_width, [1 1]*(c/4 * 2/9), 'r');
 
 axis('equal');
 axis('off');
