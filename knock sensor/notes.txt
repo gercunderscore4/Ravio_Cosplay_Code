@@ -1,3 +1,6 @@
+Accelerometer
+=============
+
 I have a spare ADXL345 board.
 It has I2C.
 
@@ -24,7 +27,6 @@ Success.
       Serial.println("");
   }
 
-
 Interrupts are enabled by setting the appropriate bit in the 
 INT_ENABLE register (Address 0x2E)
 and are mapped to either the INT1 or INT2 pin based on the contents of the 
@@ -43,16 +45,21 @@ THRESH_TAP register (Address 0x1D)
 occurs for less time than is specified in the 
 DUR register (Address 0x21).
 
+https://github.com/chiefenne/ATTINY85-Servo-Control/blob/master/main.c
 
 
+MAKEFILE
+========
 
+Tired of using a RPi to compile and flash code.
+Let's install make in chocolatey.
+https://chocolatey.org/install
+choco install make
+choco install gcc
 
+https://web.engr.oregonstate.edu/~traylor/ece473/webpages/ubuntu_install.html
 
+https://www.microchip.com/en-us/tools-resources/develop/microchip-studio/gcc-compilers
 
-
-
-
-
-
-
-
+Nothing's working on Windows.
+I'll keep using Linux for now.
