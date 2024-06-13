@@ -1,85 +1,177 @@
 /*
- * File: main.c
- * Purpose: LoZ treasure chest using ATtiny85
- * Notes:
- *     - uc: ATtiny85
- * Todo:
+ *     ATtiny84
+ * VCC -+-\/-+- GND
+ * PB0 -+    +- PA0
+ * PB1 -+    +- PA1
+ * PB3 -+    +- PA2
+ * PB2 -+    +- PA3
+ * PA7 -+    +- PA4
+ * PA6 -+----+- PA5
  *
- *     ATtiny85
- * PB5 -+----+- VCC
- * PB3 -+O   +- PB2/SCL
- * PB4 -+    +- PB1/OC0B/OC1A
- * GND -+----+- PB0/SDA
+ * PA0 : trigger
+ * PA1 : 
+ * PA2 : 
+ * PA3 : 
+ * PA5 : 
+ * PA6 : 
+ * PA7 : PWM servo
  *
- * PB0 : SDA (accel)
- * PB1 : PWM (servo)
- * PB2 : SCL (accel)
- * PB3 : NC
- * PB4 : NC
- * PB5 : button (reset with 10k pull-up)
+ * Useful registers
+ * ----------------
+ * 
+ * DDRB  - Port B Data Direction Register
+ * 0 = INPUT, 1 = OUTPUT
  *
- * BTN -+----+- VCC
- * NC  -+O   +- SW3
- * NC  -+    +- PWM
- * GND -+----+- SW2
+ * PORTB - Port B Data Register
+ * INPUT: 1 = PULL-UP
+ *
+ * PINB  - Port B Input Pins Address
+ * 1 = HIGH, 0 = LOW
  */
 
 #include <avr/io.h>
 #include <util/delay.h>
+#include "stdlib.h"
+#include "InterruptAudio.h"
+#include "AnalogInput.h"
+#include "ArduinoLike.h"
+#include "pwm.h"
 
+/****************************************************************
+ * MAIN
+ ****************************************************************/
 
-////////////////////////////////////////////////////////////////
-// SWITCHES
-////////////////////////////////////////////////////////////////
-
-void init_switches (void) {
-    DDRB  &=  ~( (1 << DDB0) | (1 << DDB2) ); // inputs
-    PORTB |=  (1 << PORTB0) | (1 << PORTB2); // pull-up
-}
-
-uint8_t get_sw2 (void) {
-    return !(PINB & ( 1 << PINB0));
-}
-
-uint8_t get_sw3 (void) {
-    return !(PINB & (1 << PINB2));
-}
-
-////////////////////////////////////////////////////////////////
-// MAIN
-////////////////////////////////////////////////////////////////
-
-int main (void)
-{
-    init_switches();
-    init_sparkle();
+/*
+int main (void) {
     init_audio();
 
-    uint8_t divindex = 4;
-    uint8_t octave   = 4;
-    play_section_0(&divindex, &octave);
+    toneOn(0);
 
-    uint8_t played_1 = 0;
-    uint8_t played_2 = 0;
-    uint8_t played_4 = 0;
-    while (!played_4) {
-        if (get_sw3()) {
-            if (played_2 || played_1) {
-                play_section_3(&divindex, &octave);
-                play_section_4(&divindex, &octave);
-            } else {
-                play_section_5(&divindex, &octave);
-            }
-            played_4 = 1;
-        } else if (get_sw2() || played_2){
-            play_section_2(&divindex, &octave);
-            played_2 = 1;
-        } else {
-            play_section_1(&divindex, &octave);
-            played_1 = 1;
+    uint16_t timeBlock = 0;
+    uint16_t f = 0;
+    uint16_t t = 0;
+    while (1) {
+        // these are manually picked through testing
+        f = randomWMinMax(6000, 7000);
+        t = randomWMinMax(2, 4);
+        timeBlock += t;
+        changeTone(f);
+        delay(t);
+    }
+    while(1) {
+        for (f = 1000; f <= 20000; f += 1000) {
+            changeTone(f);
+            delay(1000);
         }
     }
-    while (1);
+
+    noTone();
 
     return 1;
+}
+*/
+
+//      ANALOG_PIN   // PA0
+#define FUSE_1_PIN 1 // PA1
+#define FUSE_2_PIN 2 // PA2
+#define FUSE_3_PIN 3 // PA3
+#define MOTOR_PIN  5 // PA5
+//      AUDIO_PIN    // PA6
+//      FLASH_PIN    // PA7
+
+uint8_t debounceTrigger (void) {
+    if (analogRead() > TRIGGER_THRESH) {
+        delay(50);
+        if (analogRead() > TRIGGER_THRESH) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+void waitForTrigger (void) {
+    while (!debounceTrigger());
+}
+
+void setup (void) {
+    pwmInit();
+
+    // set outputs
+    pinMode(FUSE_1_PIN, OUTPUT);
+    pinMode(FUSE_2_PIN, OUTPUT);
+    pinMode(FUSE_3_PIN, OUTPUT);
+    pinMode(MOTOR_PIN,  OUTPUT);
+    
+    // set all low
+    digitalWrite(FUSE_1_PIN, LOW);
+    digitalWrite(FUSE_2_PIN, LOW);
+    digitalWrite(FUSE_3_PIN, LOW);
+    digitalWrite(MOTOR_PIN,  LOW);
+}
+
+void loop (void) {
+    // wait for trigger to start
+    waitForTrigger();
+    
+    // fuse
+    toneOn(0);
+    sparkleFuse(FUSE_1_PIN);
+    sparkleFuse(FUSE_2_PIN);
+    sparkleFuse(FUSE_3_PIN);
+    noTone();
+
+    // if user is still holding the fuse, don't explode
+    if (debounceTrigger()) {
+        delay(3000);
+        return;
+    }
+    
+    // start motor
+    digitalWrite(MOTOR_PIN, HIGH);
+
+    int fMax = 0;
+    int timeBlock = 0;
+    int time_ms = 0;
+    int f = 0;
+    int t = 0;
+    // decrease f and brightness to reach zero together
+    fMax = 1600;
+    time_ms = 5;
+    uint8_t brightness = 0xFF;
+    while (fMax) {
+        // set brightness, then divide by 2
+        pwmWrite(brightness);
+        brightness >>= 1;
+
+        // play 100ms of sound
+        // and decrease f
+        timeBlock = 0;
+        while (timeBlock < time_ms) {
+            f = randomWMinMax(0, fMax);
+            t = randomWMinMax(0,    3);
+            timeBlock += t;
+            toneOn(f);
+            delay(t);
+        }
+        fMax -= 100;
+        fMax = max(0, fMax);
+        time_ms += 5;
+    }
+    noTone();
+    pwmOff();
+
+    // stop motor
+    digitalWrite(MOTOR_PIN, LOW);
+    digitalWrite(MOTOR_PIN, HIGH);
+    digitalWrite(MOTOR_PIN, LOW);
+
+    return;
+}
+
+int main (void) {
+    setup();
+
+    while (1) {
+        loop();
+    }
 }
