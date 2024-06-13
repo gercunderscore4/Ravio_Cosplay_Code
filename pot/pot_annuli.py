@@ -91,8 +91,9 @@ def get_even_rings(
 def draw_rings(ring_list):
     ax = plt.figure().add_subplot(projection='3d')
 
+    print(' # height   inner   outer')
     for i, ring in enumerate(ring_list, start=1):
-        print(f'{i:2d} {ring.base*2.54:6.2f} {ring.outer*2.54:6.2f}, {ring.inner*2.54:6.2f}')
+        print(f'{i:2d}  {ring.base*2.54:6.2f}  {ring.outer*2.54:6.2f}  {ring.inner*2.54:6.2f}')
         x = ring.inner * sind(THETA)
         y = ring.inner * cosd(THETA)
         z = ring.base
