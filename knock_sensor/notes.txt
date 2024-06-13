@@ -48,18 +48,16 @@ DUR register (Address 0x21).
 https://github.com/chiefenne/ATTINY85-Servo-Control/blob/master/main.c
 
 
-MAKEFILE
-========
+Tools for Windows
+=================
 
-Tired of using a RPi to compile and flash code.
-Let's install make in chocolatey.
+make
 https://chocolatey.org/install
-choco install make
-choco install gcc
 
-https://web.engr.oregonstate.edu/~traylor/ece473/webpages/ubuntu_install.html
+avrdude
+https://tinusaur.com/guides/avr-gcc-toolchain/
 
+avr-gcc
 https://www.microchip.com/en-us/tools-resources/develop/microchip-studio/gcc-compilers
 
-Nothing's working on Windows.
-I'll keep using Linux for now.
+In makefile, need to flip slashes and change "rm -f" to "del"

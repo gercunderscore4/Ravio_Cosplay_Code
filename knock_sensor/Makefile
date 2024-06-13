@@ -5,7 +5,7 @@
 DEVICE     = attiny84
 CLOCK      = 8000000
 PROGRAMMER = -c usbtiny
-LIBRARIES  = InterruptAudio.o AnalogInput.o ArduinoLike.o pwm.o
+LIBRARIES  = ArduinoLike.o pwm.o USI_TWI_Master\USI_TWI_Master.o
 OBJECTS    = main.o
 OBJECTS   += $(LIBRARIES)
 # for ATTiny85
@@ -15,6 +15,8 @@ FUSES       = -U lfuse:w:0xE2:m -U hfuse:w:0xdf:m -U efuse:w:0xff:m
 # Tune the lines below only if you know what you are doing:
 AVRDUDE = avrdude $(PROGRAMMER) -p $(DEVICE)
 COMPILE = avr-gcc -Wall -Os -DF_CPU=$(CLOCK) -mmcu=$(DEVICE)
+#DELETE = rm -f
+DELETE = del
 
 # symbolic targets:
 all:	main.hex
@@ -37,19 +39,15 @@ fuse:
 # Xcode uses the Makefile targets "", "clean" and "install"
 install: clean flash fuse
 
-# if you use a bootloader, change the command below appropriately:
-load: all
-	bootloadHID main.hex
-
 clean:
-	rm -f main.hex main.elf $(OBJECTS)
+	$(DELETE) main.hex main.elf $(OBJECTS)
 
 # file targets:
 main.elf: $(OBJECTS)
 	$(COMPILE) -o main.elf $(OBJECTS)
 
 main.hex: main.elf
-	rm -f main.hex
+	$(DELETE) main.hex
 	avr-objcopy -j .text -j .data -O ihex main.elf main.hex
 	avr-size --format=avr --mcu=$(DEVICE) main.elf
 # If you have an EEPROM section, you must also create a hex file for the
