@@ -33,6 +33,7 @@
 #include <util/delay.h>
 #include "stdlib.h"
 #include "pwm.h"
+#include "ArduinoLike.h"
 
 /****************************************************************
  * MAIN
@@ -43,9 +44,11 @@ void setup (void) {
 }
 
 void loop (void) {
-    pwmWrite(0x00);
-    delay(2000);
-    pwmWrite(0x80);
+    pwmWrite(0x0A);
+    delay(3000);
+    pwmWrite(0x1E);
+    delay(3000);
+    pwmWrite(0x32);
     delay(3000);
     pwmOff();
 }

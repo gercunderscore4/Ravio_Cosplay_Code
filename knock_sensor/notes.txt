@@ -1,3 +1,26 @@
+Tools for Windows
+=================
+
+make
+https://chocolatey.org/install
+
+avrdude
+https://tinusaur.com/guides/avr-gcc-toolchain/
+
+avr-gcc
+https://www.microchip.com/en-us/tools-resources/develop/microchip-studio/gcc-compilers
+
+In makefile, need to flip slashes and change "rm -f" to "del"
+
+Servo Control
+=============
+FS5113M
+Arduino uses PWM frequency: 50Hz (20ms)
+Pulse width: 500-2500µs (0-180deg)
+Speed: 0.14sec/60 degree
+Voltage: 4-8.4V (tested at 6V)
+Torque: 14kg*cm
+
 Accelerometer
 =============
 
@@ -46,18 +69,3 @@ occurs for less time than is specified in the
 DUR register (Address 0x21).
 
 https://github.com/chiefenne/ATTINY85-Servo-Control/blob/master/main.c
-
-
-Tools for Windows
-=================
-
-make
-https://chocolatey.org/install
-
-avrdude
-https://tinusaur.com/guides/avr-gcc-toolchain/
-
-avr-gcc
-https://www.microchip.com/en-us/tools-resources/develop/microchip-studio/gcc-compilers
-
-In makefile, need to flip slashes and change "rm -f" to "del"
