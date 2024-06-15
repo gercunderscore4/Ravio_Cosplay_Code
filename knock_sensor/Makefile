@@ -5,7 +5,7 @@
 DEVICE     = attiny84
 CLOCK      = 8000000
 PROGRAMMER = -c usbtiny
-LIBRARIES  = ArduinoLike.o pwm.o USI_TWI_Master\USI_TWI_Master.o
+LIBRARIES  = ArduinoLike.o accel.o servo.o USI_TWI_Master\USI_TWI_Master.o
 OBJECTS    = main.o
 OBJECTS   += $(LIBRARIES)
 # for ATTiny85

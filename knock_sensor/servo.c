@@ -46,17 +46,8 @@
  * non-inverted
  * OC0B (PA7)
  * 
- * f_OCnxPCPWM = f_clk_IO / ( N x 510)
- * N is prescale factor 1,8,64,256,1024
- *
- * f_PWM = 15625Hz (64us)
- * 8MHz clock
- * N = 1
- *
- * If I can set the pre-scaler to 256, 
- * I can get f_PWM = 61Hz (16ms) which is almost 50Hz
- * Then 16ms / 256 = 64us
- * 500us = 0x0A, 2500us = 0x32
+ * f_fast_PWM = f_clk / ( N x 2 x TOP)
+ * f_clk = 8MHz
  *
  * CS02 CS01 CS00
  * 0b000 no clock
@@ -68,13 +59,11 @@
  * 0b110 N = external falling edge
  * 0b111 N = external rising edge
  * 
- * Got it working, mostly.
- * It doesn't seem to like 0x32.
  */
 
-#include "pwm.h"
+#include "servo.h"
 
-void pwmInit (void) {
+void servo_init (void) {
     // output
     DDRA  |=  (1 << PWM_PIN);
     // no pull-up
@@ -83,16 +72,20 @@ void pwmInit (void) {
     PINA  &= ~(1 << PWM_PIN);
 }
 
-void pwmWrite (uint8_t pwm) {
+void servo_write (uint8_t pwm) {
+    OCR0A = 0x4E;
     OCR0B = pwm;
+    // fast PWM, N = 1024, non-inverted
     TCCR0A = (0 << COM0A1) | (0 << COM0A0) | (1 << COM0B1) | (0 << COM0B0) | (0 << WGM01) | (1 << WGM00);
-    TCCR0B = (0 << FOC0A) | (0 << FOC0B) | (0 << WGM02) | (1 << CS02) | (0 << CS01) | (0 << CS00);
+    TCCR0B = (0 << FOC0A) | (0 << FOC0B) | (1 << WGM02) | (1 << CS02) | (0 << CS01) | (1 << CS00);
 }
 
-void pwmOff (void) {
+void servo_off (void) {
+    OCR0A = 0x00;
     OCR0B = 0x00;
-    TCCR0A = (0 << COM0A1) | (0 << COM0A0) | (0 << COM0B1) | (0 << COM0B0) | (0 << WGM01) | (1 << WGM00);
-    TCCR0B = (0 << FOC0A) | (0 << FOC0B) | (0 << WGM02) | (1 << CS02) | (0 << CS01) | (0 << CS00);
+    // turn it all off
+    TCCR0A = (0 << COM0A1) | (0 << COM0A0) | (0 << COM0B1) | (0 << COM0B0) | (0 << WGM01) | (0 << WGM00);
+    TCCR0B = (0 << FOC0A) | (0 << FOC0B) | (0 << WGM02) | (0 << CS02) | (0 << CS01) | (0 << CS00);
     // set pin low
     PINA &= ~(1 << PWM_PIN);
 }

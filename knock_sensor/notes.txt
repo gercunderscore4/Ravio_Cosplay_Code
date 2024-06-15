@@ -21,6 +21,11 @@ Speed: 0.14sec/60 degree
 Voltage: 4-8.4V (tested at 6V)
 Torque: 14kg*cm
 
+N = (1,8,64,256,1024)
+f_clk = 8e6 Hz
+f_PWM = f_clk / ( N x 510)
+N = 1024  top = 0x4E  f_PWM = 50
+
 Accelerometer
 =============
 
