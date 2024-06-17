@@ -93,6 +93,16 @@ void writeByteAndVerify(byte device_address, byte register_address, byte input_b
   Serial.println();
 }
 
+void setup_accel() {
+  writeByteAndVerify(ACCEL_ADDR, THRESH_TAP_ADDR, THRESH_TAP_VALUE);
+  writeByteAndVerify(ACCEL_ADDR, DUR_ADDR, DUR_VALUE);
+  writeByteAndVerify(ACCEL_ADDR, TAP_AXES_ADDR, TAP_AXES_VALUE);
+  writeByteAndVerify(ACCEL_ADDR, ACT_TAP_AXES_ADDR, ACT_TAP_AXES_VALUE);
+  writeByteAndVerify(ACCEL_ADDR, PWR_CTL_ADDR, PWR_CTL_VALUE);
+  writeByteAndVerify(ACCEL_ADDR, INT_MAP_ADDR, INT_MAP_VALUE);
+  writeByteAndVerify(ACCEL_ADDR, INT_ENABLE_ADDR, INT_ENABLE_VALUE);
+}
+
 void setup() {
   Serial.begin(9600);
   Serial.println("Hello.");
@@ -105,17 +115,15 @@ void setup() {
   delay(500);
   digitalWrite(OUTPUT_PIN, LOW);
 
-  writeByteAndVerify(ACCEL_ADDR, THRESH_TAP_ADDR, THRESH_TAP_VALUE);
-  writeByteAndVerify(ACCEL_ADDR, DUR_ADDR, DUR_VALUE);
-  writeByteAndVerify(ACCEL_ADDR, TAP_AXES_ADDR, TAP_AXES_VALUE);
-  writeByteAndVerify(ACCEL_ADDR, ACT_TAP_AXES_ADDR, ACT_TAP_AXES_VALUE);
-  writeByteAndVerify(ACCEL_ADDR, PWR_CTL_ADDR, PWR_CTL_VALUE);
-  writeByteAndVerify(ACCEL_ADDR, INT_MAP_ADDR, INT_MAP_VALUE);
-  writeByteAndVerify(ACCEL_ADDR, INT_ENABLE_ADDR, INT_ENABLE_VALUE);
-
+  setup_accel();
 }
 
 void loop() {
+  setup_accel();
+  delay(1);
+}
+
+void not_loop() {
   byte output_byte;
   readByte(ACCEL_ADDR, INT_SOURCE_ADDR, &output_byte);
 

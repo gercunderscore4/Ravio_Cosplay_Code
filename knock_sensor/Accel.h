@@ -11,10 +11,7 @@
 
 // A4 => SDA
 // A5 => SCL
-#define INPUT_PIN 12
-#define OUTPUT_PIN 13
-
-#define ACCEL_ADDR 0x53
+#define ACCEL_ADDR 0xA6
 
 #define DEVID_ADDR 0x00
 #define DEVID_VALUE 0xE5
@@ -49,5 +46,6 @@
 #define INT_SOURCE_ADDR 0x30
 
 void accel_setup_interrupt (void);
+void accel_clear_interrupt (void);
 
 #endif // __ACCEL_H__

@@ -98,6 +98,17 @@
 #define PIN_USI_SCL PINB2
 #endif
 
+// added from https://github.com/adafruit/TinyWireM/blob/master/USI_TWI_Master.h
+#if defined(__ATtiny84__) | defined(__ATtiny44__)
+#define DDR_USI DDRA
+#define PORT_USI PORTA
+#define PIN_USI PINA
+#define PORT_USI_SDA PORTA6
+#define PORT_USI_SCL PORTA4
+#define PIN_USI_SDA PINA6
+#define PIN_USI_SCL PINA4
+#endif
+
 #if defined(__AT90Tiny2313__) || defined(__ATtiny2313__)
 #define DDR_USI DDRB
 #define PORT_USI PORTB

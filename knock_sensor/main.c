@@ -12,8 +12,9 @@
  * PA1 :
  * PA2 :
  * PA3 :
+ * PA4 : SCL
  * PA5 :
- * PA6 :
+ * PA6 : SDA
  * PA7 : PWM servo
  *
  * Useful registers
@@ -41,13 +42,18 @@
  ****************************************************************/
 
 void shutdown(void) {
+    // enable interrupts
+    // this interrupt requires ISC01,ISC00=0,1 
+    
+    SREG |= (1 << 7)
+
     // power reduction
     PRR = (1 << PRTIM1) | (1 << PRTIM0) | (1 << PRUSI)  | (1 << PRADC);
-    // BODS sequence, section 8.9.1
-    MCUCR = (1 << BODS) | (0 << PUD) | (0 << SE) | (0 << SM1) | (0 << SM0) | (1 << BODSE);
-    MCUCR = (1 << BODS) | (0 << PUD) | (0 << SE) | (0 << SM1) | (0 << SM0) | (0 << BODSE);
+    // BODS sequence
+    MCUCR = (1 << BODS) | (0 << PUD) | (0 << SE) | (0 << SM1) | (0 << SM0) | (1 << BODSE) | (0 << ISC01) | (1 << ISC00);
+    MCUCR = (1 << BODS) | (0 << PUD) | (0 << SE) | (0 << SM1) | (0 << SM0) | (0 << BODSE) | (0 << ISC01) | (1 << ISC00);
     // power down
-    MCUCR = (1 << BODS) | (1 << PUD) | (1 << SE) | (1 << SM1) | (0 << SM0) | (0 << BODSE);
+    MCUCR = (1 << BODS) | (1 << PUD) | (1 << SE) | (1 << SM1) | (0 << SM0) | (0 << BODSE) | (0 << ISC01) | (1 << ISC00);
 }
 
 void power_up(void) {
@@ -60,20 +66,23 @@ void power_up(void) {
 /****************************************************************
  * MAIN
  ****************************************************************/
-
 void setup (void) {
-    servo_init();
-    accel_setup_interrupt();
-}
+    power_up();
 
-void loop (void) {
+    accel_setup_interrupt();
+    accel_clear_interrupt();
+
+    servo_init();
+    servo_write(CW_MAX);
+    delay(3000);
     servo_write(CCW_MAX);
     delay(3000);
     servo_off();
 
-    servo_write(CW_MAX);
-    delay(3000);
-    servo_off();
+    //shutdown();
+}
+
+void loop (void) {
 }
 
 int main (void) {

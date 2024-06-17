@@ -74,3 +74,60 @@ occurs for less time than is specified in the
 DUR register (Address 0x21).
 
 https://github.com/chiefenne/ATTINY85-Servo-Control/blob/master/main.c
+
+The board I have for the ADXL345 is from OSEPP.
+Their schematic shows that CS, SDA, and SCL are all connected to VCC via 4.7k resistors.
+ADDR is connected to GND via a 4.7k resistor.
+The schematic looks accurate to what's on the board.
+
+ADDR pulled low is why the address is 0x53.
+Translating to 0xA6 for write and 0xA7 for read.
+There are options for 100kHz and 400kHz communication.
+
+Confirmed connections via multimeter.
+When powered with 5V, chip used 3.27V as VCC, including on SDA and SCL.
+Not great.
+How much power loss will I get just from these resistors?
+3 * (5 - 3.2)^2 / 4700 = 2mW
+That's not nothing. That's 6W per hour.
+Ugh.
+
+USI_TWI_Master_Initialise says that it enable pull-ups on SDA and SCL.
+My readings don't show this at all.
+I saw those as 0V on both, and only went up to 3.2V.
+There's no ATtiny84 support here.
+https://github.com/adafruit/TinyWireM/blob/master/USI_TWI_Master.h
+There's a new version with 84 support.
+Honestly, this was probably the issue.
+Oh, that's actually not the original, this is:
+https://github.com/puuu/USIWire/blob/master/src/USI_TWI_Master/USI_TWI_Master.h
+Original has a GNU lesser license that the new one lacks, hmm.
+Oh well, I copied the license, I think I'm okay.
+I'm only going to copy the section I need defining ATtiny84 ports.
+
+Also, looks like I should add a few definitions to my own code.
+#define F_CPU = 8000000
+#define TWI_FAST_MODE
+
+Issue was the address.
+I forgot to append the R/W bit.
+I was using 0x52/0x52 instead of 0xA6/0xA7.
+
+Interrupts
+==========
+
+PCMSK - Pin Change Mask Register
+If PCINT11..0 is set, and PCIE0 bit in GIMSK is set, pin change interrupt is enabled on that pin.
+If PCINT11..0 is cleared, the interrupt is disabled.
+
+Let's use PCINT0 on PCMSK0.
+
+GIFR - General Interrupt Flag Register
+When a PCINT triggers an interrupt request, PCIF bevomes set.
+If the I-bit of SREG and the PCIE0 bit in GIMSK are set, 
+the MCU will just to the corresponding interrupt vector.
+The flag is cleared when the interrupt routine is execulated.
+Or you can clear it by writing a 1 to it.
+
+GIMSK
+This has INT0, PCIE1, and PCIE0.
