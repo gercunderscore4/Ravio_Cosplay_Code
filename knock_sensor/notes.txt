@@ -113,6 +113,10 @@ Issue was the address.
 I forgot to append the R/W bit.
 I was using 0x52/0x52 instead of 0xA6/0xA7.
 
+Considered switching to the LIS2DH I have lying around.
+Because it's on a flatter board.
+But its interrupt pins aren't populated, so I'd have to solder things either way.
+
 Interrupts
 ==========
 
@@ -123,11 +127,25 @@ If PCINT11..0 is cleared, the interrupt is disabled.
 Let's use PCINT0 on PCMSK0.
 
 GIFR - General Interrupt Flag Register
-When a PCINT triggers an interrupt request, PCIF bevomes set.
+When a PCINT triggers an interrupt request, PCIF becomes set.
 If the I-bit of SREG and the PCIE0 bit in GIMSK are set, 
 the MCU will just to the corresponding interrupt vector.
 The flag is cleared when the interrupt routine is execulated.
 Or you can clear it by writing a 1 to it.
 
-GIMSK
+GIMSK - General Interrupt Mask
 This has INT0, PCIE1, and PCIE0.
+
+https://developerhelp.microchip.com/xwiki/bin/view/products/mcu-mpu/8-bit-avr/structure/sleep/
+https://www.nongnu.org/avr-libc/user-manual/group__avr__sleep.html#func-members
+https://www.nongnu.org/avr-libc/user-manual/group__avr__power.html
+https://onlinedocs.microchip.com/pr/GUID-A834D554-5741-41A3-B5E1-35ED7CD8250A-en-US-5/index.html?GUID-825A28EE-C4E4-4C03-864F-92AA9BA41231
+
+BOD = Brown Out Detection
+
+Let's use INT0 because I need it to be low level, not toggle.
+Because if the accelerometer is triggered before we're detecting, then we'll never trigger.
+This does mean I need to interrupt on low, so I need to invert the accelerometer logic.
+It actually does have this so we're good.
+
+Done!

@@ -8,14 +8,11 @@
  * PA7 -+    +- PA4
  * PA6 -+----+- PA5
  *
- * PA0 : trigger
- * PA1 :
- * PA2 :
- * PA3 :
+ * PA3 : blink
  * PA4 : SCL
- * PA5 :
  * PA6 : SDA
  * PA7 : PWM servo
+ * PB2 : trigger
  *
  * Useful registers
  * ----------------
@@ -31,64 +28,111 @@
  */
 
 #include <avr/io.h>
+#include <avr/interrupt.h>
+#include <avr/power.h>
+#include <avr/sleep.h>
 #include <util/delay.h>
 #include "stdlib.h"
 #include "servo.h"
 #include "accel.h"
-#include "ArduinoLike.h"
+
+#define INT0_PIN 2
+
+#define BLINK_PIN 3
+#define BLINK_DELAY 300
 
 /****************************************************************
- * POWER
+ * HELPERS
  ****************************************************************/
 
-void shutdown(void) {
-    // enable interrupts
-    // this interrupt requires ISC01,ISC00=0,1 
-    
-    SREG |= (1 << 7)
+void blink_twice (uint8_t pin) {
+    DDRA |= _BV(pin);
 
-    // power reduction
-    PRR = (1 << PRTIM1) | (1 << PRTIM0) | (1 << PRUSI)  | (1 << PRADC);
-    // BODS sequence
-    MCUCR = (1 << BODS) | (0 << PUD) | (0 << SE) | (0 << SM1) | (0 << SM0) | (1 << BODSE) | (0 << ISC01) | (1 << ISC00);
-    MCUCR = (1 << BODS) | (0 << PUD) | (0 << SE) | (0 << SM1) | (0 << SM0) | (0 << BODSE) | (0 << ISC01) | (1 << ISC00);
-    // power down
-    MCUCR = (1 << BODS) | (1 << PUD) | (1 << SE) | (1 << SM1) | (0 << SM0) | (0 << BODSE) | (0 << ISC01) | (1 << ISC00);
+    PORTA |= _BV(pin);
+    _delay_ms(BLINK_DELAY);
+    PORTA &= ~_BV(pin);
+    _delay_ms(BLINK_DELAY);
+
+    PORTA |= _BV(pin);
+    _delay_ms(BLINK_DELAY);
+    PORTA &= ~_BV(pin);
+    _delay_ms(BLINK_DELAY);
 }
 
-void power_up(void) {
-    // disable sleep
-    MCUCR = (0 << BODS) | (0 << PUD) | (0 << SE) | (0 << SM1) | (0 << SM0) | (0 << BODSE);
-    // undo power reduction
-    PRR = (0 << PRTIM1) | (0 << PRTIM0) | (0 << PRUSI)  | (0 << PRADC);
+void toggle (void) {
+    DDRA |= _BV(BLINK_PIN);
+    PORTA ^= _BV(BLINK_PIN);
+}
+
+ISR (INT0_vect) {
+}
+
+void sleep_until_int0_low (void) {
+    // low power
+    power_timer0_disable();
+    power_timer1_disable();
+    power_usi_disable();
+
+    // setup interrupt
+    GIMSK |= _BV(INT0);
+    MCUCR &= (~_BV(ISC01)) & (~_BV(ISC00));
+
+    sei();
+    sleep_enable();
+    sleep_bod_disable();
+    sleep_cpu();
+
+    // asleep
+
+    sleep_disable();
+    cli();
+
+    // undo low power
+    power_timer0_enable();
+    power_timer1_enable();
+    power_usi_enable();
 }
 
 /****************************************************************
  * MAIN
  ****************************************************************/
-void setup (void) {
-    power_up();
 
-    accel_setup_interrupt();
-    accel_clear_interrupt();
+void setup (void) {
+    //blink_twice(0);
+    // we're not using the ADCs
+    power_adc_disable();
+
+    // standby mode, uses the least power
+    set_sleep_mode(SLEEP_MODE_STANDBY);
+
+    DDRB &= ~_BV(INT0_PIN);
+    PORTB |= _BV(INT0_PIN);
 
     servo_init();
-    servo_write(CW_MAX);
-    delay(3000);
-    servo_write(CCW_MAX);
-    delay(3000);
-    servo_off();
 
-    //shutdown();
+    accel_setup_interrupt();
+    //blink_twice(1);
 }
 
 void loop (void) {
+    // clear accelerometer
+    while (!(PINB & _BV(INT0_PIN))) {
+        //blink_twice(2);
+        accel_setup_interrupt();
+        accel_clear_interrupt();
+    }
+    // sleep
+    sleep_until_int0_low();
+    // do the thing
+    //blink_twice(3);
+    open_chest();
+    _delay_ms(10000);
 }
 
 int main (void) {
     setup();
-
     while (1) {
         loop();
     }
+    return 0;
 }

@@ -66,10 +66,8 @@
 void servo_init (void) {
     // output
     DDRA  |=  (1 << PWM_PIN);
-    // no pull-up
+    // low
     PORTA &= ~(1 << PWM_PIN);
-    // set pin low
-    PINA  &= ~(1 << PWM_PIN);
 }
 
 void servo_write (uint8_t pwm) {
@@ -87,7 +85,17 @@ void servo_off (void) {
     TCCR0A = (0 << COM0A1) | (0 << COM0A0) | (0 << COM0B1) | (0 << COM0B0) | (0 << WGM01) | (0 << WGM00);
     TCCR0B = (0 << FOC0A) | (0 << FOC0B) | (0 << WGM02) | (0 << CS02) | (0 << CS01) | (0 << CS00);
     // set pin low
-    PINA &= ~(1 << PWM_PIN);
+    PORTA &= ~(1 << PWM_PIN);
 }
 
+void open_chest (void) {
+    // open
+    servo_write(CCW_MAX);
+    _delay_ms(3000);
 
+    // retract
+    servo_write(MID_POINT);
+    _delay_ms(3000);
+
+    servo_off();
+}

@@ -18,7 +18,7 @@
 
 // threshold
 #define THRESH_TAP_ADDR 0x1D
-#define THRESH_TAP_VALUE 0x40 // 62.5mg (milli-g's), 0x20 => 32 => 2g
+#define THRESH_TAP_VALUE 0x80 // 62.5mg (milli-g's), 0x20 => 32 => 2g
 
 // duration
 #define DUR_ADDR 0x21
@@ -34,7 +34,10 @@
 #define BW_RATE_VALUE 0x18 // 0x10 => low power, 0x08 => 12.5 Hz
 
 #define PWR_CTL_ADDR 0x2D
-#define PWR_CTL_VALUE 0x09 // 0x80 => measure don't standby, 0x01 => in sleep mode read at 4Hz
+#define PWR_CTL_VALUE 0x09 // 0x08 => measure don't standby, 0x01 => in sleep mode read at 4Hz
+
+#define DATA_FORMAT_ADDR 0x31
+#define DATA_FORMAT_VALUE 0x20  // INT_INVERT
 
 // enable this last
 #define INT_ENABLE_ADDR 0x2E

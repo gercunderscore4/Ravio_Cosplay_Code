@@ -13,7 +13,9 @@ void accel_setup_interrupt (void) {
 
     USI_TWI_Master_Initialise();
 
+    // device address for writing, no need to change this
     data[0] = I2C_SLAVE_WRITE(ACCEL_ADDR);
+
     data[1] = THRESH_TAP_ADDR;
     data[2] = THRESH_TAP_VALUE;
     USI_TWI_Start_Transceiver_With_Data_Stop(data, 3, FALSE);
@@ -40,6 +42,10 @@ void accel_setup_interrupt (void) {
 
     data[1] = INT_ENABLE_ADDR;
     data[2] = INT_ENABLE_VALUE;
+    USI_TWI_Start_Transceiver_With_Data_Stop(data, 3, FALSE);
+
+    data[1] = DATA_FORMAT_ADDR;
+    data[2] = DATA_FORMAT_VALUE;
     USI_TWI_Start_Transceiver_With_Data_Stop(data, 3, FALSE);
 }
 
