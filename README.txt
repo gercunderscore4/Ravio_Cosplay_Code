@@ -1,10 +1,9 @@
-+--------------------+
-| Ravio Cosplay Code |
-+--------------------+
+Ravio Cosplay Code
+==================
 
 
 Overview
---------
+========
 I'm working on a cosplay of Ravio, the shopkeeper from The Legend of Zelda: A Link Between Worlds, and I'm storing the code for it here.
 I'm working on electronics for various items, and the code for those will be stored here.
 There is also a physical log book for this project. Not all notes will be stored here.
@@ -12,23 +11,30 @@ Percentages mark expected progress for next event (nothing is ever completely do
 
 
 TASKS FOR TODAY
----------------
+===============
 
 
 SHOPPING LIST
 -------------
+- 16x 20"x30" foamboard sheets from dollar store ($60)
+- 2x 2'x2' 1/8" MDF board (from hardware store $7)
+- hanging wood sign from dollar store ($2)
+- mason jars from dollar store ($4)
+- green 20"x30" poster board ($1)
+- UHU glue ($6)
+- print stamp passports ($75)
 
 
 TODO
-----
-Grass:
-    - make new grass
-    - improve durability
+====
 Minish:
     - make from worbla
     - make kinstone
     - make doorway
     - paint
+Grass:
+    - make new grass
+    - improve durability
 Rods:
     - ensuring working
 Chest:
@@ -62,7 +68,7 @@ Wig:
 
 
 TO-NOT-DO
----------
+=========
 Rods:
     - use gyro interrupts
     - look up PCBA
@@ -81,16 +87,19 @@ Additional Chest:
     - simple electronics (1 switch)
     - make sad song (sad/happy by pin)
     - print more maps
+Bracelet:
+    - make
 
 
 Microcontrols
--------------
+=============
 ATtiny85 (T85)
 ATtiny84 (T84)
+ATmega328 (Arduino chip, without board)
 
 
 ATtiny Code Examples
---------------------
+====================
 https://electronut.in/getting-started-with-attiny85-avr-programming/
 https://embeddedthoughts.com/2016/05/25/getting-started-with-the-attiny85/
 http://www.technoblogy.com/show?QVN
@@ -102,7 +111,7 @@ https://github.com/adafruit/Adafruit_TinyFlash
 
 
 Datasheets and References
--------------------------
+=========================
 http://ww1.microchip.com/downloads/en/devicedoc/atmel-2586-avr-8-bit-microcontroller-attiny25-attiny45-attiny85_datasheet.pdf
 https://www.microchip.com/wwwproducts/en/ATtiny85
 http://www.engbedded.com/fusecalc/
@@ -111,6 +120,5 @@ https://store.arduino.cc/usa/arduino-uno-rev3
 https://www.arduino.cc/reference/en/
 
 Misc
-----
+====
 http://sox.sourceforge.net/soxformat.html 
-
