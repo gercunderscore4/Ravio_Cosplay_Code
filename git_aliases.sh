@@ -1,0 +1,5 @@
+git config --global alias.stat  'status --short'
+git config --global alias.gud   'commit -a -m'
+git config --global alias.clean 'reset HEAD --hard'
+git config --global alias.story 'log --pretty=format:"%aD%x09%an%x09%s" --reverse'
+git config --global alias.news  'log --pretty=format:"%h%x09%an%x09%ai%x09%s" -n 10'

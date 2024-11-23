@@ -382,20 +382,21 @@ for ii = 1:size(Name_Mat_Norm,1)
     Name_Mat_Norm{ii,3} = R * Name_Mat_Norm{ii,3};
 end
 
-%figure(1);
-%clf;
-%hold on;
-%axis('equal');
-%for ii = 1:size(Name_Mat_Norm,1)
-%    plot3(Name_Mat_Norm{ii,2}(1,:), Name_Mat_Norm{ii,2}(2,:), Name_Mat_Norm{ii,2}(3,:))
-%end
-%% draw axes
-%plot3([0 1], [0 0], [0 0], 'r')
-%plot3([0 0], [0 1], [0 0], 'g')
-%plot3([0 0], [0 0], [0 1], 'b')
-%hold off;
-%view(Name_Mat_Norm{13,3}) % view from a slight angle
-
+if true
+	figure(1);
+	clf;
+	hold on;
+	axis('equal');
+	for ii = 1:size(Name_Mat_Norm,1)
+	    plot3(Name_Mat_Norm{ii,2}(1,:), Name_Mat_Norm{ii,2}(2,:), Name_Mat_Norm{ii,2}(3,:))
+	end
+	% draw axes
+	plot3([0 1], [0 0], [0 0], 'r')
+	plot3([0 0], [0 1], [0 0], 'g')
+	plot3([0 0], [0 0], [0 1], 'b')
+	hold off;
+	view(Name_Mat_Norm{13,3}) % view from a slight angle
+end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % flatten
@@ -475,37 +476,41 @@ Name_Mat_Norm{ii,2}(2,:) = Name_Mat_Norm{ii,2}(2,:) + 1 * MATERIAL_THICKNESS;
 
 % check that it's all flat
 % as long as there are only a handful of unevenly groups bars, this should be fine
-%figure(2);
-%clf;
-%H = [];
-%for ii = 1:size(Name_Mat_Norm,1)
-%    H = [H, Name_Mat_Norm{ii,2}(3,:) = Name_Mat_Norm{ii,2}(3,:)];
-%end
-%hist(H, 100)
+if false
+	figure(2);
+	clf;
+	H = [];
+	for ii = 1:size(Name_Mat_Norm,1)
+	    H = [H, Name_Mat_Norm{ii,2}(3,:) = Name_Mat_Norm{ii,2}(3,:)];
+	end
+	hist(H, 100)
+end
 
 % draw flattened SVG for laser cutting
-figure(3);
-clf;
-hold on;
-for ii = 1:size(Name_Mat_Norm,1)
-    % draw >0 green, <0 red, =0 black
-    if sum(Name_Mat_Norm{ii,2}(3,:)) > 0
-        c = 'g';
-    elseif sum(Name_Mat_Norm{ii,2}(3,:)) < 0
-        c = 'r';
-    else
-        c = 'k';
-    end
-    %plot3(Name_Mat_Norm{ii,2}(1,:), Name_Mat_Norm{ii,2}(2,:), Name_Mat_Norm{ii,2}(3,:), c);
+if true
+	figure(3);
+	clf;
+	hold on;
+	for ii = 1:size(Name_Mat_Norm,1)
+	    % draw >0 green, <0 red, =0 black
+	    if sum(Name_Mat_Norm{ii,2}(3,:)) > 0
+	        c = 'g';
+	    elseif sum(Name_Mat_Norm{ii,2}(3,:)) < 0
+	        c = 'r';
+	    else
+	        c = 'k';
+	    end
+	    %plot3(Name_Mat_Norm{ii,2}(1,:), Name_Mat_Norm{ii,2}(2,:), Name_Mat_Norm{ii,2}(3,:), c);
     
-    % blue for cut
-    c = 'b';
-    plot(Name_Mat_Norm{ii,2}(1,:), Name_Mat_Norm{ii,2}(2,:), c);
+	    % blue for cut
+	    c = 'b';
+	    plot(Name_Mat_Norm{ii,2}(1,:), Name_Mat_Norm{ii,2}(2,:), c);
+	end
+	plot3([0 1], [0 0], [0 0], 'r')
+	plot3([0 0], [0 1], [0 0], 'g')
+	plot3([0 0], [0 0], [0 1], 'b')
+	axis('equal');
+	axis('off');
+	hold off;
+	saveas(3, 'lasercut_chest.svg');
 end
-%plot3([0 1], [0 0], [0 0], 'r')
-%plot3([0 0], [0 1], [0 0], 'g')
-%plot3([0 0], [0 0], [0 1], 'b')
-axis('equal');
-axis('off');
-hold off;
-saveas(3, 'lasercut_chest.svg');

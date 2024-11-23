@@ -8,7 +8,6 @@ clear;
 c = 100; % circumference
 n = 12;  % points in curves
 m = 12;   % number of lunes
-q = 1;   % number of lunes to display
 z = 90;  % accurate curves
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -44,7 +43,7 @@ y2 = repelem(ty,3);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % EXTERIOR LINES
 
-total_visible_width = q * 2 * nr;
+total_visible_width = m * 2 * nr;
 
 x3 = repmat([0 1 NaN]*total_visible_width, n + 1);
 y3 = repelem(ty, 3);
@@ -63,29 +62,51 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % PLOT
 
-figure(1);
-clf;
-hold on;
+if true
+	figure(1);
+	clf;
+	hold on;
+	title("all lunes")
 
-for ii = 1:q
-    % lune
-    plot((ii - 0.5) * 2 * nr + x,  y,  'k');
-    % lines interior to lune
-    plot((ii - 0.5) * 2 * nr + x2, y2, 'k');
+	for ii = 1:m
+	    % lune
+	    plot((ii - 0.5) * 2 * nr + x,  y,  'k');
+	    % lines interior to lune
+	    plot((ii - 0.5) * 2 * nr + x2, y2, 'k');
+	end
+
+	% draw lines across
+	plot(x3, y3, 'g');
+
+	% border
+	plot([0 0 1 1 0]*total_visible_width, [-1 1 1 -1 -1]*c/4, 'k');
+
+	% cut line
+	plot([0 1]*total_visible_width, [1 1]*(-35/90)*c/4, 'r');
+
+	axis('equal');
+	axis('off');
+	hold off;
+
+	saveas(1, 'hat_arcs.svg')
 end
 
-% draw lines across
-%plot(x3, y3, 'g');
+if true
+	figure(2);
+	clf;
+	hold on;
+	title("single lune")
 
-% border
-%plot([0 0 1 1 0]*total_visible_width, [-1 1 1 -1 -1]*c/4, 'k');
+    % lune
+    plot((0.5) * 2 * nr + x,  y,  'k');
+    % lines interior to lune
+    plot((0.5) * 2 * nr + x2, y2, 'k');
 
-% cut line
-plot([0 1]*total_visible_width, [1 1]*(-35/90)*c/4, 'r');
+	% cut line
+	plot([0 1]*2*nr, [1 1]*(-35/90)*c/4, 'r');
 
-axis('equal');
-axis('off');
-hold off;
-
-saveas(1, 'hat_arcs.svg')
+	axis('equal');
+	axis('off');
+	hold off;
+end
 
