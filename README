@@ -8,7 +8,6 @@ Overview
 I'm working on a cosplay of Ravio, the shopkeeper from The Legend of Zelda: A Link Between Worlds, and I'm storing the code for it here.
 I'm working on electronics for various items, and the code for those will be stored here.
 There is also a physical log book for this project. Not all notes will be stored here.
-Use "orb of power" instead of "bomb" to avoid scaring people.
 Percentages mark expected progress for next event (nothing is ever completely done).
 
 
@@ -22,106 +21,66 @@ SHOPPING LIST
 
 TODO
 ----
-All Rods:
-    - Test gyroscope as new input
-Ice Rod:
-    - Buy blue construction paper
-    - Cut and tape new gem
-Bomb:
-    - Solder 47uF filter cap across speaker inputs
-    - Solder red LEDs
-    - Pick and buy wire connectors for speaker/motor/flash/batteries
-    - Redesign circuit enclosure
-Hookshot:
-    - Create STLs
-    - Get it printed
-    - Design handle
-    - Design cover
-    - Design hook
+Grass:
+    - make new grass
+    - improve durability
+Minish:
+    - make from worbla
+    - make kinstone
+    - make doorway
+    - paint
+Rods:
+    - ensuring working
 Chest:
-    - Solder second circuit for cardboard chest
-Korok Blocks:
-    - Buy t-track (or equivalent)
-    - Buy high density foam samples
+    - ensuring working
+Sign:
+    - add "on break" sign
+    - make sign stay up better
+Table:
+    - buy new panels
+    - make new item holders
+Korok Puzzle:
+    - add sleep function (save battery)
+    - "don't touch" sign from "Zonai Survey Team"
+    - locking latch for lid
+Stamp Rally:
+    - build blocks
+    - research stamp tools
+    - buy stamp materials
+    - make stamps
+    - print passports
+    - buy mason jars
+    - make smoothies
+    - acquire fake branch
+    - acquire white cotton candy
+    - make fang
+    - make monster guts
+Wig:
+    - buy UHU glue
+    - buy batting
+    - glue in place
 
 
 TO-NOT-DO
 ---------
-Rug:
-    - Buy orange fabric (what?)
-    - Make patterns for orange
-    - Cut orange patterns
-    - Sew orange patterns
-    - Hem edges
+Rods:
+    - use gyro interrupts
+    - look up PCBA
+    - design board
+    - order boards
+Tornado Rods:
+    - research power-tool/motor
 Book:
     - Design cover for log book
-Boots:
-    - Buy
-
-
-#==============#============#============#========#
-| PART         | DIFFICULTY | IMPORTANCE | STATUS |
-#==============#============#============#========#
-| COSTUME                                         |
-#==============#============#============#========#
-| Hat          |     H      |     XH     |  100%  |
-+--------------+------------+------------+--------+
-| Robes        |     M      |     XH     |  100%  |
-+--------------+------------+------------+--------+
-| Belt         |     L      |     XH     |  100%  |
-+--------------+------------+------------+--------+
-| Bag          |     M      |     M      |  100%  |
-+--------------+------------+------------+--------+
-| Wig          |     L      |     L      |   N/A  |
-+--------------+------------+------------+--------+
-| Ears         |     L      |     L      |  100%  |
-+--------------+------------+------------+--------+
-| Shoes        |     L      |     XL     |   N/A  |
-#==============#============#============#========#
-| WEAPONS                                         |
-#==============#============#============#========#
-| Fire Rod     |     H      |     XH     |   90%  |
-+--------------+------------+------------+--------+
-| Ice Rod      |     H      |     H      |   80%  |
-+--------------+------------+------------+--------+
-| Bomb         |     H      |     H      |   80%  |
-+--------------+------------+------------+--------+
-| Tornado Rod  |     M      |     H      |  100%  |
-+--------------+------------+------------+--------+
-| Hammer       |     L      |     H      |  100%  |
-+--------------+------------+------------+--------+
-| Sand Rod     |     H      |     M      |    0%  |
-+--------------+------------+------------+--------+
-| Hookshot     |     H      |     M      |   25%  |
-+--------------+------------+------------+--------+
-| Boomerang    |     L      |     M      |  100%  |
-+--------------+------------+------------+--------+
-| Bow          |     L      |     L      |  100%  |
-#==============#============#============#========#
-| SHOP                                            |
-#==============#============#============#========#
-| Chest        |     H      |     H      |  100%  |
-+--------------+------------+------------+--------+
-| Rupees       |     L      |     M      |  100%  |
-+--------------+------------+------------+--------+
-| Item Ears    |     M      |     L      |   N/A  |
-+--------------+------------+------------+--------+
-| Rug          |     M      |     L      |   N/A  |
-+--------------+------------+------------+--------+
-| Pot          |     M      |     L      |   N/A  |
-+--------------+------------+------------+--------+
-| Bush         |     L      |     L      |   50%  |
-+--------------+------------+------------+--------+
-| Maps         |     L      |     L      |   N/A  |
-+--------------+------------+------------+--------+
-| Pet          |     H      |     XL     |  100%  |
-+--------------+------------+------------+--------+
-| Sign         |     L      |     XL     |  100%  |
-+--------------+------------+------------+--------+
-| Book         |     M      |     XL     |   N/A  |
-+--------------+------------+------------+--------+
-| Korok Blocks |     H      |     L      |   N/A  |
-+--------------+------------+------------+--------+
+Bomb:
+    - Solder 47uF filter cap across speaker inputs
+    - Solder red LEDs
+    - Redesign circuit enclosure
+Additional Chest:
+    - make Hyrule Warriors chest
+    - simple electronics (1 switch)
+    - make sad song (sad/happy by pin)
+    - print more maps
 
 
 Microcontrols
