@@ -535,10 +535,10 @@ if true
         plot(NB(:,1),          dy + NB(:,2),          'b');
         plot(NC(:,1),          dy + NC(:,2),          'r');
 
-        %plot(NC(:,1),          dy - NC(:,2),          'r');
-        %plot(NB(:,1),          dy - NB(:,2),          'b');
-        %plot(NP(:,1),          dy - NP(:,2),          'k');
-        %plot(NR(:,1),          dy - NR(:,2),          'k');
+        plot(NC(:,1),          dy - NC(:,2),          'r');
+        plot(NB(:,1),          dy - NB(:,2),          'b');
+        plot(NP(:,1),          dy - NP(:,2),          'k');
+        plot(NR(:,1),          dy - NR(:,2),          'k');
 
         plot(OUTER_BOX(:,1),   dy + OUTER_BOX(:,2),   'k');
         plot(SIDE_PANEL(:,1),  dy + SIDE_PANEL(:,2),  'k');

@@ -655,4 +655,3 @@ if false
     writePointsToSvg(NB3,        "svg/END_BAR_POINTS.svg");
 
 end
-

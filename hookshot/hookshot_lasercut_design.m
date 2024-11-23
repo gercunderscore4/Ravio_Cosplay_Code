@@ -525,11 +525,11 @@ L2((indx+1):(indx+c3),:) = [END_COVER_POINTS BAR_COUNT*ones(c3,1)];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % PLOT AND SAVE
 
-if 1 == 1
+if true
     figure(1);
     clf;
     hold on;
-    jjmax = 2;
+    jjmax = 3;
     
     for jj = 1:jjmax
         % get angle and separation distances
@@ -583,7 +583,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % LAYERS
 
-if 1 == 1
+if false
     figure(2);
     clf;
     hold on;
@@ -637,7 +637,7 @@ end
 % INDIVIDUAL PIECES
 % this section is to help design individual pieces without drawing thw whole thing
 
-if 0 == 1
+if false
     figure(3);
     clf;
     hold on;

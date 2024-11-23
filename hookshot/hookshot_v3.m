@@ -571,12 +571,12 @@ if true
         plot(NC(:,1),          dy + NC(:,2),          'r');
         plot(NH(:,1),          dy + NH(:,2),          'r');
 
-        %plot(NH(:,1),          dy - NH(:,2),          'r');
-        %plot(NC(:,1),          dy - NC(:,2),          'r');
-        %plot(NH(:,1),          dy - NH(:,2),          'b');
-        %plot(NB(:,1),          dy - NB(:,2),          'b');
-        %plot(NP(:,1),          dy - NP(:,2),          'k');
-        %plot(NR(:,1),          dy - NR(:,2),          'k');
+        plot(NH(:,1),          dy - NH(:,2),          'r');
+        plot(NC(:,1),          dy - NC(:,2),          'r');
+        plot(NH(:,1),          dy - NH(:,2),          'b');
+        plot(NB(:,1),          dy - NB(:,2),          'b');
+        plot(NP(:,1),          dy - NP(:,2),          'k');
+        plot(NR(:,1),          dy - NR(:,2),          'k');
 
         plot(OUTER_BOX(:,1),   dy + OUTER_BOX(:,2),   'k');
         plot(SIDE_PANEL(:,1),  dy + SIDE_PANEL(:,2),  'k');
@@ -590,7 +590,7 @@ if true
     hold off;
 end
 
-if true
+if false
     figure(2);
     clf;
     hold on;
@@ -629,7 +629,7 @@ if true
     hold off;
 end
 
-if true
+if false
     figure(3)
     clf;
     hold on;
