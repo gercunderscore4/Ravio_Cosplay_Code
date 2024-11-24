@@ -12,17 +12,31 @@ Percentages mark expected progress for next event (nothing is ever completely do
 
 TASKS FOR TODAY
 ===============
+- check rods
+- check chest
+- 3D model kinstone
+- add sleep mode to puzzle
+- draw up "don't touch" sign
+- design sign base
+- design new chest
+- rod PCBA
+- Li batteries for rods
+- 3D model of minish
+- fix wig
 
 
 SHOPPING LIST
--------------
-- 16x 20"x30" foamboard sheets from dollar store ($60)
-- 2x 2'x2' 1/8" MDF board (from hardware store $7)
-- hanging wood sign from dollar store ($2)
-- mason jars from dollar store ($4)
-- green 20"x30" poster board ($1)
-- UHU glue ($6)
+=============
+- 21x 20"x30" foamboard sheets from Dollarama ($70)
+- 2x 2'x2' 1/8" MDF board from Home Depot ($7)
+- hanging wood sign from Dollarama ($2)
+- mason jars from Dollarama ($4)
+- green 20"x30" poster board from Dollarama ($1)
+- UHU glue from Staples ($6)
 - print stamp passports ($75)
+- white cotton candy from Party City ($3)
+- lino cutter and lino blocks from Gwartzman's ($30)
+- 5x ink pads at Michael's ($30)
 
 
 TODO
@@ -51,12 +65,13 @@ Korok Puzzle:
     - locking latch for lid
 Stamp Rally:
     - build blocks
-    - research stamp tools
     - buy stamp materials
     - make stamps
     - print passports
-    - buy mason jars
     - make smoothies
+    - buy mason jars
+    - buy straws
+    - buy fake flowers for smoothie garnish
     - acquire fake branch
     - acquire white cotton candy
     - make fang
