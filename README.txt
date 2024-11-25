@@ -13,16 +13,14 @@ Percentages mark expected progress for next event (nothing is ever completely do
 TASKS FOR TODAY
 ===============
 - check rods
-- check chest
-- 3D model kinstone
+- upgrade wig
+- rod PCBA
 - add sleep mode to puzzle
-- draw up "don't touch" sign
 - design sign base
 - design new chest
-- rod PCBA
-- Li batteries for rods
+- 3D model kinstone
 - 3D model of minish
-- fix wig
+- check chest
 
 
 SHOPPING LIST
@@ -37,6 +35,7 @@ SHOPPING LIST
 - white cotton candy from Party City ($3)
 - lino cutter and lino blocks from Gwartzman's ($30)
 - 5x ink pads at Michael's ($30)
+- Home Decor Self Adhesive Window Film from Home Depot ($20)
 
 
 TODO
