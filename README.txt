@@ -10,16 +10,16 @@ There is also a physical log book for this project. Not all notes will be stored
 Percentages mark expected progress for next event (nothing is ever completely done).
 
 
-TASKS FOR TODAY
-===============
-- check rods
+TASKS TO DO
+===========
+- wanted sign
+- item holders
 - upgrade wig
+- check rods
 - rod PCBA
 - add sleep mode to puzzle
 - design sign base
 - design new chest
-- 3D model kinstone
-- 3D model of minish
 - check chest
 
 
@@ -27,44 +27,34 @@ SHOPPING LIST
 =============
 - 21x 20"x30" foamboard sheets from Dollarama ($70)
 - 2x 2'x2' 1/8" MDF board from Home Depot ($7)
-- hanging wood sign from Dollarama ($2)
 - mason jars from Dollarama ($4)
-- green 20"x30" poster board from Dollarama ($1)
-- UHU glue from Staples ($6)
 - print stamp passports ($75)
 - white cotton candy from Party City ($3)
-- lino cutter and lino blocks from Gwartzman's ($30)
 - 5x ink pads at Michael's ($30)
 - Home Decor Self Adhesive Window Film from Home Depot ($20)
 
 
 TODO
 ====
-Minish:
-    - make from worbla
-    - make kinstone
-    - make doorway
-    - paint
-Grass:
-    - make new grass
-    - improve durability
 Rods:
     - ensuring working
+Table:
+    - make new item holders
+    - buy new panels
+Grass:
+    - make new grass
 Chest:
     - ensuring working
 Sign:
     - add "on break" sign
     - make sign stay up better
-Table:
-    - buy new panels
-    - make new item holders
 Korok Puzzle:
     - add sleep function (save battery)
     - "don't touch" sign from "Zonai Survey Team"
     - locking latch for lid
 Stamp Rally:
+    - buy smoothies
     - build blocks
-    - buy stamp materials
     - make stamps
     - print passports
     - make smoothies
@@ -76,8 +66,7 @@ Stamp Rally:
     - make fang
     - make monster guts
 Wig:
-    - buy UHU glue
-    - buy batting
+    - get batting
     - glue in place
 
 
