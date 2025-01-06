@@ -12,7 +12,7 @@ Percentages mark expected progress for next event (nothing is ever completely do
 
 TASKS TO DO
 ===========
-- wanted sign
+- paint wanted sign
 - item holders
 - upgrade wig
 - check rods
@@ -46,7 +46,6 @@ Grass:
 Chest:
     - ensuring working
 Sign:
-    - add "on break" sign
     - make sign stay up better
 Korok Puzzle:
     - add sleep function (save battery)
