@@ -149,3 +149,26 @@ This does mean I need to interrupt on low, so I need to invert the accelerometer
 It actually does have this so we're good.
 
 Done!
+
+
+Power Issues
+============
+
+The servo is the first thing to give.
+I'm having trouble powering everything batteries.
+I tried powering it from a power supply just to test it, but the servo doesn't respond.
+I see current increases (up to 110mA), but nothing happens.
+
+Similarly, when I have an ammeter in line with it, nothing.
+Maybe a hall-effect sensor would work here.
+And add more capacitors.
+
+I'd also like to increase the voltage.
+Looking it up to check: voltage maps to speed, current maps to torque.
+So I need more current.
+More capcitors.
+
+The ammeter in my multitool doesn't appear to work.
+The power supply doesn't seem to work as well as batteries for some reason.
+And when powering just the lights & sounds section, I was getting brown-outs causing random lights and noise.
+Sovled that with an additional cap for the lights.
