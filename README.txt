@@ -4,7 +4,7 @@ Ravio Cosplay Code
 
 Overview
 ========
-I'm working on a cosplay of Ravio, the shopkeeper from The Legend of Zelda: A Link Between Worlds, and I'm storing the code for it here.
+I'm making a Ravio cosplay, the shopkeeper from The Legend of Zelda: A Link Between Worlds, and I'm storing the code for it here.
 I'm working on electronics for various items, and the code for those will be stored here.
 There is also a physical log book for this project. Not all notes will be stored here.
 Percentages mark expected progress for next event (nothing is ever completely done).
@@ -12,57 +12,33 @@ Percentages mark expected progress for next event (nothing is ever completely do
 
 TASKS TO DO
 ===========
-- paint wanted sign
-- item holders
-- upgrade wig
 - check rods
 - rod PCBA
 - add sleep mode to puzzle
-- design sign base
-- design new chest
-- check chest
+- upgrade wig
 
 
 SHOPPING LIST
 =============
-- 21x 20"x30" foamboard sheets from Dollarama ($70)
-- 2x 2'x2' 1/8" MDF board from Home Depot ($7)
-- mason jars from Dollarama ($4)
-- print stamp passports ($75)
-- white cotton candy from Party City ($3)
-- 5x ink pads at Michael's ($30)
-- Home Decor Self Adhesive Window Film from Home Depot ($20)
+- 5x 24"x21"x20" Extra Large cardboard boxes from Home Depot ($5.25 x 5 = $26.25)
 
 
 TODO
 ====
 Rods:
-    - ensuring working
-Table:
-    - make new item holders
-    - buy new panels
-Grass:
-    - make new grass
-Chest:
-    - ensuring working
-Sign:
-    - make sign stay up better
+    - ensure working
 Korok Puzzle:
     - add sleep function (save battery)
-    - "don't touch" sign from "Zonai Survey Team"
-    - locking latch for lid
 Stamp Rally:
-    - buy smoothies
+    - print instructions
+    - weather instructions
+    - clear-coat instructions
+    - buy boxes
     - build blocks
     - make stamps
-    - print passports
-    - make smoothies
-    - buy mason jars
-    - buy straws
-    - buy fake flowers for smoothie garnish
-    - acquire fake branch
-    - acquire white cotton candy
-    - make fang
+    - paint passports
+    - cut fangs
+    - paint fangs
     - make monster guts
 Wig:
     - get batting
