@@ -14,7 +14,6 @@ TASKS TO DO
 ===========
 - check rods
 - rod PCBA
-- add sleep mode to puzzle
 - upgrade wig
 
 
@@ -27,8 +26,9 @@ TODO
 ====
 Rods:
     - ensure working
-Korok Puzzle:
-    - add sleep function (save battery)
+Wig:
+    - try crimping
+    - restyle
 Stamp Rally:
     - print instructions
     - weather instructions
@@ -40,9 +40,6 @@ Stamp Rally:
     - cut fangs
     - paint fangs
     - make monster guts
-Wig:
-    - get batting
-    - glue in place
 
 
 TO-NOT-DO
@@ -67,6 +64,10 @@ Additional Chest:
     - print more maps
 Bracelet:
     - make
+Korok Puzzle:
+    - with better ammeter:
+        - test disabling brown-out detection during sleep.
+        - test setting tach to output during sleep
 
 
 Microcontrols

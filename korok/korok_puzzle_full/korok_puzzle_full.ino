@@ -19,18 +19,6 @@
  * 
  * Copying some sleep code from https://www.kevindarrah.com/download/arduino_code/LowPowerVideo.ino
  * 
- * https://www.arduino.cc/reference/cs/language/functions/external-interrupts/attachinterrupt/
- * digitalPinToInterrupt(pin)
- * Need to use digital pin 2 (3 is used for the spinning motor)
- *
- * TODO:
- *     - test power consumption with PIN set to output and ADC off
- *     - move reed wire to pin PD2 (previously ) and test that it still works
- *     - set up sleep on digital pin 2 (interrupt 0)
- *     - test power consumption using sleep
- *     - consider disabling brown-out detection 
- *       probably won't make a difference, I likely have other drains on power
- *     - test whole circuit
  *            __  __
  *      PD6  -| \/ |-  PC5
  *      PD0  -|    |-  PC4
@@ -53,7 +41,7 @@
 #include <Servo.h>
 #include <SPI.h>
 
-#define REED_PIN 4
+#define REED_PIN 2
 
 #define SPIN_PIN 3
 
@@ -84,9 +72,9 @@ void digitalInterrupt(){
 }
 
 void senseBlock() {
-  while (!digitalRead(REED_PIN));
-  while (digitalRead(REED_PIN));
-  //__asm__  __volatile__("sleep");//in line assembler to go to sleep
+  //while (!digitalRead(REED_PIN));
+  //while (digitalRead(REED_PIN));
+  __asm__  __volatile__("sleep");//in line assembler to go to sleep
 }
 
 bool detectSpinner() {
@@ -221,11 +209,11 @@ void setup(){
     Serial.println("SD fail");  
   }
 
-  //attachInterrupt(0, digitalInterrupt, RISING); //interrupt for waking up
-
+  //interrupt for waking up
+  attachInterrupt(digitalPinToInterrupt(REED_PIN), digitalInterrupt, RISING);
   //enable sleep
-  //SMCR |= (1 << 2); //power down mode
-  //SMCR |= 1;//enable sleep
+  SMCR |= (1 << 2); //power down mode
+  SMCR |= 1;//enable sleep
 }
 
 void loop(){  
